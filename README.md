@@ -64,16 +64,19 @@ portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per view
 
 ## Fonts
 
-| Role | Face | Source |
+| Role | Face | How it is served |
 | --- | --- | --- |
-| Body, UI, nav (`--font-body`) | **Switzer** | Indian Type Foundry via Fontshare, free for commercial use. Self-hosted from `src/fonts/*.woff2` through `next/font/local` — no third-party request |
-| Headings (`--font-display`) | DM Serif Display | Google Fonts — a stand-in |
+| Headings (`--font-display`) | **Times** | System font. `"Times New Roman", Times, Tinos, Georgia, serif` |
+| Body, UI, nav (`--font-body`) | **Inter** | Google Fonts via `next/font/google`, self-hosted at build |
 
-**Tempting is not installed.** It is a script face by RGB Studio whose free
-download is licensed for personal use only, and this is a commercial site. To use
-it, buy the licence (MyFonts or Creative Fabrica), drop the `.woff2`/`.otf` in
-`src/fonts/`, and swap the `dmSerif` declaration in `src/app/layout.tsx` for a
-`localFont` call the same shape as the Switzer one.
+Times New Roman is a Monotype licence we do not hold, so it is never served —
+only referenced, which needs no licence because the visitor already has it.
+macOS, iOS and Windows all ship it.
+
+Android and Linux do not. **Tinos** (Apache 2.0, metrically identical to Times
+New Roman) sits last in the stack for them. It is declared with `preload: false`
+so browsers fetch it only when everything ahead of it is missing — most visitors
+never download it.
 
 Both faces are referenced only through `--font-display` and `--font-body` in
 `globals.css`, so changing either is a one-line edit.
