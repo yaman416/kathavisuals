@@ -25,6 +25,7 @@ export async function submitEnquiry(
   const email = String(formData.get("email") ?? "").trim();
   const phone = String(formData.get("phone") ?? "").trim();
   const service = String(formData.get("service") ?? "").trim();
+  const coverage = String(formData.get("coverage") ?? "").trim();
   const date = String(formData.get("date") ?? "").trim();
   const location = String(formData.get("location") ?? "").trim();
   const details = String(formData.get("details") ?? "").trim();
@@ -56,6 +57,7 @@ export async function submitEnquiry(
     `Email: ${email}`,
     `Phone: ${phone || "—"}`,
     `Service: ${service || "Not specified"}`,
+    `Coverage: ${coverage || "Not specified"}`,
     `Preferred date: ${date || "—"}`,
     `Location: ${location || "—"}`,
     "",
@@ -70,7 +72,7 @@ export async function submitEnquiry(
         from,
         to: [to],
         reply_to: email,
-        subject: `New enquiry — ${service || "General"} — ${name}`,
+        subject: `New enquiry — ${service || "General"}${coverage ? ` (${coverage})` : ""} — ${name}`,
         text: body,
       }),
     });

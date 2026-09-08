@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 import { initialEnquiryState, submitEnquiry } from "@/app/actions";
 import { Checkbox, Input, Select, Textarea } from "@/components/ds/fields";
 import { Button, Eyebrow, SectionHeading } from "@/components/ds/primitives";
-import { serviceOptions } from "@/lib/site";
+import { coverageOptions, serviceOptions } from "@/lib/site";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -86,6 +86,16 @@ export function ContactSection() {
                 Choose a service
               </option>
               {serviceOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Select>
+            <Select id="coverage" name="coverage" label="Coverage" defaultValue="">
+              <option value="" disabled>
+                Photography, video, or both
+              </option>
+              {coverageOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

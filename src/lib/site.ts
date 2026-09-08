@@ -187,6 +187,14 @@ export const projects: Project[] = [
 /** Shown above the portfolio grid while the grid holds sample entries. */
 export const showSampleNote = true;
 
+/** Clients can book stills, motion, or both. */
+export const coverageOptions = [
+  "Photography only",
+  "Videography only",
+  "Photography and video",
+  "Not sure yet",
+] as const;
+
 export const serviceOptions = [
   "Weddings",
   "Events",
