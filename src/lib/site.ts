@@ -3,9 +3,9 @@
  * (claude.ai/design — "Katha Visuals Website.dc.html") so copy, services and
  * contact details live in one place.
  *
- * Strings in [SQUARE BRACKETS] are deliberate placeholders carried over from
- * the design system: missing facts render as explicit placeholders rather than
- * invented copy. Replace them with real answers before promoting the site.
+ * Every FAQ answer here is confirmed by the studio. If a fact is ever unknown,
+ * write it as an explicit [PLACEHOLDER] rather than inventing copy — that is
+ * the design system's rule and it is what kept these honest.
  */
 
 export const site = {
@@ -81,7 +81,8 @@ export const services: Service[] = [
       },
       {
         question: "Do you travel outside Canberra?",
-        answer: "[SERVICE AREA PLACEHOLDER]",
+        answer:
+          "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add.",
       },
     ],
   },
@@ -101,7 +102,8 @@ export const services: Service[] = [
       },
       {
         question: "Can you deliver same day highlights?",
-        answer: "[TURNAROUND PLACEHOLDER]",
+        answer:
+          "Not on the night itself. You will have a set of preview images within 48 hours, and the full edited gallery in one to two weeks.",
       },
     ],
   },
@@ -115,8 +117,14 @@ export const services: Service[] = [
     audience:
       "Agents and owners who want listings that stand out and photograph well online.",
     faqs: [
-      { question: "Do you shoot drone footage?", answer: "[DRONE AVAILABILITY PLACEHOLDER]" },
-      { question: "How quickly can we get images?", answer: "[TURNAROUND PLACEHOLDER]" },
+      {
+        question: "Do you shoot drone footage?",
+        answer: "Yes. We fly our own drone, so aerial stills and video can be added to any property shoot.",
+      },
+      {
+        question: "How quickly can we get images?",
+        answer: "Property images are delivered within 24 to 48 hours, so you can list without waiting.",
+      },
     ],
   },
   {
@@ -130,7 +138,8 @@ export const services: Service[] = [
     faqs: [
       {
         question: "Do you offer ongoing content packages?",
-        answer: "[PACKAGE OPTIONS PLACEHOLDER]",
+        answer:
+          "Not yet. We book shoots individually at the moment, so tell us what you need and we will quote that piece of work.",
       },
       {
         question: "Can you edit for specific platforms?",
