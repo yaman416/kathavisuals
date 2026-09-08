@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { DM_Serif_Display, Montserrat } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+/**
+ * DM Serif Display and Montserrat are the design system's chosen faces.
+ * No official Katha Visuals font files were supplied — see the design system
+ * readme's font substitution flag.
+ */
+const dmSerif = DM_Serif_Display({
+  variable: "--font-dm-serif",
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-display",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
-  weight: ["300", "400", "600"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
-  },
+  title: `${site.name} — ${site.tagline}`,
   description: site.description,
   keywords: [
     "Canberra photographer",
-    "Canberra wedding videographer",
-    "ACT photography studio",
-    "wedding films Canberra",
-    "brand photography Canberra",
+    "Canberra videographer",
+    "wedding photography Canberra",
+    "event photography ACT",
+    "real estate photography Canberra",
+    "social media content Canberra",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -52,20 +56,26 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-AU"
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${dmSerif.variable} ${montserrat.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-sand focus:px-4 focus:py-2 focus:text-sm focus:text-ink"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
+          style={{
+            background: "var(--color-accent)",
+            color: "var(--black)",
+            padding: "8px 16px",
+            borderRadius: "var(--radius-control)",
+          }}
         >
           Skip to content
         </a>
-        <Header />
+        <SiteHeader />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <Footer />
+        <SiteFooter />
       </body>
     </html>
   );

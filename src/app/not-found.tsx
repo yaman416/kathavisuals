@@ -1,24 +1,32 @@
-import Link from "next/link";
-import { Container } from "@/components/Container";
+import { ButtonLink, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 
 export default function NotFound() {
   return (
-    <section className="py-32">
-      <Container className="text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.28em] text-sand">404</p>
-        <h1 className="mt-5 font-display text-4xl text-balance sm:text-5xl">
-          That page is out of frame.
-        </h1>
-        <p className="mx-auto mt-4 max-w-md text-bone-dim">
-          The link is broken or the page has moved. The work is still where you left it.
-        </p>
-        <Link
-          href="/"
-          className="mt-9 inline-block rounded-full bg-sand px-7 py-3 text-sm font-medium text-ink transition-colors hover:bg-bone"
-        >
-          Back home
-        </Link>
-      </Container>
+    <section
+      style={{
+        padding: "var(--section-space) var(--page-gutter)",
+        maxWidth: "var(--content-width-narrow)",
+        margin: "0 auto",
+        textAlign: "center",
+      }}
+    >
+      <Eyebrow>404</Eyebrow>
+      <SectionHeading as="h1" style={{ margin: "16px 0" }}>
+        That page is out of frame.
+      </SectionHeading>
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          color: "var(--color-text-secondary)",
+          lineHeight: "var(--leading-body)",
+          margin: "0 0 32px",
+        }}
+      >
+        The link is broken or the page has moved.
+      </p>
+      <ButtonLink href="/" variant="primary">
+        Back Home
+      </ButtonLink>
     </section>
   );
 }
