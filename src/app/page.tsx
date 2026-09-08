@@ -35,9 +35,9 @@ export default function HomePage() {
         }}
       >
         <Media
-          src={null}
+          src="/design/hero-camera.jpg"
           alt=""
-          label="Hero image — /public/design/hero-camera.png"
+          label="Hero image — /public/design/hero-camera.jpg"
           style={{ position: "absolute", inset: 0 }}
           sizes="100vw"
           priority
@@ -104,7 +104,7 @@ export default function HomePage() {
                 label={service.name}
                 icon={<Icon width={20} height={20} />}
                 href={`#${service.anchorId}`}
-                placeholderLabel={`/public/design/service-${service.slug}.png`}
+                placeholderLabel={`/public/design/service-${service.slug}.jpg`}
               />
             );
           })}
@@ -122,9 +122,9 @@ export default function HomePage() {
         }}
       >
         <Media
-          src={null}
+          src="/design/about-landscape.jpg"
           alt="Landscape near Canberra, ACT"
-          label="/public/design/about-landscape.png"
+          label="/public/design/about-landscape.jpg"
           style={{ aspectRatio: "4/3", borderRadius: "var(--radius-card)" }}
         />
         <div>
@@ -205,7 +205,7 @@ export default function HomePage() {
               <Media
                 src={service.image}
                 alt=""
-                label={`/public/design/service-${service.slug}.png`}
+                label={`/public/design/service-${service.slug}.jpg`}
                 style={{ height: "160px", borderRadius: "var(--radius-card)" }}
                 sizes="(min-width: 900px) 220px, 100vw"
               />
@@ -256,9 +256,9 @@ export default function HomePage() {
         }}
       >
         <Media
-          src={null}
+          src="/design/about-landscape.jpg"
           alt="Landscape near Canberra, ACT"
-          label="/public/design/about-landscape.png"
+          label="/public/design/about-landscape.jpg"
           style={{ aspectRatio: "4/3", borderRadius: "var(--radius-card)" }}
         />
         <div>

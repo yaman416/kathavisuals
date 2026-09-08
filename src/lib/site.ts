@@ -56,7 +56,7 @@ export const services: Service[] = [
     anchorId: "svc-weddings",
     name: "Weddings",
     icon: "camera",
-    image: null,
+    image: "/design/service-weddings.jpg",
     copy: "Photography and video documenting the people, emotions and moments of your wedding day, from getting ready through to the reception.",
     audience:
       "Couples who want their wedding day told as one honest story, not a checklist of poses.",
@@ -82,7 +82,7 @@ export const services: Service[] = [
     anchorId: "svc-events",
     name: "Events",
     icon: "users",
-    image: null,
+    image: "/design/service-events.jpg",
     copy: "Photography and video for private celebrations, business events and community gatherings, capturing the atmosphere as it happens.",
     audience:
       "Businesses and hosts who want a clean, usable record of their event for marketing or memory.",
@@ -102,7 +102,7 @@ export const services: Service[] = [
     anchorId: "svc-real-estate",
     name: "Real Estate",
     icon: "home",
-    image: null,
+    image: "/design/service-real-estate.jpg",
     copy: "Property photography and video built for property marketing, showing spaces at their best.",
     audience:
       "Agents and owners who want listings that stand out and photograph well online.",
@@ -116,7 +116,7 @@ export const services: Service[] = [
     anchorId: "svc-social",
     name: "Social Media Content",
     icon: "video",
-    image: null,
+    image: "/design/service-social.jpg",
     copy: "Photography, short-form video and reels for businesses, products and personal brands.",
     audience: "Brands and creators who need a steady supply of platform-ready content.",
     faqs: [
@@ -170,10 +170,10 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-  { title: "Weddings", category: "Weddings", image: null },
-  { title: "Events", category: "Events", image: null },
-  { title: "Real Estate", category: "Real Estate", image: null },
-  { title: "Social Media Content", category: "Social Media Content", image: null },
+  { title: "Weddings", category: "Weddings", image: "/design/portfolio-weddings.jpg" },
+  { title: "Events", category: "Events", image: "/design/portfolio-events.jpg" },
+  { title: "Real Estate", category: "Real Estate", image: "/design/portfolio-real-estate.jpg" },
+  { title: "Social Media Content", category: "Social Media Content", image: "/design/portfolio-social.jpg" },
 ];
 
 /** Shown above the portfolio grid while the grid holds sample entries. */

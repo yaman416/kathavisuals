@@ -37,19 +37,30 @@ npm run lint    # eslint
 Design tokens live only in `globals.css`. Components reference them as CSS variables
 (`var(--color-accent)`), never as hard-coded values.
 
-## Adding real photography
+## Imagery
 
-Every image slot renders a placeholder frame. In development the frame shows the file
-path it expects; in production it renders as a plain dark panel.
+**Every photo on the site is an AI-generated placeholder**, generated with Higgsfield
+(Nano Banana Pro) and stored in `public/design/`. They exist so the layout reads
+correctly until real work replaces them. `logo-white.png` is the one real supplied
+asset.
 
-1. Put the file in `public/design/` (e.g. `public/design/service-weddings.png`).
-2. Set `image: "/design/service-weddings.png"` on that entry in `src/lib/site.ts`.
+The portfolio grid keeps a visible line — *"Sample projects shown while we build out
+our portfolio with real client work"* — controlled by `showSampleNote` in
+`src/lib/site.ts`. Leave it on until the grid holds real client work.
 
-For the hero and the about photo, set the `src` prop on the `<Media>` call in
-`src/app/page.tsx`.
+| Slot | File | Crop |
+| --- | --- | --- |
+| Hero background | `hero-camera.jpg` | 21:9, dark left third for the headline |
+| About (used twice) | `about-landscape.jpg` | 4:3 |
+| Service cards + detail rows | `service-{weddings,events,real-estate,social}.jpg` | 4:5 |
+| Portfolio grid | `portfolio-{weddings,events,real-estate,social}.jpg` | 4:3 |
 
-The design project's own imagery was AI-generated staging content and was not imported.
-`public/design/logo-white.png` is the real supplied logo and is in use.
+To swap in a real photo: drop the file in `public/design/` and point the matching
+`image:` field in `src/lib/site.ts` at it. The hero and about images are set on the
+`<Media>` calls in `src/app/page.tsx`.
+
+Source files were resized and converted to JPEG (quality 76) — hero 2400px wide,
+portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per viewport.
 
 ## Contact form
 
@@ -76,7 +87,7 @@ domain; the apex 308-redirects to it.
 ## Before promoting the site
 
 - [ ] Replace the four `[PLACEHOLDER]` FAQ answers in `src/lib/site.ts`
-- [ ] Add real photography (7 slots)
+- [ ] Replace the 10 AI-generated placeholder images with real work
 - [ ] Point the footer's Instagram / Facebook / YouTube links at real profiles
 - [ ] Write the privacy policy the contact form's checkbox refers to
 - [ ] Add a favicon and an OG share image
