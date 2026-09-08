@@ -26,13 +26,20 @@ export const site = {
   youtube: "#",
 } as const;
 
-export const navLinks = [
+/**
+ * The portfolio grid currently repeats the four service names with staging
+ * imagery, so it is hidden until there is real client work to show. Flip this
+ * to true and the section and its nav link both come back.
+ */
+export const showPortfolio = false;
+
+export const navLinks: { label: string; href: string }[] = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
+  ...(showPortfolio ? [{ label: "Portfolio", href: "#portfolio" }] : []),
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
-] as const;
+];
 
 export type IconName = "camera" | "users" | "home" | "video";
 

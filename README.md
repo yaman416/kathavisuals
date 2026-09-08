@@ -30,7 +30,7 @@ npm run lint    # eslint
 | `src/app/globals.css` | Design tokens ported verbatim from the design system, plus hover/focus/responsive rules |
 | `src/components/ds/` | Design system components: primitives, fields, cards, Accordion, Icons, Media |
 | `src/components/Site*.tsx` | Header (with mobile menu) and footer |
-| `src/components/PortfolioSection.tsx` | Portfolio grid with service filters |
+| `src/components/PortfolioSection.tsx` | Portfolio grid with service filters (hidden — see `showPortfolio`) |
 | `src/components/ContactSection.tsx` | Enquiry form |
 | `src/app/actions.ts` | Server action that validates and sends enquiries |
 
@@ -61,6 +61,19 @@ To swap in a real photo: drop the file in `public/design/` and point the matchin
 
 Source files were resized and converted to JPEG (quality 76) — hero 2400px wide,
 portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per viewport.
+
+## Page length
+
+The design stitched a five-page UI kit into one scroll, which duplicated each
+page's intro block. The duplicate About section and the portfolio grid (which
+just repeated the four service names) were removed, along with the gold badge
+that restated each service heading and the four per-row "Enquire Now" buttons —
+the sticky header carries a permanent CTA.
+
+Desktop went from 7,747px to 5,628px, mobile from 12,099px to 9,293px.
+
+`showPortfolio` in `src/lib/site.ts` brings the portfolio section and its nav
+link back in one flip, once there is real client work to put in it.
 
 ## Contact form
 

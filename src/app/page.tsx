@@ -2,16 +2,10 @@ import { Accordion } from "@/components/ds/Accordion";
 import { ProcessStep, ServiceCard } from "@/components/ds/cards";
 import { icons } from "@/components/ds/Icons";
 import { Media } from "@/components/ds/Media";
-import {
-  Badge,
-  ButtonLink,
-  Divider,
-  Eyebrow,
-  SectionHeading,
-} from "@/components/ds/primitives";
+import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
 import { PortfolioSection } from "@/components/PortfolioSection";
-import { processSteps, services, site } from "@/lib/site";
+import { processSteps, services, showPortfolio, site } from "@/lib/site";
 
 const bodyText = {
   fontFamily: "var(--font-body)",
@@ -64,7 +58,7 @@ export default function HomePage() {
             <ButtonLink href="#contact" variant="primary">
               Enquire Now
             </ButtonLink>
-            <ButtonLink href="#portfolio" variant="outline">
+            <ButtonLink href={showPortfolio ? "#portfolio" : "#services"} variant="outline">
               View Our Work
             </ButtonLink>
           </div>
@@ -108,37 +102,6 @@ export default function HomePage() {
               />
             );
           })}
-        </div>
-      </section>
-
-      {/* About preview --------------------------------------------------- */}
-      <section
-        id="about-preview"
-        className="kv-split"
-        style={{
-          padding: "0 var(--page-gutter) var(--section-space)",
-          maxWidth: "var(--content-width)",
-          margin: "0 auto",
-        }}
-      >
-        <Media
-          src="/design/about-landscape.jpg"
-          alt="Landscape near Canberra, ACT"
-          label="/public/design/about-landscape.jpg"
-          style={{ aspectRatio: "4/3", borderRadius: "var(--radius-card)" }}
-        />
-        <div>
-          <Eyebrow>About Katha Visuals</Eyebrow>
-          <SectionHeading style={{ margin: "12px 0 20px" }}>
-            We Approach Every Story With Care.
-          </SectionHeading>
-          <p style={{ ...bodyText, marginBottom: "24px" }}>
-            We listen first and shoot second. Every wedding, event, property and brand we work with
-            gets a plan built around the people and spaces involved, not a fixed template.
-          </p>
-          <ButtonLink href="#about" variant="outline">
-            About Katha Visuals
-          </ButtonLink>
         </div>
       </section>
 
@@ -210,14 +173,13 @@ export default function HomePage() {
                 sizes="(min-width: 900px) 220px, 100vw"
               />
               <div>
-                <Badge tone="gold">{service.name}</Badge>
                 <h3
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 400,
                     color: "var(--color-text-strong)",
                     fontSize: "var(--text-h3)",
-                    margin: "12px 0 8px",
+                    margin: "0 0 8px",
                   }}
                 >
                   {service.name}
@@ -230,19 +192,14 @@ export default function HomePage() {
                   {service.audience}
                 </p>
                 <Accordion items={service.faqs} />
-                <div style={{ marginTop: "20px" }}>
-                  <ButtonLink href="#contact" variant="primary">
-                    Enquire Now
-                  </ButtonLink>
-                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Portfolio ------------------------------------------------------- */}
-      <PortfolioSection />
+      {/* Portfolio — hidden until there is real client work to show ------ */}
+      {showPortfolio ? <PortfolioSection /> : null}
 
       {/* About ----------------------------------------------------------- */}
       <section
