@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ds/primitives";
 import { MenuIcon, XIcon } from "@/components/ds/Icons";
-import { LogoLockup, LogoMark } from "@/components/Logo";
 import { navLinks, site } from "@/lib/site";
 
 const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
@@ -75,7 +75,14 @@ export function SiteHeader() {
         style={{ display: "flex", alignItems: "center", textDecoration: "none" }}
         aria-label={site.name}
       >
-        <LogoLockup markSize={34} />
+        <Image
+          src="/design/logo-original.png"
+          alt={site.name}
+          width={1562}
+          height={1074}
+          priority
+          style={{ height: "44px", width: "auto" }}
+        />
       </a>
 
       <nav aria-label="Primary" className="kv-nav-desktop" style={{ display: "flex", gap: "32px" }}>
@@ -156,9 +163,13 @@ export function SiteHeader() {
             <XIcon width={24} height={24} />
           </button>
 
-          <span style={{ marginBottom: "16px" }}>
-            <LogoMark size={64} />
-          </span>
+          <Image
+            src="/design/logo-original.png"
+            alt=""
+            width={1562}
+            height={1074}
+            style={{ height: "56px", width: "auto", marginBottom: "16px" }}
+          />
 
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} onClick={close} className="kv-menu-link">

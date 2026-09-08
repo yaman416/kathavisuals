@@ -6,7 +6,7 @@ import {
   PhoneIcon,
   YoutubeIcon,
 } from "@/components/ds/Icons";
-import { LogoLockup } from "@/components/Logo";
+import Image from "next/image";
 import { navLinks, site } from "@/lib/site";
 
 const columnHeading = {
@@ -33,7 +33,13 @@ export function SiteFooter() {
         style={{ maxWidth: "var(--content-width)", margin: "0 auto" }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <LogoLockup markSize={40} wordSize="1.0625rem" />
+          <Image
+            src="/design/logo-original.png"
+            alt={site.name}
+            width={1562}
+            height={1074}
+            style={{ height: "56px", width: "auto" }}
+          />
           <p
             style={{
               fontFamily: "var(--font-body)",
