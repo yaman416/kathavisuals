@@ -62,6 +62,29 @@ To swap in a real photo: drop the file in `public/design/` and point the matchin
 Source files were resized and converted to JPEG (quality 76) — hero 2400px wide,
 portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per viewport.
 
+## Logo
+
+`src/components/Logo.tsx` holds the mark and lockup as stroked SVG geometry —
+no image files, crisp at every size, and it takes its colour from the theme.
+
+The mark is a six-blade aperture: six chords of a circle, each spanning 120°, at
+60° intervals, drawn to two thirds of their length. Six lines tangent to a
+circle of radius R/2 necessarily meet as a regular hexagon, so the opening is
+exact rather than eyeballed. Drawing them full length produces a hexagram
+instead — that is the one thing to be careful of if you edit the geometry. Four
+gold L-brackets frame it. One blade carries the accent colour.
+
+| Variant | Where | Notes |
+| --- | --- | --- |
+| `LogoLockup` | Header, footer | Mark plus the wordmark set in the display face as real text — selectable, and never needs re-exporting when the font changes |
+| `LogoMark` | Mobile menu | `frame={false}` below ~24px |
+| `src/app/icon.svg` | Favicon | No brackets, heavier stroke, on a rounded dark tile |
+| `public/design/logo-mark.svg` | Print, watermarks | Standalone, fixed colours |
+
+`public/design/logo-white.png` is the original supplied badge. It is no longer
+used on the site — its detail disappeared at header size — but it is kept for
+print and photo watermarks, where it works well.
+
 ## Fonts
 
 | Role | Face | How it is served |

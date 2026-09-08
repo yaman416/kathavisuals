@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -7,6 +6,7 @@ import {
   PhoneIcon,
   YoutubeIcon,
 } from "@/components/ds/Icons";
+import { LogoLockup } from "@/components/Logo";
 import { navLinks, site } from "@/lib/site";
 
 const columnHeading = {
@@ -33,13 +33,7 @@ export function SiteFooter() {
         style={{ maxWidth: "var(--content-width)", margin: "0 auto" }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <Image
-            src="/design/logo-white.png"
-            alt={site.name}
-            width={64}
-            height={64}
-            style={{ height: "64px", width: "64px", objectFit: "contain" }}
-          />
+          <LogoLockup markSize={40} wordSize="1.0625rem" />
           <p
             style={{
               fontFamily: "var(--font-body)",
