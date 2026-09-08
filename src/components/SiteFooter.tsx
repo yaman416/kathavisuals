@@ -131,7 +131,10 @@ export function SiteFooter() {
             margin: 0,
           }}
         >
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © {new Date().getFullYear()} {site.name}. All rights reserved.{" "}
+          <a href="/privacy" style={{ color: "var(--color-text-secondary)" }}>
+            Privacy policy
+          </a>
         </p>
       </div>
     </footer>

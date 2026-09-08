@@ -135,7 +135,7 @@ export function Checkbox({
   id,
   label,
   ...rest
-}: { id: string; label: string } & ComponentPropsWithoutRef<"input">) {
+}: { id: string; label: ReactNode } & ComponentPropsWithoutRef<"input">) {
   return (
     <label
       htmlFor={id}

@@ -113,7 +113,18 @@ export function ContactSection() {
             error={state.fieldErrors?.details}
           />
 
-          <Checkbox id="privacy" name="privacy" label="I agree to the privacy policy" />
+          <Checkbox
+            id="privacy"
+            name="privacy"
+            label={
+              <>
+                I agree to the{" "}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer">
+                  privacy policy
+                </a>
+              </>
+            }
+          />
           {state.fieldErrors?.privacy ? (
             <p
               role="alert"

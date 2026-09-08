@@ -163,7 +163,7 @@ export const processSteps = [
   {
     icon: "video" as IconName,
     title: "Photography & Video",
-    description: "Stills and motion captured together, shaped as one story.",
+    description: "Stills and motion shot by the same eye, whether you book one or both.",
   },
   {
     icon: "heart" as const,

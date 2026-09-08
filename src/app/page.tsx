@@ -229,9 +229,10 @@ export default function HomePage() {
             events, real estate and social media content.
           </p>
           <p style={{ ...bodyText, marginBottom: "24px" }}>
-            We treat photography and video as one craft, not two separate bookings. Every project
-            gets clear communication, thoughtful preparation on the day and a consistent,
-            considered look across the final gallery.
+            Book photography, video, or both. Whichever you choose, it is shot by the same team
+            with the same eye, so a project never looks like two suppliers stitched together.
+            Every one gets clear communication, thoughtful preparation on the day and a
+            consistent, considered look across the final delivery.
           </p>
           <ButtonLink href="#contact" variant="primary">
             Enquire Now
