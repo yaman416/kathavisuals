@@ -2,7 +2,7 @@ export const site = {
   name: "Katha Visuals",
   tagline: "Every frame is a story",
   domain: "kathavisuals.com.au",
-  url: "https://kathavisuals.com.au",
+  url: "https://www.kathavisuals.com.au",
   email: "hello@kathavisuals.com.au",
   phone: "+61 400 000 000",
   location: "Canberra, ACT — available Australia-wide",
