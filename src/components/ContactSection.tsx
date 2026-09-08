@@ -2,7 +2,8 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { initialEnquiryState, submitEnquiry } from "@/app/actions";
+import { submitEnquiry } from "@/app/actions";
+import { initialEnquiryState } from "@/lib/enquiry";
 import { Checkbox, Input, Select, Textarea } from "@/components/ds/fields";
 import { Button, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { coverageOptions, serviceOptions } from "@/lib/site";

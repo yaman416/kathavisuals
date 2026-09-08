@@ -1,14 +1,7 @@
 "use server";
 
+import type { EnquiryState } from "@/lib/enquiry";
 import { site } from "@/lib/site";
-
-export type EnquiryState = {
-  status: "idle" | "success" | "error";
-  message: string;
-  fieldErrors?: Partial<Record<"name" | "email" | "details" | "privacy", string>>;
-};
-
-export const initialEnquiryState: EnquiryState = { status: "idle", message: "" };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
