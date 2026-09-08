@@ -1,13 +1,57 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ButtonLink } from "@/components/ds/primitives";
 import { MenuIcon, XIcon } from "@/components/ds/Icons";
 import { navLinks, site } from "@/lib/site";
 
+const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("home");
+
+  const close = useCallback(() => setOpen(false), []);
+
+  // Escape closes the menu, and the page behind it must not scroll while it is
+  // covering the screen.
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, close]);
+
+  // Mark the section currently under the header so the nav says where you are.
+  useEffect(() => {
+    const targets = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (targets.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
+    );
+
+    targets.forEach((t) => observer.observe(t));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header
@@ -21,7 +65,7 @@ export function SiteHeader() {
         alignItems: "center",
         justifyContent: "space-between",
         gap: "24px",
-        padding: "16px var(--page-gutter)",
+        padding: "12px var(--page-gutter)",
         background: "var(--color-bg)",
         borderBottom: "1px solid var(--color-border)",
       }}
@@ -33,13 +77,19 @@ export function SiteHeader() {
           width={84}
           height={84}
           priority
-          style={{ height: "64px", width: "64px", objectFit: "contain" }}
+          style={{ height: "56px", width: "56px", objectFit: "contain" }}
         />
       </a>
 
-      <nav aria-label="Primary" className="kv-nav-desktop" style={{ display: "flex", gap: "36px" }}>
+      <nav aria-label="Primary" className="kv-nav-desktop" style={{ display: "flex", gap: "32px" }}>
         {navLinks.map((link) => (
-          <a key={link.href} href={link.href} className="kv-nav-link">
+          <a
+            key={link.href}
+            href={link.href}
+            className="kv-nav-link"
+            data-active={active === link.href.replace("#", "")}
+            aria-current={active === link.href.replace("#", "") ? "true" : undefined}
+          >
             {link.label}
           </a>
         ))}
@@ -86,21 +136,24 @@ export function SiteHeader() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "28px",
+            gap: "8px",
+            padding: "24px",
           }}
         >
           <button
             type="button"
             aria-label="Close menu"
-            onClick={() => setOpen(false)}
+            onClick={close}
+            className="kv-nav-toggle"
             style={{
               position: "absolute",
-              top: "24px",
-              right: "24px",
+              top: "12px",
+              right: "calc(var(--page-gutter) - 10px)",
               background: "none",
               border: "none",
               color: "var(--color-text-primary)",
               cursor: "pointer",
+              display: "flex",
             }}
           >
             <XIcon width={24} height={24} />
@@ -108,31 +161,34 @@ export function SiteHeader() {
 
           <Image
             src="/design/logo-white.png"
-            alt={site.name}
+            alt=""
             width={72}
             height={72}
-            style={{ height: "72px", width: "72px", objectFit: "contain" }}
+            style={{ height: "64px", width: "64px", objectFit: "contain", marginBottom: "16px" }}
           />
 
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.75rem",
-                color: "var(--color-text-primary)",
-                textDecoration: "none",
-              }}
-            >
+            <a key={link.href} href={link.href} onClick={close} className="kv-menu-link">
               {link.label}
             </a>
           ))}
 
-          <ButtonLink href="#contact" variant="primary" onClick={() => setOpen(false)}>
+          <ButtonLink
+            href="#contact"
+            variant="primary"
+            onClick={close}
+            style={{ marginTop: "20px" }}
+          >
             Enquire Now
           </ButtonLink>
+
+          <a
+            href={`tel:${site.phoneHref}`}
+            className="kv-footer-link"
+            style={{ marginTop: "8px", color: "var(--color-text-secondary)" }}
+          >
+            {site.phone}
+          </a>
         </div>
       ) : null}
     </header>

@@ -141,8 +141,9 @@ export function Checkbox({
       htmlFor={id}
       style={{
         display: "flex",
-        alignItems: "flex-start",
+        alignItems: "center",
         gap: "10px",
+        minHeight: "var(--touch-target)",
         fontFamily: "var(--font-body)",
         fontSize: "var(--text-sm)",
         color: "var(--color-text-secondary)",
@@ -153,9 +154,9 @@ export function Checkbox({
         id={id}
         type="checkbox"
         style={{
-          width: "18px",
-          height: "18px",
-          marginTop: "2px",
+          width: "20px",
+          height: "20px",
+          flexShrink: 0,
           accentColor: "var(--color-accent)",
         }}
         {...rest}

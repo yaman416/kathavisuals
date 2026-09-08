@@ -19,27 +19,6 @@ const columnHeading = {
   margin: "0 0 8px",
 } as const;
 
-const contactLink = {
-  fontFamily: "var(--font-body)",
-  fontSize: "var(--text-sm)",
-  color: "var(--color-text-primary)",
-  textDecoration: "none",
-  display: "flex",
-  gap: "8px",
-  alignItems: "center",
-} as const;
-
-const socialLink = {
-  width: "36px",
-  height: "36px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "1px solid var(--color-border)",
-  borderRadius: "50%",
-  color: "var(--color-text-primary)",
-} as const;
-
 export function SiteFooter() {
   return (
     <footer
@@ -74,19 +53,10 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <p style={columnHeading}>Quick Links</p>
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "var(--text-sm)",
-                color: "var(--color-text-primary)",
-                textDecoration: "none",
-              }}
-            >
+            <a key={link.href} href={link.href} className="kv-footer-link">
               {link.label}
             </a>
           ))}
@@ -94,26 +64,26 @@ export function SiteFooter() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <p style={columnHeading}>Follow Us</p>
-          <div style={{ display: "flex", gap: "12px" }}>
-            <a href={site.instagram} aria-label="Instagram" style={socialLink}>
-              <InstagramIcon width={16} height={16} />
+          <div style={{ display: "flex", gap: "10px" }}>
+            <a href={site.instagram} aria-label="Instagram" className="kv-social-link">
+              <InstagramIcon width={18} height={18} />
             </a>
-            <a href={site.facebook} aria-label="Facebook" style={socialLink}>
-              <FacebookIcon width={16} height={16} />
+            <a href={site.facebook} aria-label="Facebook" className="kv-social-link">
+              <FacebookIcon width={18} height={18} />
             </a>
-            <a href={site.youtube} aria-label="Youtube" style={socialLink}>
-              <YoutubeIcon width={16} height={16} />
+            <a href={site.youtube} aria-label="Youtube" className="kv-social-link">
+              <YoutubeIcon width={18} height={18} />
             </a>
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <p style={columnHeading}>Get In Touch</p>
-          <a href={`tel:${site.phoneHref}`} style={contactLink}>
+          <a href={`tel:${site.phoneHref}`} className="kv-footer-link" style={{ gap: "8px" }}>
             <PhoneIcon width={16} height={16} />
             {site.phone}
           </a>
-          <a href={`mailto:${site.email}`} style={contactLink}>
+          <a href={`mailto:${site.email}`} className="kv-footer-link" style={{ gap: "8px" }}>
             <MailIcon width={16} height={16} />
             {site.email}
           </a>
@@ -125,6 +95,7 @@ export function SiteFooter() {
               display: "flex",
               gap: "8px",
               alignItems: "center",
+              minHeight: "var(--touch-target)",
             }}
           >
             <MapPinIcon width={16} height={16} />

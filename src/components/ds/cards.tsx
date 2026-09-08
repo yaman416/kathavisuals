@@ -149,12 +149,12 @@ export function ProcessStep({
 }) {
   return (
     <div
+      className="kv-process-step"
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "12px",
         padding: "24px",
-        borderRight: "1px solid var(--color-border)",
       }}
     >
       <span aria-hidden="true" style={{ color: "var(--color-accent)" }}>

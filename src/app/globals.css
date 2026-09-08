@@ -259,7 +259,108 @@ textarea.kv-field {
     display: none !important;
   }
   .kv-nav-toggle {
-    display: block !important;
+    display: flex !important;
+  }
+}
+
+/* The menu button is the only navigation on a phone, so it gets a full
+   44px target rather than the icon's own 24px. */
+.kv-nav-toggle {
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  margin-right: -10px;
+}
+
+/* Footer links sit at 20px tall from their text alone; pad them to a
+   comfortable target without changing how the column looks. */
+.kv-footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+.kv-footer-link:hover {
+  color: var(--color-accent);
+}
+
+.kv-social-link {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  transition:
+    color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+.kv-social-link:hover {
+  color: var(--color-accent);
+  border-color: var(--color-border-accent);
+}
+
+/* Desktop nav sits at 22px tall from the text alone — give it real height. */
+.kv-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}
+
+/* Mobile menu entries get thumb-sized rows. */
+.kv-menu-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-target);
+  padding: 0 16px;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
+}
+.kv-menu-link:hover,
+.kv-menu-link:focus-visible {
+  color: var(--color-accent);
+}
+
+/* Active section, set by the header's scroll spy. */
+.kv-nav-link[data-active="true"] {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* 11px uppercase is legible on a desktop monitor and marginal on a phone.
+   Desktop keeps the design system value; small screens get a 12px floor. */
+@media (max-width: 900px) {
+  :root {
+    --text-xs: 0.75rem;
+  }
+}
+
+/* The process strip divides with vertical rules across four columns. Once it
+   stacks, those rules point nowhere — divide horizontally instead. */
+.kv-process-step {
+  border-right: 1px solid var(--color-border);
+}
+.kv-process-step:last-child {
+  border-right: 0;
+}
+@media (max-width: 900px) {
+  .kv-process-step {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .kv-process-step:last-child {
+    border-bottom: 0;
   }
 }
 
@@ -346,5 +447,50 @@ textarea.kv-field {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ---------------------------------------------------------------------------
+   Scroll-driven motion. CSS-only via view() timelines, so there is no observer
+   to fail and no state where content sits invisible waiting for JavaScript.
+   Browsers without support simply render the page static.
+--------------------------------------------------------------------------- */
+
+@keyframes kv-rise {
+  from {
+    opacity: 0.4;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kv-hero-drift {
+  from {
+    transform: scale(1.06) translateY(0);
+  }
+  to {
+    transform: scale(1.06) translateY(4%);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kv-reveal {
+      animation: kv-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+
+    /* The hero image drifts slightly slower than the page, which reads as depth
+       without the jitter of scroll-linked JavaScript. */
+    .kv-hero-media {
+      animation: kv-hero-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
   }
 }

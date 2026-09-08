@@ -81,6 +81,25 @@ never download it.
 Both faces are referenced only through `--font-display` and `--font-body` in
 `globals.css`, so changing either is a one-line edit.
 
+## Interaction and motion
+
+- **Hero video** — `public/design/hero.mp4` plays behind the headline. The still
+  image renders underneath it always, so the hero is complete before any script
+  runs. `HeroVideo` skips the download entirely on reduced-motion, Data Saver,
+  and connections the browser reports as 2g/3g, and removes itself if the file
+  fails.
+- **Scroll motion** — CSS `animation-timeline: view()` only. Service rows and the
+  About block rise into place; the hero drifts slightly slower than the page.
+  There is no observer to fail and no state where content sits invisible waiting
+  for JavaScript. Unsupported browsers render the page static. All of it is
+  inside `prefers-reduced-motion: no-preference`.
+- **Scroll spy** — the header marks the section you are in.
+- **Mobile menu** — locks page scroll while open, closes on Escape, and carries
+  the phone number.
+
+Touch targets are 44px throughout (`--touch-target`), and `--text-xs` has a 12px
+floor below 900px — 11px uppercase is fine on a monitor and marginal on a phone.
+
 ## Page length
 
 The design stitched a five-page UI kit into one scroll, which duplicated each

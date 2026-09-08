@@ -4,6 +4,7 @@ import { icons } from "@/components/ds/Icons";
 import { Media } from "@/components/ds/Media";
 import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
+import { HeroVideo } from "@/components/HeroVideo";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { processSteps, services, showPortfolio, site } from "@/lib/site";
 
@@ -32,10 +33,12 @@ export default function HomePage() {
           src="/design/hero-camera.jpg"
           alt=""
           label="Hero image — /public/design/hero-camera.jpg"
+          className="kv-hero-media"
           style={{ position: "absolute", inset: 0 }}
           sizes="100vw"
           priority
         />
+        <HeroVideo src="/design/hero.mp4" poster="/design/hero-camera.jpg" />
         <div
           style={{
             position: "absolute",
@@ -157,7 +160,7 @@ export default function HomePage() {
             <div
               key={service.slug}
               id={service.anchorId}
-              className="kv-service-row"
+              className="kv-service-row kv-reveal"
               style={{
                 background: "var(--color-bg-secondary)",
                 borderBottom: "1px solid var(--color-border)",
@@ -204,7 +207,7 @@ export default function HomePage() {
       {/* About ----------------------------------------------------------- */}
       <section
         id="about"
-        className="kv-split"
+        className="kv-split kv-reveal"
         style={{
           maxWidth: "var(--content-width)",
           margin: "0 auto",
