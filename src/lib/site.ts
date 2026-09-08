@@ -21,9 +21,10 @@ export const site = {
   location: "Canberra, ACT",
   description:
     "Katha Visuals is a Canberra photography and video studio working across weddings, events, real estate and social media content.",
-  instagram: "#",
-  facebook: "#",
-  youtube: "#",
+  instagram: "https://www.instagram.com/_katha_visuals_",
+  facebook: "https://www.facebook.com/profile.php?id=100076007284082",
+  /** No channel yet — the footer hides any social link left null. */
+  youtube: null,
 } as const;
 
 /**

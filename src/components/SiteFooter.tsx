@@ -9,6 +9,14 @@ import {
 import Image from "next/image";
 import { navLinks, site } from "@/lib/site";
 
+/** Only the profiles that exist — a dead social link costs trust. */
+type Social = { label: string; href: string; Icon: typeof InstagramIcon };
+
+const socials: Social[] = [];
+if (site.instagram) socials.push({ label: "Instagram", href: site.instagram, Icon: InstagramIcon });
+if (site.facebook) socials.push({ label: "Facebook", href: site.facebook, Icon: FacebookIcon });
+if (site.youtube) socials.push({ label: "YouTube", href: site.youtube, Icon: YoutubeIcon });
+
 const columnHeading = {
   fontFamily: "var(--font-body)",
   fontSize: "var(--text-xs)",
@@ -65,15 +73,18 @@ export function SiteFooter() {
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <p style={columnHeading}>Follow Us</p>
           <div style={{ display: "flex", gap: "10px" }}>
-            <a href={site.instagram} aria-label="Instagram" className="kv-social-link">
-              <InstagramIcon width={18} height={18} />
-            </a>
-            <a href={site.facebook} aria-label="Facebook" className="kv-social-link">
-              <FacebookIcon width={18} height={18} />
-            </a>
-            <a href={site.youtube} aria-label="Youtube" className="kv-social-link">
-              <YoutubeIcon width={18} height={18} />
-            </a>
+            {socials.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="kv-social-link"
+                target="_blank"
+                rel="noopener noreferrer me"
+              >
+                <Icon width={18} height={18} />
+              </a>
+            ))}
           </div>
         </div>
 
