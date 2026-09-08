@@ -62,6 +62,22 @@ To swap in a real photo: drop the file in `public/design/` and point the matchin
 Source files were resized and converted to JPEG (quality 76) — hero 2400px wide,
 portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per viewport.
 
+## Fonts
+
+| Role | Face | Source |
+| --- | --- | --- |
+| Body, UI, nav (`--font-body`) | **Switzer** | Indian Type Foundry via Fontshare, free for commercial use. Self-hosted from `src/fonts/*.woff2` through `next/font/local` — no third-party request |
+| Headings (`--font-display`) | DM Serif Display | Google Fonts — a stand-in |
+
+**Tempting is not installed.** It is a script face by RGB Studio whose free
+download is licensed for personal use only, and this is a commercial site. To use
+it, buy the licence (MyFonts or Creative Fabrica), drop the `.woff2`/`.otf` in
+`src/fonts/`, and swap the `dmSerif` declaration in `src/app/layout.tsx` for a
+`localFont` call the same shape as the Switzer one.
+
+Both faces are referenced only through `--font-display` and `--font-body` in
+`globals.css`, so changing either is a one-line edit.
+
 ## Page length
 
 The design stitched a five-page UI kit into one scroll, which duplicated each

@@ -45,7 +45,7 @@
 
   /* fonts.css — loaded through next/font, variables set on <html> */
   --font-display: var(--font-dm-serif), Georgia, serif;
-  --font-body: var(--font-montserrat), Arial, Helvetica, sans-serif;
+  --font-body: var(--font-switzer), "Helvetica Neue", Arial, sans-serif;
 
   /* typography.css */
   --text-xs: clamp(0.6875rem, 0.66rem + 0.1vw, 0.75rem);
