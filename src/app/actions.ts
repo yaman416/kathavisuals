@@ -5,6 +5,13 @@ import { site } from "@/lib/site";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * Resend's own sender. It needs no verified domain, and it delivers to the
+ * address that owns the Resend account. Used when ENQUIRY_FROM_EMAIL is unset,
+ * and as the fallback when the configured sender is rejected.
+ */
+const RESEND_TEST_SENDER = "Katha Visuals <onboarding@resend.dev>";
+
 export async function submitEnquiry(
   _prev: EnquiryState,
   formData: FormData,
@@ -35,11 +42,11 @@ export async function submitEnquiry(
     return { status: "error", message: "Please check the fields below.", fieldErrors };
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.ENQUIRY_TO_EMAIL ?? site.email;
-  const from = process.env.ENQUIRY_FROM_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const to = (process.env.ENQUIRY_TO_EMAIL ?? site.email).trim();
+  const configuredFrom = process.env.ENQUIRY_FROM_EMAIL?.trim();
 
-  if (!apiKey || !from) {
+  if (!apiKey) {
     return {
       status: "error",
       message: `Our enquiry form is not connected yet. Please email ${site.email} or call ${site.phone}.`,
@@ -59,21 +66,45 @@ export async function submitEnquiry(
     details,
   ].join("\n");
 
-  try {
+  const subject = `New enquiry: ${service || "General"}${coverage ? ` (${coverage})` : ""} from ${name}`;
+
+  const send = async (sender: string) => {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from,
+        from: sender,
         to: [to],
         reply_to: email,
-        subject: `New enquiry: ${service || "General"}${coverage ? ` (${coverage})` : ""} from ${name}`,
+        subject,
         text: body,
       }),
     });
+    // Read the body either way: Resend explains rejections here, and that text
+    // is the only thing that says which of several config mistakes it was.
+    return { ok: response.ok, status: response.status, detail: await response.text() };
+  };
 
-    if (!response.ok) {
-      console.error("Enquiry send failed", response.status, await response.text());
+  try {
+    let result = await send(configuredFrom || RESEND_TEST_SENDER);
+
+    /*
+     * Resend refuses a `from` address whose domain is not verified on the
+     * account, which is the usual reason a working key still sends nothing.
+     * Rather than lose the enquiry, fall back to Resend's own sender, which
+     * needs no domain and delivers to the account owner. The enquiry arrives;
+     * the log below says the domain still needs fixing.
+     */
+    if (!result.ok && configuredFrom && (result.status === 403 || result.status === 422)) {
+      console.error(
+        `Enquiry: Resend rejected from="${configuredFrom}" (${result.status}): ${result.detail}. ` +
+          `Retrying as ${RESEND_TEST_SENDER}. Verify the domain in Resend to send under your own address.`,
+      );
+      result = await send(RESEND_TEST_SENDER);
+    }
+
+    if (!result.ok) {
+      console.error(`Enquiry send failed (${result.status}): ${result.detail}`);
       return {
         status: "error",
         message: `Something went wrong sending that. Please email ${site.email}.`,
