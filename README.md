@@ -151,6 +151,13 @@ Both faces are referenced only through `--font-display` and `--font-body` in
   `HeroLayers` stacks them; `globals.css` owns the ranges. Fully reversible —
   scroll back up and it runs backwards to exactly where it started.
 
+  **Use `scroll(root)`, never bare `scroll()`.** Bare `scroll()` means
+  `scroll(nearest)`, and the nearest *scroll container* is any ancestor with
+  clipped overflow — the hero has `overflow: hidden`, so the timeline bound to
+  the hero itself, which never scrolls. The animations ran, on a timeline whose
+  progress was permanently zero, and nothing moved. Check with
+  `document.getAnimations()[0].timeline.source`: it must be `<html>`.
+
   The ranges must finish before the page covers the hero, or the later
   cross-fades happen out of sight. At a 900px viewport the hero is covered at
   829px of scroll and the last fade completes at 792px. If you change the hero

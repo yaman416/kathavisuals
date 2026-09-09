@@ -50,7 +50,7 @@ const DRIFTS: [number, number, number, number][] = [
  */
 export function ScrollMotion() {
   useEffect(() => {
-    if (typeof CSS !== "undefined" && CSS.supports("animation-timeline", "scroll()")) return;
+    if (typeof CSS !== "undefined" && CSS.supports("animation-timeline", "scroll(root)")) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const layers = [...document.querySelectorAll<HTMLElement>(".kv-hero-layer")];

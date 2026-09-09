@@ -540,9 +540,9 @@ textarea.kv-field {
 .kv-hero-layer:not([data-layer="0"]) { opacity: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: scroll()) {
+  @supports (animation-timeline: scroll(root)) {
     .kv-hero-layer {
-      animation-timeline: scroll();
+      animation-timeline: scroll(root);
       animation-fill-mode: both;
       animation-timing-function: linear;
       animation-duration: 1ms;
@@ -570,7 +570,7 @@ textarea.kv-field {
 
     .kv-hero-content {
       animation: kv-hero-lift 1ms linear both;
-      animation-timeline: scroll();
+      animation-timeline: scroll(root);
       animation-range: 0 78vh;
     }
   }
