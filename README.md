@@ -126,23 +126,27 @@ Both faces are referenced only through `--font-display` and `--font-body` in
 
 ## Interaction and motion
 
+- **Nothing animates on its own.** Every animation on the page is bound to a
+  `ScrollTimeline`, never a `DocumentTimeline` — the scrollbar is the clock. Stop
+  scrolling and everything stops. There is no video, no autoplay, no loop, and
+  no JavaScript on the scroll path. To check this at any time, run
+  `document.getAnimations()` in the console: every entry's `timeline` should be
+  a `ScrollTimeline`.
 - **Pinned hero** — the hero is `position: sticky` and the rest of the page
-  (`.kv-over-hero`) scrolls up over it on an opaque ground. The hero image also
-  settles from a slight scale as it is covered, so being pinned reads as depth.
-- **Hero video** — `public/design/hero.mp4`, 530KB, one continuous dolly.
-  Autoplays muted and loops. The still image underneath is always rendered, so
-  the hero is complete before any script runs. Skipped on reduced-motion, Data
-  Saver and 2g.
-- **Scroll motion** — CSS `animation-timeline` only, which runs on the
-  compositor rather than the main thread, so it cannot stutter. Blocks rise in,
-  headings wipe up from their baseline, images uncover from the left, and the
-  four service cards stagger 90ms apart via `--kv-delay`. There is no JavaScript
-  on the scroll path. Unsupported browsers render the page static, and every
-  rule sits inside `prefers-reduced-motion: no-preference`.
+  (`.kv-over-hero`) scrolls up over it on an opaque ground. As it is covered the
+  image pushes in and drifts (`kv-hero-settle`) and the headline lifts away
+  (`kv-hero-lift`), both on a `scroll()` timeline.
+- **Reveals** — blocks rise in, headings wipe up from their own baseline, images
+  uncover from the left, and the four service cards stagger 90ms apart via
+  `--kv-delay`. All on `view()` timelines.
 
-  A previous version scrubbed a 41-frame sequence from a scroll listener. It was
-  removed: 41 frames across 640px is one frame per 16px, so it stepped rather
-  than moved, and a JS scroll handler jitters by nature.
+  Because these run on the compositor rather than the main thread, they cannot
+  stutter. An earlier version scrubbed a 41-frame sequence from a scroll
+  listener and was removed: 41 frames across 640px is one frame per 16px, so it
+  stepped rather than moved, and a JS scroll handler jitters by nature.
+
+  Unsupported browsers render the page static, and every rule sits inside
+  `prefers-reduced-motion: no-preference`.
 - **Scroll spy** — the header marks the section you are in.
 - **Mobile menu** — locks page scroll while open, closes on Escape, and carries
   the phone number.

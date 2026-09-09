@@ -4,7 +4,6 @@ import { icons } from "@/components/ds/Icons";
 import { Media } from "@/components/ds/Media";
 import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
-import { HeroVideo } from "@/components/HeroVideo";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { processSteps, services, showPortfolio, site } from "@/lib/site";
 
@@ -39,7 +38,6 @@ export default function HomePage() {
           sizes="100vw"
           priority
         />
-        <HeroVideo src="/design/hero.mp4" poster="/design/hero-scroll-poster.jpg" />
         <div
           style={{
             position: "absolute",
@@ -48,7 +46,10 @@ export default function HomePage() {
               "linear-gradient(90deg, rgba(5,6,7,0.96) 0%, rgba(5,6,7,0.6) 55%, rgba(5,6,7,0.2) 100%)",
           }}
         />
-        <div style={{ position: "relative", padding: "0 var(--page-gutter)", maxWidth: "640px" }}>
+        <div
+          className="kv-hero-content"
+          style={{ position: "relative", padding: "0 var(--page-gutter)", maxWidth: "640px" }}
+        >
           <Eyebrow>{site.eyebrow}</Eyebrow>
           <SectionHeading as="h1" size="h1" style={{ margin: "16px 0" }}>
             {site.tagline}

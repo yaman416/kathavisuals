@@ -495,6 +495,17 @@ textarea.kv-field {
   background: var(--color-bg);
 }
 
+@keyframes kv-hero-lift {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-64px);
+  }
+}
+
 @keyframes kv-rise {
   from {
     opacity: 0;
@@ -532,15 +543,17 @@ textarea.kv-field {
   }
 }
 
-/* The hero settles as it is covered, so being pinned still feels like depth. */
+/* The hero pushes in and drifts as it is covered. Nothing here runs on its own:
+   the timeline is the scrollbar, so every frame of it is the visitor's own
+   input. Stop scrolling and it stops. */
 @keyframes kv-hero-settle {
   from {
-    transform: scale(1.08);
-    filter: saturate(1.05);
+    transform: scale(1.18) translateY(-2%);
+    filter: saturate(1.08) brightness(1.02);
   }
   to {
-    transform: scale(1);
-    filter: saturate(0.9);
+    transform: scale(1) translateY(4%);
+    filter: saturate(0.86) brightness(0.9);
   }
 }
 
@@ -580,10 +593,19 @@ textarea.kv-field {
   }
 
   @supports (animation-timeline: scroll()) {
-    .kv-hero-media {
+    .kv-hero-media,
+    .kv-hero-media img {
       animation: kv-hero-settle 1ms linear both;
       animation-timeline: scroll();
-      animation-range: 0 92vh;
+      animation-range: 0 100vh;
+      will-change: transform;
+    }
+
+    /* The headline and its controls lift away as the page covers the hero. */
+    .kv-hero-content {
+      animation: kv-hero-lift 1ms linear both;
+      animation-timeline: scroll();
+      animation-range: 0 78vh;
     }
   }
 }
