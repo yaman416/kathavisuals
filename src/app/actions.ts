@@ -1,6 +1,7 @@
 "use server";
 
 import type { EnquiryState } from "@/lib/enquiry";
+import { renderEnquiryEmail } from "@/lib/enquiry-email";
 import { site } from "@/lib/site";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -81,18 +82,17 @@ export async function submitEnquiry(
     };
   }
 
-  const body = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Phone: ${phone || "Not provided"}`,
-    `Service: ${service || "Not specified"}`,
-    `Coverage: ${coverage || "Not specified"}`,
-    `Preferred date: ${date || "Not provided"}`,
-    `Location: ${location || "Not provided"}`,
-    `Budget: ${budget || "Not stated"}`,
-    "",
+  const { html, text } = renderEnquiryEmail({
+    name,
+    email,
+    phone,
+    service,
+    coverage,
+    date,
+    location,
+    budget,
     details,
-  ].join("\n");
+  });
 
   const subject = `New enquiry: ${service || "General"}${coverage ? ` (${coverage})` : ""} from ${name}`;
 
@@ -105,7 +105,8 @@ export async function submitEnquiry(
         to: [to],
         reply_to: email,
         subject,
-        text: body,
+        html,
+        text,
       }),
     });
     // Read the body either way: Resend explains rejections here, and that text
