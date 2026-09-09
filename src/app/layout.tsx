@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { ScrollMotion } from "@/components/ScrollMotion";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main" className="kv-btn kv-btn--accent" data-skip-link>
           Skip to content
         </a>
-        <ScrollMotion />
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />

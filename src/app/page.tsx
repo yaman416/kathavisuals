@@ -12,7 +12,7 @@ export default function HomePage() {
     <>
       <Hero />
 
-      <div className="kv-below-hero">
+      <div>
         {/* Introduction ------------------------------------------------- */}
         <section className="kv-section">
           <div className="kv-wrap kv-split kv-split--wide-media">
