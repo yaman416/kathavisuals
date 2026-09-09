@@ -329,6 +329,70 @@ export const projects: Project[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
+/* Galleries                                                                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Slots in each service's gallery.
+ *
+ * Twelve is the lowest common multiple of the 2, 4 and 6 columns the grid uses
+ * across breakpoints, so every screen size ends on a complete row rather than a
+ * ragged one. Real photographs fill the slots in order and the remainder render
+ * as labelled placeholders, ready to be replaced.
+ */
+export const GALLERY_SLOTS = 12;
+
+export type GallerySlot = { src: string; alt: string } | null;
+
+function slots(images: { src: string; alt: string }[]): GallerySlot[] {
+  return Array.from({ length: GALLERY_SLOTS }, (_, i) => images[i] ?? null);
+}
+
+/** Keyed by service slug. Add photographs to the arrays; slots fill in order. */
+export const galleries: Record<string, GallerySlot[]> = {
+  weddings: slots([
+    {
+      src: "/design/portfolio-weddings.jpg",
+      alt: "An outdoor wedding ceremony on a lawn in bright daylight",
+    },
+    {
+      src: "/design/service-weddings.jpg",
+      alt: "A couple laughing together in a sunlit garden",
+    },
+  ]),
+  events: slots([
+    {
+      src: "/design/portfolio-events.jpg",
+      alt: "Guests seated at a long outdoor table under a white canopy",
+    },
+    {
+      src: "/design/service-events.jpg",
+      alt: "Guests laughing together at an outdoor garden party",
+    },
+  ]),
+  "real-estate": slots([
+    {
+      src: "/design/service-real-estate.jpg",
+      alt: "A white living room filled with morning daylight",
+    },
+    {
+      src: "/design/portfolio-real-estate.jpg",
+      alt: "A contemporary home exterior in clear morning light",
+    },
+  ]),
+  "brand-content": slots([
+    {
+      src: "/design/service-social.jpg",
+      alt: "Coffee and pastries on a marble counter beside a sunlit window",
+    },
+    {
+      src: "/design/portfolio-social.jpg",
+      alt: "An overhead arrangement of plates, fruit and flowers on pale marble",
+    },
+  ]),
+};
+
+/* -------------------------------------------------------------------------- */
 /* Homepage supporting content                                                */
 /* -------------------------------------------------------------------------- */
 

@@ -346,6 +346,15 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
+/* Work galleries. Six columns, four on tablets, two on phones — the grid never
+   drops to a single column, so a section always reads as a gallery rather than
+   a stack. GALLERY_SLOTS is set to 12 to divide evenly into all three. */
+.kv-gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
 .kv-split {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -353,6 +362,14 @@ img, video { max-width: 100%; }
   align-items: center;
 }
 .kv-split--wide-media { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+
+@media (max-width: 1100px) {
+  .kv-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .kv-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 @media (max-width: 900px) {
   .kv-grid--3, .kv-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
