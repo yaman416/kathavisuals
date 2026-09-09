@@ -87,7 +87,16 @@ export default function ServicesPage() {
                   <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                     {service.includes.map((item) => (
                       <li key={item} style={listItem}>
-                        <span aria-hidden="true" style={{ color: "var(--color-accent-text)" }}>—</span>
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            flexShrink: 0,
+                            width: 14,
+                            height: 1,
+                            marginTop: "0.7em",
+                            background: "var(--color-accent-text)",
+                          }}
+                        />
                         <span>{item}</span>
                       </li>
                     ))}

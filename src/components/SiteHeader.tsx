@@ -52,7 +52,7 @@ export function SiteHeader() {
   return (
     <header className="kv-header">
       <div className="kv-wrap kv-header__inner">
-        <Link href="/" aria-label={`${site.name} — home`} style={{ textDecoration: "none" }}>
+        <Link href="/" aria-label={`${site.name} home`} style={{ textDecoration: "none" }}>
           <Logo />
         </Link>
 

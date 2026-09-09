@@ -12,7 +12,7 @@
   --gallery-white: #ffffff;
 
   /* Derived from the five brand values, not invented alongside them.
-     Ember at its brand value is 3.63:1 on Story Paper — fine for rules, borders
+     Ember at its brand value is 3.63:1 on Story Paper. Fine for rules, borders
      and focus rings, which only need 3.0, but short of the 4.5 that text needs.
      `--ember-text` is the smallest darkening that clears 4.5 both as text on
      paper (4.86) and behind white button text (5.53). */
@@ -346,7 +346,7 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
-/* Work galleries. Six columns, four on tablets, two on phones — the grid never
+/* Work galleries. Six columns, four on tablets, two on phones. The grid never
    drops to a single column, so a section always reads as a gallery rather than
    a stack. GALLERY_SLOTS is set to 12 to divide evenly into all three. */
 .kv-gallery {

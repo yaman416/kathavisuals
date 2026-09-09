@@ -11,7 +11,7 @@ export async function submitEnquiry(
 ): Promise<EnquiryState> {
   // Honeypot: real people leave this empty. Accept silently so bots do not retry.
   if (String(formData.get("company") ?? "").trim() !== "") {
-    return { status: "success", message: "Thanks — your enquiry has been sent." };
+    return { status: "success", message: "Thanks, your enquiry has been sent." };
   }
 
   const name = String(formData.get("name") ?? "").trim();
@@ -49,11 +49,11 @@ export async function submitEnquiry(
   const body = [
     `Name: ${name}`,
     `Email: ${email}`,
-    `Phone: ${phone || "—"}`,
+    `Phone: ${phone || "Not provided"}`,
     `Service: ${service || "Not specified"}`,
     `Coverage: ${coverage || "Not specified"}`,
-    `Preferred date: ${date || "—"}`,
-    `Location: ${location || "—"}`,
+    `Preferred date: ${date || "Not provided"}`,
+    `Location: ${location || "Not provided"}`,
     `Budget: ${budget || "Not stated"}`,
     "",
     details,
@@ -67,7 +67,7 @@ export async function submitEnquiry(
         from,
         to: [to],
         reply_to: email,
-        subject: `New enquiry — ${service || "General"}${coverage ? ` (${coverage})` : ""} — ${name}`,
+        subject: `New enquiry: ${service || "General"}${coverage ? ` (${coverage})` : ""} from ${name}`,
         text: body,
       }),
     });
@@ -89,6 +89,6 @@ export async function submitEnquiry(
 
   return {
     status: "success",
-    message: "Thanks — your enquiry has been sent. We'll be in touch soon.",
+    message: "Thanks, your enquiry has been sent. We'll be in touch soon.",
   };
 }

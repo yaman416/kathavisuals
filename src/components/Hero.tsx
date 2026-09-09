@@ -57,7 +57,7 @@ export function Hero() {
         />
 
         <div className="kv-wrap" style={{ position: "relative" }}>
-          <p className="kv-eyebrow">Photography &amp; Videography — {site.location}</p>
+          <p className="kv-eyebrow">Photography &amp; Videography in {site.location}</p>
           <h1 style={{ maxWidth: "14ch" }}>{site.tagline}</h1>
           <hr className="kv-rule" />
           <p className="kv-lede" style={{ maxWidth: "44ch" }}>

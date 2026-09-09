@@ -257,7 +257,7 @@ export type Project = {
   category: Exclude<(typeof portfolioCategories)[number], "All">;
   image: string;
   alt: string;
-  /** Editorial grid weighting — tall frames break the rhythm of a plain grid. */
+  /** Editorial grid weighting. Tall frames break the rhythm of a plain grid. */
   span: "wide" | "tall" | "standard";
 };
 
@@ -431,7 +431,7 @@ export const budgetOptions = [
 ] as const;
 
 /* -------------------------------------------------------------------------- */
-/* Not yet confirmed — nothing here is rendered                               */
+/* Not yet confirmed. Nothing here is rendered                                */
 /* -------------------------------------------------------------------------- */
 
 export const pending = {
@@ -446,7 +446,7 @@ export const pending = {
   imageryIsPlaceholder: true,
   /** Confirmed detail still needed before it can be written into a bio. */
   bioDetailNeeded: [
-    "Any detail either founder wants published to distinguish their bios — the two are currently parallel because the roles are identical",
+    "Any detail either founder wants published to distinguish their bios. The two are currently parallel because the roles are identical",
     "Whether an ABN should appear in the footer",
   ],
 };

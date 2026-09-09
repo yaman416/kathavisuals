@@ -38,7 +38,7 @@ export function Media({
           style={{ objectFit: "cover" }}
         />
       ) : (
-        <div className="kv-placeholder" role="img" aria-label={`${alt} — image not yet supplied`}>
+        <div className="kv-placeholder" role="img" aria-label={`${alt}. Image not yet supplied.`}>
           {placeholder}
         </div>
       )}

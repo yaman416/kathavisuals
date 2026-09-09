@@ -21,8 +21,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} | ${site.tagline}`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   keywords: [
@@ -39,13 +39,13 @@ export const metadata: Metadata = {
     locale: "en_AU",
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: site.description,
     images: [{ url: "/design/og.jpg", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: site.description,
     images: ["/design/og.jpg"],
   },
@@ -86,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <script
           type="application/ld+json"
-          // Static, author-controlled object — no user input reaches this.
+          // Static, author-controlled object. No user input reaches this.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <a href="#main" className="kv-btn kv-btn--accent" data-skip-link>

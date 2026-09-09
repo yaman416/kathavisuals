@@ -7,7 +7,7 @@
  *
  * To swap in the final artwork: drop the SVG into this file (or import it) and
  * replace the contents of `Monogram`. Nothing else in the codebase needs to
- * change — the header, footer and drawer all render this component.
+ * change. The header, footer and drawer all render this component.
  *
  * The brief rules out camera, aperture, lens, film-reel, mountain and eye
  * imagery. The mark here is an open frame with the K's diagonals reaching out of
