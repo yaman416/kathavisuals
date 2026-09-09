@@ -1,74 +1,60 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Design tokens — ported verbatim from the Katha Visuals design system
-   (_ds/katha-visuals-design-system-.../tokens/*.css)
---------------------------------------------------------------------------- */
-
-/* ---------------------------------------------------------------------------
-   Warm Ivory palette. The design system was authored dark; these are the same
-   roles re-derived for a light ground. The accent had to darken — the original
-   #a99066 sits at 2.6:1 on white, which fails AA and looks washed out.
+   Cinematic Earth
 --------------------------------------------------------------------------- */
 
 :root {
-  /* colors.css */
-  --ink: #17150f;
-  --ink-strong: #100f0b;
-  --cream: #f5f2ec;
-  --paper: #ffffff;
-  --text-muted: #6a6459;
-  --gold: #7d6838;
-  --gold-hover: #5f4f2a;
-  --border-subtle: #dad5cb;
-  --border-gold: rgb(125 104 56 / 40%);
-  --error: #b03a38;
-  --success: #3f7d58;
-  --warning: #8a6b1e;
+  --forest-ink: #1f2824;
+  --story-paper: #f4f0e8;
+  --ember: #b46a47;
+  --archive-sand: #c8b99f;
+  --gallery-white: #ffffff;
 
-  --color-bg: var(--cream);
-  --color-bg-secondary: var(--paper);
-  --color-surface: var(--paper);
-  --color-text-primary: var(--ink);
-  --color-text-strong: var(--ink-strong);
-  --color-text-secondary: var(--text-muted);
-  --color-accent: var(--gold);
-  --color-accent-hover: var(--gold-hover);
-  --color-border: var(--border-subtle);
-  --color-border-accent: var(--border-gold);
-  --color-action-primary-bg: var(--ink);
-  --color-action-primary-text: var(--cream);
-  --color-action-primary-bg-hover: #2a2620;
-  --color-action-outline-border: rgb(23 21 15 / 28%);
-  --color-action-outline-text: var(--ink);
-  --color-action-outline-border-hover: var(--ink);
-  --color-focus-ring: var(--gold);
-  --color-field-border: rgb(23 21 15 / 26%);
-  --color-error: var(--error);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
+  /* Derived from the five brand values, not invented alongside them.
+     Ember at its brand value is 3.63:1 on Story Paper — fine for rules, borders
+     and focus rings, which only need 3.0, but short of the 4.5 that text needs.
+     `--ember-text` is the smallest darkening that clears 4.5 both as text on
+     paper (4.86) and behind white button text (5.53). */
+  --ink-soft: #3d4a44;
+  --ink-muted: #58655e;
+  --sand-tint: #e6ded0;
+  --ember-text: #9c5637;
+  --ember-deep: #874b31;
 
-  /* fonts.css — loaded through next/font, variables set on <html> */
-  --font-display: "Times New Roman", Times, var(--font-tinos), Georgia, serif;
+  --color-bg: var(--story-paper);
+  --color-surface: var(--gallery-white);
+  --color-surface-alt: #ece6da;
+  --color-ink: var(--forest-ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-accent: var(--ember);
+  --color-accent-text: var(--ember-text);
+  --color-accent-hover: var(--ember-deep);
+  --color-border: var(--archive-sand);
+  --color-border-soft: var(--sand-tint);
+  --color-focus: var(--ember);
+  --color-error: #9c3a2c;
+  --color-success: #3f6b4e;
+
+  --font-display: var(--font-cormorant), "Iowan Old Style", Georgia, serif;
   --font-body: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
 
-  /* typography.css */
-  --text-xs: clamp(0.6875rem, 0.66rem + 0.1vw, 0.75rem);
-  --text-sm: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
-  --text-base: clamp(1rem, 0.97rem + 0.1vw, 1.0625rem);
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
-  --text-h3: clamp(1.75rem, 1.4rem + 1.2vw, 2.375rem);
-  --text-h2: clamp(2rem, 1.5rem + 2vw, 3rem);
-  --text-h1: clamp(2.5rem, 1.7rem + 3.5vw, 4.5rem);
-  --leading-tight: 1.1;
-  --leading-heading: 1.15;
-  --leading-body: 1.6;
-  --tracking-eyebrow: 0.14em;
-  --tracking-nav: 0.08em;
-  --tracking-tight: -0.01em;
+  --text-h3: clamp(1.5rem, 1.28rem + 0.9vw, 2rem);
+  --text-h2: clamp(2rem, 1.6rem + 1.7vw, 3rem);
+  --text-h1: clamp(2.5rem, 1.85rem + 2.9vw, 4.25rem);
 
-  /* spacing.css */
-  --space-1: 4px;
+  --leading-tight: 1.08;
+  --leading-heading: 1.14;
+  --leading-body: 1.65;
+  --tracking-label: 0.16em;
+  --tracking-nav: 0.06em;
+
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
@@ -76,522 +62,387 @@
   --space-8: 32px;
   --space-12: 48px;
   --space-16: 64px;
-  --space-20: 80px;
-  --section-space: clamp(64px, 9vw, 112px);
-  /* A tighter beat, for sections that follow closely from the one above. */
-  --section-space-tight: clamp(44px, 6vw, 76px);
-  --content-width: 1280px;
-  --content-width-narrow: 720px;
-  /* Between the two: wide enough for an image beside text, narrow enough that
-     a 62ch column does not leave a void alongside it. */
-  --content-width-mid: 1040px;
-  --page-gutter: clamp(20px, 4vw, 56px);
+  --section: clamp(72px, 9vw, 128px);
+  --section-tight: clamp(48px, 6vw, 84px);
+  --content: 1200px;
+  --content-mid: 1040px;
+  --content-narrow: 660px;
+  --gutter: clamp(20px, 4vw, 56px);
 
-  /* effects.css */
-  --radius-control: 2px;
-  --radius-card: 4px;
-  --radius-pill: 999px;
-  --shadow-card: 0 24px 48px rgb(0 0 0 / 32%);
-  --shadow-raised: 0 8px 24px rgb(0 0 0 / 24%);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 150ms;
-  --duration-base: 200ms;
-  --duration-slow: 240ms;
-  --touch-target: 44px;
+  --radius: 2px;
+  --radius-media: 3px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fast: 160ms;
+  --base: 240ms;
+  --touch: 44px;
 
   color-scheme: light;
-}
-
-/* Sections layered over dark photography flip the roles back, so type and
-   controls on the hero keep the contrast the imagery requires. */
-.kv-on-dark {
-  --color-text-primary: #f3f0e9;
-  --color-text-strong: #ffffff;
-  --color-text-secondary: #b8b4ad;
-  --color-accent: #c9b083;
-  --color-accent-hover: #ddc99f;
-  --color-action-primary-bg: #f3f0e9;
-  --color-action-primary-text: #17150f;
-  --color-action-primary-bg-hover: #ffffff;
-  --color-action-outline-border: rgb(243 240 233 / 55%);
-  --color-action-outline-text: #f3f0e9;
-  --color-action-outline-border-hover: #f3f0e9;
 }
 
 html {
   scroll-behavior: smooth;
   background: var(--color-bg);
-}
-
-/* Running text was setting at ~123 characters a line. Comfortable reading is
-   45-75; past about 80 the eye loses its place returning to the left margin. */
-p {
-  max-width: 62ch;
-  text-wrap: pretty;
-}
-
-/* Headings are short and deserve even line lengths rather than an orphan. */
-h1,
-h2,
-h3 {
-  text-wrap: balance;
-}
-
-/* Times sets loose at display sizes. A touch of negative tracking closes the
-   gaps the way a compositor would. */
-h1,
-h2 {
-  letter-spacing: -0.014em;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   background: var(--color-bg);
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-}
-
-a {
-  color: var(--color-accent);
-}
-
-a:hover {
-  color: var(--color-accent-hover);
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  outline-offset: 3px;
-}
-
-::selection {
-  background: var(--color-accent);
-  color: var(--paper);
-}
-
-/* ---------------------------------------------------------------------------
-   Component styles. Hover and focus states live here rather than in React
-   state so the page stays server-rendered; values match the design system.
---------------------------------------------------------------------------- */
-
-/* Button ------------------------------------------------------------------ */
-.kv-btn {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-nav);
-  text-transform: uppercase;
-  border: 1px solid transparent;
-  border-radius: var(--radius-control);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 28px;
-  text-decoration: none;
-  transition:
-    background-color var(--duration-base) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out),
-    color var(--duration-base) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
-}
-
-.kv-btn--primary {
-  background: var(--color-action-primary-bg);
-  color: var(--color-action-primary-text);
-}
-.kv-btn--primary:hover {
-  background: var(--color-action-primary-bg-hover);
-  color: var(--color-action-primary-text);
-}
-
-.kv-btn--outline {
-  background: transparent;
-  color: var(--color-action-outline-text);
-  border-color: var(--color-action-outline-border);
-}
-.kv-btn--outline:hover {
-  border-color: var(--color-action-outline-border-hover);
-  color: var(--color-action-outline-text);
-}
-
-.kv-btn--outline-gold {
-  background: transparent;
-  color: var(--color-text-primary);
-  border-color: var(--color-border-accent);
-}
-.kv-btn--outline-gold:hover {
-  border-color: var(--color-accent-hover);
-  color: var(--color-accent-hover);
-}
-
-.kv-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* Form fields ------------------------------------------------------------- */
-.kv-field {
-  width: 100%;
-  box-sizing: border-box;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-field-border);
-  border-radius: var(--radius-control);
-  color: var(--color-text-primary);
+  color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  padding: 12px 16px;
-  min-height: 44px;
-  outline: none;
-  transition: border-color var(--duration-base) var(--ease-out);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.kv-field:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgb(125 104 56 / 20%);
+/* Running text past about 75 characters loses the reader on the return sweep
+   to the left margin. */
+p {
+  max-width: 62ch;
+  text-wrap: pretty;
+  margin: 0 0 var(--space-4);
 }
 
-.kv-field[aria-invalid="true"] {
-  border-color: var(--color-error);
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-ink);
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: -0.012em; }
+h2 { font-size: var(--text-h2); letter-spacing: -0.008em; }
+h3 { font-size: var(--text-h3); }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: 1px;
 }
 
-textarea.kv-field {
-  resize: vertical;
-  min-height: 120px;
+::selection { background: var(--color-accent-text); color: var(--gallery-white); }
+
+img, video { max-width: 100%; }
+
+/* --------------------------------------------------------------- layout --- */
+
+.kv-wrap {
+  width: 100%;
+  max-width: var(--content);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+.kv-wrap--mid { max-width: var(--content-mid); }
+.kv-wrap--narrow { max-width: var(--content-narrow); }
+
+.kv-section { padding-block: var(--section); }
+.kv-section--tight { padding-block: var(--section-tight); }
+.kv-section--dark { background: var(--color-ink); color: var(--story-paper); }
+.kv-section--dark h1,
+.kv-section--dark h2,
+.kv-section--dark h3 { color: var(--story-paper); }
+
+/* ----------------------------------------------------------------- type --- */
+
+.kv-eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+  margin: 0 0 var(--space-4);
+}
+.kv-section--dark .kv-eyebrow { color: var(--archive-sand); }
+
+.kv-lede { font-size: var(--text-lg); color: var(--color-ink-soft); line-height: 1.55; }
+.kv-muted { color: var(--color-ink-muted); }
+.kv-section--dark .kv-muted,
+.kv-section--dark .kv-lede { color: var(--sand-tint); }
+
+.kv-rule {
+  width: 56px; height: 2px; border: 0;
+  background: var(--color-accent);
+  margin: var(--space-6) 0;
 }
 
-/* Cards ------------------------------------------------------------------- */
-.kv-card-media img,
-.kv-card-media .kv-placeholder {
-  transition: transform var(--duration-slow) var(--ease-out);
-}
-.kv-card:hover .kv-card-media img,
-.kv-card:hover .kv-card-media .kv-placeholder {
-  transform: scale(1.03);
-}
+/* -------------------------------------------------------------- buttons --- */
 
-.kv-service-card__label {
-  color: var(--color-text-primary);
-  transition: color var(--duration-base) var(--ease-out);
-}
-.kv-card:hover .kv-service-card__label {
-  color: var(--color-accent);
-}
-
-/* Nav --------------------------------------------------------------------- */
-.kv-nav-link {
+.kv-btn {
   font-family: var(--font-body);
   font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: var(--tracking-nav);
   text-transform: uppercase;
-  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch);
+  padding: 0 26px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--base) var(--ease),
+    border-color var(--base) var(--ease),
+    color var(--base) var(--ease);
+}
+.kv-btn--primary { background: var(--color-ink); color: var(--story-paper); }
+.kv-btn--primary:hover { background: var(--color-accent-text); color: var(--gallery-white); }
+.kv-btn--accent { background: var(--color-accent-text); color: var(--gallery-white); }
+.kv-btn--accent:hover { background: var(--color-accent-hover); }
+.kv-btn--ghost { background: transparent; color: var(--color-ink); border-color: var(--color-border); }
+.kv-btn--ghost:hover { border-color: var(--color-ink); }
+.kv-section--dark .kv-btn--ghost { color: var(--story-paper); border-color: rgb(244 240 232 / 42%); }
+.kv-section--dark .kv-btn--ghost:hover { border-color: var(--story-paper); }
+.kv-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.kv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--touch);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-accent-text);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  padding-bottom: 4px;
-  transition:
-    color var(--duration-base) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out);
+  transition: border-color var(--base) var(--ease);
 }
-.kv-nav-link:hover {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
+.kv-link:hover { border-bottom-color: currentColor; }
+
+[data-skip-link] {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+[data-skip-link]:focus-visible {
+  left: var(--gutter);
+  top: var(--space-3);
 }
 
-@media (max-width: 900px) {
-  .kv-nav-desktop {
-    display: none !important;
-  }
-  .kv-nav-toggle {
-    display: flex !important;
-  }
-}
+/* --------------------------------------------------------------- header --- */
 
-/* The menu button is the only navigation on a phone, so it gets a full
-   44px target rather than the icon's own 24px. */
-.kv-nav-toggle {
+.kv-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--story-paper) 92%, transparent);
+  backdrop-filter: saturate(1.3) blur(8px);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+.kv-header__inner {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  width: var(--touch-target);
-  height: var(--touch-target);
-  margin-right: -10px;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: 72px;
 }
-
-/* Footer links sit at 20px tall from their text alone; pad them to a
-   comfortable target without changing how the column looks. */
-.kv-footer-link {
+.kv-nav { display: flex; align-items: center; gap: var(--space-8); }
+.kv-nav a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--touch-target);
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  transition: color var(--duration-base) var(--ease-out);
-}
-.kv-footer-link:hover {
-  color: var(--color-accent);
-}
-
-.kv-social-link {
-  width: var(--touch-target);
-  height: var(--touch-target);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  color: var(--color-text-primary);
-  transition:
-    color var(--duration-base) var(--ease-out),
-    border-color var(--duration-base) var(--ease-out);
-}
-.kv-social-link:hover {
-  color: var(--color-accent);
-  border-color: var(--color-border-accent);
-}
-
-/* Desktop nav sits at 22px tall from the text alone — give it real height. */
-.kv-nav-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-}
-
-/* Mobile menu entries get thumb-sized rows. */
-.kv-menu-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--touch-target);
-  padding: 0 16px;
-  font-family: var(--font-display);
-  font-size: 1.75rem;
-  color: var(--color-text-primary);
-  text-decoration: none;
-  transition: color var(--duration-base) var(--ease-out);
-}
-.kv-menu-link:hover,
-.kv-menu-link:focus-visible {
-  color: var(--color-accent);
-}
-
-/* Active section, set by the header's scroll spy. */
-.kv-nav-link[data-active="true"] {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
-}
-
-/* 11px uppercase is legible on a desktop monitor and marginal on a phone.
-   Desktop keeps the design system value; small screens get a 12px floor. */
-@media (max-width: 900px) {
-  :root {
-    --text-xs: 0.75rem;
-  }
-}
-
-/* The process strip divides with vertical rules across four columns. Once it
-   stacks, those rules point nowhere — divide horizontally instead. */
-.kv-process-step {
-  border-right: 1px solid var(--color-border);
-}
-.kv-process-step:last-child {
-  border-right: 0;
-}
-@media (max-width: 900px) {
-  .kv-process-step {
-    border-right: 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .kv-process-step:last-child {
-    border-bottom: 0;
-  }
-}
-
-/* Placeholder frame for imagery that has not been supplied yet ------------- */
-.kv-placeholder {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background:
-    radial-gradient(120% 80% at 20% 10%, rgb(125 104 56 / 14%), transparent 60%),
-    radial-gradient(90% 70% at 90% 90%, rgb(23 21 15 / 5%), transparent 55%),
-    var(--color-bg);
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  box-sizing: border-box;
-}
-.kv-placeholder span {
-  font-family: var(--font-body);
-  font-size: 10px;
+  min-height: var(--touch);
+  font-size: var(--text-xs);
+  font-weight: 600;
   letter-spacing: var(--tracking-nav);
   text-transform: uppercase;
-  color: var(--color-text-secondary);
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--base) var(--ease);
 }
+.kv-nav a:hover, .kv-nav a[aria-current="page"] { color: var(--color-ink); }
+.kv-nav a[aria-current="page"] { border-bottom-color: var(--color-accent); }
 
-/* Responsive layout switches --------------------------------------------- */
-.kv-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-.kv-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
+.kv-menu-btn {
+  display: none;
   align-items: center;
-}
-.kv-service-row {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-  gap: 36px;
-  align-items: start;
-}
-.kv-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 24px;
-}
-.kv-footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 48px;
+  justify-content: center;
+  width: var(--touch);
+  height: var(--touch);
+  margin-right: -10px;
+  background: none;
+  border: 0;
+  color: var(--color-ink);
+  cursor: pointer;
 }
 
 @media (max-width: 900px) {
-  .kv-grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .kv-split,
-  .kv-service-row,
-  .kv-form-grid {
-    grid-template-columns: 1fr;
-  }
-  .kv-split {
-    gap: 32px;
-  }
-  .kv-footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-  }
+  .kv-desktop-only { display: none !important; }
+  .kv-menu-btn { display: flex; }
+}
+
+.kv-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--story-paper);
+  display: flex;
+  flex-direction: column;
+  padding: var(--gutter);
+}
+.kv-drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-block: auto;
+}
+.kv-drawer__links a {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+/* ---------------------------------------------------------------- media --- */
+
+.kv-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-media);
+}
+.kv-media img { transition: transform 600ms var(--ease); }
+.kv-card:hover .kv-media img { transform: scale(1.03); }
+
+.kv-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: var(--color-surface-alt);
+  color: var(--color-ink-muted);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- grids --- */
+
+.kv-grid { display: grid; gap: var(--space-6); }
+.kv-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kv-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kv-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Varying proportions, so the portfolio reads as a layout rather than a table
+   of identical cards. */
+.kv-portfolio { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-6); }
+.kv-portfolio__item { grid-column: span 3; }
+.kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
+.kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
+
+.kv-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+}
+.kv-split--wide-media { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+
+@media (max-width: 900px) {
+  .kv-grid--3, .kv-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kv-split, .kv-split--wide-media { grid-template-columns: 1fr; }
+  .kv-portfolio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kv-portfolio__item,
+  .kv-portfolio__item[data-span="wide"],
+  .kv-portfolio__item[data-span="tall"] { grid-column: span 1; }
 }
 
 @media (max-width: 560px) {
-  .kv-grid-4,
-  .kv-footer-grid {
-    grid-template-columns: 1fr;
-  }
+  .kv-grid--2, .kv-grid--3, .kv-grid--4, .kv-portfolio { grid-template-columns: 1fr; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* ---------------------------------------------------------------- forms --- */
 
-
-/* ---------------------------------------------------------------------------
-   Motion.
-
-   Only the hero moves, and only because the visitor moved the scrollbar. It is
-   bound to a ScrollTimeline, which is the scrollbar itself rather than a clock,
-   so stopping the scroll stops the motion exactly where it is.
-
-   Nothing else on the page animates on scroll.
---------------------------------------------------------------------------- */
-
-/* The hero pins itself; the page scrolls up over it like a card off a deck. */
-.kv-hero {
-  top: 0;
-  z-index: 0;
+.kv-field {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: var(--touch);
+  padding: 12px 14px;
+  background: var(--gallery-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  transition: border-color var(--base) var(--ease), box-shadow var(--base) var(--ease);
 }
+.kv-field:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+.kv-field[aria-invalid="true"] { border-color: var(--color-error); }
+textarea.kv-field { min-height: 140px; resize: vertical; }
 
-.kv-over-hero {
-  position: relative;
-  z-index: 1;
-  background: var(--color-bg);
-}
+/* --------------------------------------------------------------- motion ---
+   Timelines are bound to the document scroller. Bare `scroll()` resolves to the
+   nearest scroll container, and any ancestor with hidden overflow counts, which
+   silently freezes the timeline at zero. */
 
-/* Each layer drifts at its own rate, so the change reads as depth. */
-@keyframes kv-hero-drift-a {
-  from { transform: scale(1.16) translate3d(0, -1.5%, 0); }
-  to   { transform: scale(1.02) translate3d(0, 5%, 0); }
-}
-@keyframes kv-hero-drift-b {
-  from { transform: scale(1.02) translate3d(0, -5%, 0); }
-  to   { transform: scale(1.18) translate3d(0, 3%, 0); }
-}
-@keyframes kv-hero-drift-c {
-  from { transform: scale(1.2) translate3d(0, 4%, 0); }
-  to   { transform: scale(1.04) translate3d(0, -3%, 0); }
-}
+.kv-hero { position: sticky; top: 0; z-index: 0; }
+.kv-below-hero { position: relative; z-index: 1; background: var(--color-bg); }
 
-/* Cross-fades. Each layer owns a slice of the scroll and hands over to the
-   next; the last one holds so the hero never fades to nothing. */
-@keyframes kv-layer-out {
-  0%, 55% { opacity: 1; }
-  100%    { opacity: 0; }
-}
-@keyframes kv-layer-through {
-  0%      { opacity: 0; }
-  28%, 62% { opacity: 1; }
-  100%    { opacity: 0; }
-}
-@keyframes kv-layer-in {
-  0%   { opacity: 0; }
-  55%, 100% { opacity: 1; }
-}
-
-@keyframes kv-hero-lift {
-  from { opacity: 1; transform: none; }
-  to   { opacity: 0; transform: translateY(-64px); }
-}
-
-.kv-hero-layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-/* Without animation the first frame is the hero and the rest stay hidden. */
+.kv-hero-layer { position: absolute; inset: 0; overflow: hidden; }
 .kv-hero-layer[data-layer="0"] { opacity: 1; }
 .kv-hero-layer:not([data-layer="0"]) { opacity: 0; }
+
+@keyframes kv-drift-a {
+  from { transform: scale(1.14) translate3d(0, -1.5%, 0); }
+  to   { transform: scale(1.02) translate3d(0, 4%, 0); }
+}
+@keyframes kv-drift-b {
+  from { transform: scale(1.02) translate3d(0, -4%, 0); }
+  to   { transform: scale(1.16) translate3d(0, 3%, 0); }
+}
+@keyframes kv-drift-c {
+  from { transform: scale(1.18) translate3d(0, 3%, 0); }
+  to   { transform: scale(1.03) translate3d(0, -3%, 0); }
+}
+@keyframes kv-fade-out { 0%, 55% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes kv-fade-through { 0% { opacity: 0; } 28%, 62% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes kv-fade-in { 0% { opacity: 0; } 55%, 100% { opacity: 1; } }
+@keyframes kv-hero-lift {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-56px); }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll(root)) {
     .kv-hero-layer {
       animation-timeline: scroll(root);
-      animation-fill-mode: both;
-      animation-timing-function: linear;
       animation-duration: 1ms;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       will-change: opacity, transform;
     }
-
-    /* The page covers the hero at roughly 88vh, so the whole sequence has to
-       finish inside that. Ranges past it would cross-fade out of sight. */
     .kv-hero-layer[data-layer="0"] {
-      animation-name: kv-layer-out, kv-hero-drift-a;
+      animation-name: kv-fade-out, kv-drift-a;
       animation-range: 0 36vh, 0 88vh;
     }
     .kv-hero-layer[data-layer="1"] {
-      animation-name: kv-layer-through, kv-hero-drift-b;
+      animation-name: kv-fade-through, kv-drift-b;
       animation-range: 14vh 64vh, 0 88vh;
     }
-    /* The last layer holds, so the hero never fades to nothing. */
     .kv-hero-layer[data-layer="2"] {
-      animation-name: kv-layer-in, kv-hero-drift-c;
+      animation-name: kv-fade-in, kv-drift-c;
       animation-range: 46vh 88vh, 0 88vh;
     }
-
     .kv-hero-content {
       animation: kv-hero-lift 1ms linear both;
       animation-timeline: scroll(root);
@@ -600,11 +451,10 @@ textarea.kv-field {
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Fallback for browsers without animation-timeline (Firefox, Safari before 26).
-   ScrollMotion drives the same hero transform there and sets this flag.
---------------------------------------------------------------------------- */
-
-[data-motion-fallback] .kv-hero-media {
-  will-change: transform;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,83 +1,120 @@
 /**
- * Site content. Ported from the Katha Visuals design project
- * (claude.ai/design — "Katha Visuals Website.dc.html") so copy, services and
- * contact details live in one place.
+ * Site content.
  *
- * Every FAQ answer here is confirmed by the studio. If a fact is ever unknown,
- * write it as an explicit [PLACEHOLDER] rather than inventing copy — that is
- * the design system's rule and it is what kept these honest.
+ * Accuracy rules for anything added here:
+ *  - never state a number of years of experience
+ *  - no awards, qualifications, client names, testimonials, statistics or results
+ *  - the brand is newer than the founders' individual freelance experience; do
+ *    not blur the two
+ *  - Australian English
+ *
+ * Facts that are not yet confirmed live in `pending` below rather than being
+ * invented, and nothing in `pending` is rendered.
  */
 
 export const site = {
   name: "Katha Visuals",
-  tagline: "For Your Moments, Spaces and Stories.",
-  eyebrow: "Photography & Videography",
-  domain: "kathavisuals.com.au",
+  tagline: "When moments become stories.",
+  location: "Canberra, ACT",
+  region: "Australian Capital Territory",
+  country: "Australia",
   url: "https://www.kathavisuals.com.au",
   email: "kathavisualscbr@gmail.com",
   phone: "0426 369 124",
   phoneHref: "+61426369124",
-  phoneAlt: "0410 494 321",
-  location: "Canberra, ACT",
-  description:
-    "Katha Visuals is a Canberra photography and video studio working across weddings, events, real estate and social media content.",
   instagram: "https://www.instagram.com/_katha_visuals_",
   facebook: "https://www.facebook.com/profile.php?id=100076007284082",
-  /** No channel yet — the footer hides any social link left null. */
-  youtube: null,
+  youtube: null as string | null,
+  description:
+    "Katha Visuals is a Canberra photography and videography team documenting weddings, events, properties and brands across the ACT.",
 } as const;
 
-/**
- * The portfolio grid currently repeats the four service names with staging
- * imagery, so it is hidden until there is real client work to show. Flip this
- * to true and the section and its nav link both come back.
- */
-export const showPortfolio = false;
+export const nav = [
+  { label: "Home", href: "/" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Services", href: "/services" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+] as const;
 
-export const navLinks: { label: string; href: string }[] = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  ...(showPortfolio ? [{ label: "Portfolio", href: "#portfolio" }] : []),
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+/* -------------------------------------------------------------------------- */
+/* People                                                                     */
+/* -------------------------------------------------------------------------- */
+
+export type Person = {
+  name: string;
+  role: string;
+  bio: string;
+  /** Set once a genuine photograph exists. Never a stock or generated portrait. */
+  portrait: string | null;
+};
+
+export const people: Person[] = [
+  {
+    name: "Prakash Khanal",
+    role: "Founder",
+    bio: "Prakash leads the creative direction of Katha Visuals and brings his photography and videography experience into the visual treatment of each project.",
+    portrait: null,
+  },
+  {
+    name: "Yaman Gurung",
+    role: "Partner",
+    bio: "Yaman works alongside Prakash across the development and delivery of Katha Visuals projects, helping create a considered and consistent experience for clients.",
+    portrait: null,
+  },
 ];
 
-export type IconName = "camera" | "users" | "home" | "video";
+/* -------------------------------------------------------------------------- */
+/* Services                                                                   */
+/* -------------------------------------------------------------------------- */
 
 export type Faq = { question: string; answer: string };
 
 export type Service = {
   slug: string;
-  anchorId: string;
   name: string;
-  icon: IconName;
-  /** Set to a path under /public once real photography is supplied. */
-  image: string | null;
-  copy: string;
+  summary: string;
+  /** Longer introduction for the services page. */
+  intro: string;
+  includes: string[];
   audience: string;
+  process: string[];
   faqs: Faq[];
+  image: string;
 };
 
 export const services: Service[] = [
   {
     slug: "weddings",
-    anchorId: "svc-weddings",
     name: "Weddings",
-    icon: "camera",
-    image: "/design/service-weddings.jpg",
-    copy: "Photography and video documenting the people, emotions and moments of your wedding day, from getting ready through to the reception.",
+    summary:
+      "Honest and thoughtfully composed photography and films that preserve the atmosphere, relationships and meaningful details of your celebration.",
+    intro:
+      "We cover a wedding the way it actually unfolds. That means arriving early enough to understand the room, staying close to the people who matter, and directing only where it genuinely helps.",
+    includes: [
+      "Photography, videography, or both",
+      "Coverage planned around your run sheet",
+      "Preview images within 48 hours",
+      "Full edited gallery in one to two weeks",
+    ],
     audience:
-      "Couples who want their wedding day told as one honest story, not a checklist of poses.",
+      "Couples who want their day told as one honest story rather than a checklist of poses.",
+    process: [
+      "A conversation about the day, the people and what matters most to you",
+      "A written plan covering locations, timings and the moments you cannot miss",
+      "Coverage on the day, working quietly around the celebration",
+      "Previews within 48 hours, then the full gallery",
+    ],
     faqs: [
       {
         question: "How do we check availability?",
         answer:
-          "Send an enquiry with your date and we'll get back to you quickly to confirm.",
+          "Send an enquiry with your date and we will get back to you quickly to confirm.",
       },
       {
         question: "Do you offer photography and video together?",
         answer:
-          "Yes. We shoot stills and motion as one coordinated team so nothing is missed.",
+          "Yes. You can book stills, film, or both. Whichever you choose, it is shot by the same team with the same eye.",
       },
       {
         question: "Do you travel outside Canberra?",
@@ -85,16 +122,29 @@ export const services: Service[] = [
           "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add.",
       },
     ],
+    image: "/design/service-weddings.jpg",
   },
   {
     slug: "events",
-    anchorId: "svc-events",
     name: "Events",
-    icon: "users",
-    image: "/design/service-events.jpg",
-    copy: "Photography and video for private celebrations, business events and community gatherings, capturing the atmosphere as it happens.",
+    summary:
+      "Professional coverage for private celebrations, community gatherings, cultural occasions and corporate events.",
+    intro:
+      "Events move quickly and rarely repeat themselves. We plan the coverage in advance so the moments that matter are photographed as they happen rather than reconstructed afterwards.",
+    includes: [
+      "Half or full day coverage",
+      "Photography, videography, or both",
+      "Preview images within 48 hours",
+      "Full edited gallery in one to two weeks",
+    ],
     audience:
-      "Businesses and hosts who want a clean, usable record of their event for marketing or memory.",
+      "Organisers and hosts who need a clean, usable record of their event for marketing or for memory.",
+    process: [
+      "A short brief covering the run sheet, the venue and who needs to be photographed",
+      "Coverage planned around the parts of the programme that matter most",
+      "Discreet shooting through the event",
+      "Previews within 48 hours, then the full gallery",
+    ],
     faqs: [
       {
         question: "How far in advance should we book?",
@@ -105,36 +155,70 @@ export const services: Service[] = [
         answer:
           "Not on the night itself. You will have a set of preview images within 48 hours, and the full edited gallery in one to two weeks.",
       },
+      {
+        question: "Do you cover cultural and community events?",
+        answer:
+          "Yes. We regularly photograph community occasions and take the time to understand the programme and the customs involved beforehand.",
+      },
     ],
+    image: "/design/service-events.jpg",
   },
   {
     slug: "real-estate",
-    anchorId: "svc-real-estate",
     name: "Real Estate",
-    icon: "home",
-    image: "/design/service-real-estate.jpg",
-    copy: "Property photography and video built for property marketing, showing spaces at their best.",
+    summary:
+      "Clean, considered property photography and video created to present spaces accurately and attractively.",
+    intro:
+      "Property work is a deadline business. We shoot for the listing, deliver quickly, and keep the rooms looking like themselves rather than like a rendering.",
+    includes: [
+      "Interior and exterior photography",
+      "Walkthrough video on request",
+      "Aerial stills and video, flown in-house",
+      "Delivery within 24 to 48 hours",
+    ],
     audience:
       "Agents and owners who want listings that stand out and photograph well online.",
+    process: [
+      "Confirm the property, access and the listing deadline",
+      "Shoot the rooms and exterior in the best available light",
+      "Edit for accurate colour and straight verticals",
+      "Deliver within 24 to 48 hours",
+    ],
     faqs: [
       {
         question: "Do you shoot drone footage?",
-        answer: "Yes. We fly our own drone, so aerial stills and video can be added to any property shoot.",
+        answer:
+          "Yes. We fly our own drone, so aerial stills and video can be added to any property shoot.",
       },
       {
         question: "How quickly can we get images?",
-        answer: "Property images are delivered within 24 to 48 hours, so you can list without waiting.",
+        answer:
+          "Property images are delivered within 24 to 48 hours, so you can list without waiting.",
       },
     ],
+    image: "/design/service-real-estate.jpg",
   },
   {
-    slug: "social",
-    anchorId: "svc-social",
-    name: "Social Media Content",
-    icon: "video",
-    image: "/design/service-social.jpg",
-    copy: "Photography, short-form video and reels for businesses, products and personal brands.",
-    audience: "Brands and creators who need a steady supply of platform-ready content.",
+    slug: "brand-content",
+    name: "Brand Content",
+    summary:
+      "Photography and short-form video for businesses, products, campaigns and social media.",
+    intro:
+      "Content that has to work on a feed has different rules to a gallery. We plan the shoot around where it will actually be published and deliver it in the formats you need.",
+    includes: [
+      "Creative direction and a shot list",
+      "Stills and short-form video",
+      "Formats cut for the platforms you use",
+      "Commercial usage licence",
+    ],
+    audience:
+      "Businesses and creators who need a steady supply of images and video that look like their brand.",
+    process: [
+      "A brief covering the product, the audience and where the work will run",
+      "A shot list agreed before the day",
+      "The shoot, on location or at your premises",
+      "Delivery in the crops and formats you asked for",
+    ],
     faqs: [
       {
         question: "Do you offer ongoing content packages?",
@@ -146,57 +230,123 @@ export const services: Service[] = [
         answer: "Yes, we can format content for the platforms you use most.",
       },
     ],
+    image: "/design/service-social.jpg",
   },
 ];
 
-export const processSteps = [
-  {
-    icon: "camera" as IconName,
-    title: "Clear Communication",
-    description: "We keep you informed from first enquiry to final delivery.",
-  },
-  {
-    icon: "clock" as const,
-    title: "Thoughtful Preparation",
-    description: "We plan ahead so the day runs smoothly.",
-  },
-  {
-    icon: "video" as IconName,
-    title: "Photography & Video",
-    description: "Stills and motion shot by the same eye, whether you book one or both.",
-  },
-  {
-    icon: "heart" as const,
-    title: "A Consistent Visual Style",
-    description: "A considered look and feel across every project.",
-  },
-];
+/* -------------------------------------------------------------------------- */
+/* Portfolio                                                                  */
+/* -------------------------------------------------------------------------- */
 
-export const portfolioFilters = [
+export const portfolioCategories = [
   "All",
   "Weddings",
   "Events",
   "Real Estate",
-  "Social Media Content",
+  "Brand Content",
 ] as const;
 
 export type Project = {
+  id: string;
+  /** Factual category label until real project titles are confirmed. */
   title: string;
-  category: string;
-  image: string | null;
+  category: Exclude<(typeof portfolioCategories)[number], "All">;
+  image: string;
+  alt: string;
+  /** Editorial grid weighting — tall frames break the rhythm of a plain grid. */
+  span: "wide" | "tall" | "standard";
 };
 
 export const projects: Project[] = [
-  { title: "Weddings", category: "Weddings", image: "/design/portfolio-weddings.jpg" },
-  { title: "Events", category: "Events", image: "/design/portfolio-events.jpg" },
-  { title: "Real Estate", category: "Real Estate", image: "/design/portfolio-real-estate.jpg" },
-  { title: "Social Media Content", category: "Social Media Content", image: "/design/portfolio-social.jpg" },
+  {
+    id: "wedding-ceremony",
+    title: "Wedding ceremony",
+    category: "Weddings",
+    image: "/design/portfolio-weddings.jpg",
+    alt: "An outdoor wedding ceremony on a lawn in bright daylight",
+    span: "wide",
+  },
+  {
+    id: "wedding-portraits",
+    title: "Wedding portraits",
+    category: "Weddings",
+    image: "/design/service-weddings.jpg",
+    alt: "A couple laughing together in a sunlit garden",
+    span: "tall",
+  },
+  {
+    id: "celebration",
+    title: "Private celebration",
+    category: "Events",
+    image: "/design/portfolio-events.jpg",
+    alt: "Guests seated at a long outdoor table under a white canopy",
+    span: "standard",
+  },
+  {
+    id: "garden-event",
+    title: "Garden event",
+    category: "Events",
+    image: "/design/service-events.jpg",
+    alt: "Guests laughing together at an outdoor garden party",
+    span: "standard",
+  },
+  {
+    id: "residential-interior",
+    title: "Residential interior",
+    category: "Real Estate",
+    image: "/design/service-real-estate.jpg",
+    alt: "A white living room filled with morning daylight",
+    span: "tall",
+  },
+  {
+    id: "residential-exterior",
+    title: "Residential exterior",
+    category: "Real Estate",
+    image: "/design/portfolio-real-estate.jpg",
+    alt: "A contemporary home exterior in clear morning light",
+    span: "standard",
+  },
+  {
+    id: "cafe-content",
+    title: "Hospitality content",
+    category: "Brand Content",
+    image: "/design/service-social.jpg",
+    alt: "Coffee and pastries on a marble counter beside a sunlit window",
+    span: "standard",
+  },
+  {
+    id: "product-flat-lay",
+    title: "Product flat lay",
+    category: "Brand Content",
+    image: "/design/portfolio-social.jpg",
+    alt: "An overhead arrangement of plates, fruit and flowers on pale marble",
+    span: "wide",
+  },
 ];
 
-/** Shown above the portfolio grid while the grid holds sample entries. */
-export const showSampleNote = true;
+/* -------------------------------------------------------------------------- */
+/* Homepage supporting content                                                */
+/* -------------------------------------------------------------------------- */
 
-/** Clients can book stills, motion, or both. */
+export const principles = [
+  {
+    title: "Clear communication",
+    body: "You know who is coming, what we are covering and when the work lands, from the first reply onwards.",
+  },
+  {
+    title: "Thoughtful preparation",
+    body: "We learn the run sheet, the venue and the light before the day, so nothing important is left to chance.",
+  },
+  {
+    title: "Photography and video",
+    body: "Book stills, film, or both. Whichever you choose, it is shot by the same team with the same eye.",
+  },
+  {
+    title: "Consistent visual storytelling",
+    body: "A considered look across the whole delivery, so a gallery reads as one piece of work rather than a collection.",
+  },
+];
+
 export const coverageOptions = [
   "Photography only",
   "Videography only",
@@ -204,10 +354,32 @@ export const coverageOptions = [
   "Not sure yet",
 ] as const;
 
-export const serviceOptions = [
-  "Weddings",
-  "Events",
-  "Real Estate",
-  "Social Media Content",
-  "Not sure yet",
+export const budgetOptions = [
+  "Prefer not to say",
+  "Under $1,000",
+  "$1,000 – $2,500",
+  "$2,500 – $5,000",
+  "Over $5,000",
 ] as const;
+
+/* -------------------------------------------------------------------------- */
+/* Not yet confirmed — nothing here is rendered                               */
+/* -------------------------------------------------------------------------- */
+
+export const pending = {
+  /** Genuine client testimonials. The section stays unpublished while empty. */
+  testimonials: [] as { quote: string; name: string; detail: string }[],
+  /** A real photograph of Prakash and Yaman. No stock or generated portraits. */
+  teamPhotograph: null as string | null,
+  /**
+   * Every image currently on the site is placeholder imagery, not client work.
+   * Setting this to false removes the notice shown above the portfolio grid.
+   */
+  imageryIsPlaceholder: true,
+  /** Confirmed detail still needed before it can be written into a bio. */
+  bioDetailNeeded: [
+    "Prakash: preferred description of his background, if he wants one published",
+    "Yaman: whether a more specific role than Partner should be stated",
+    "Whether an ABN should appear in the footer",
+  ],
+};

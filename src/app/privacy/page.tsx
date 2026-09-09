@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ButtonLink, Eyebrow, SectionHeading } from "@/components/ds/primitives";
+import Link from "next/link";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,20 +11,9 @@ export const metadata: Metadata = {
 
 const UPDATED = "9 September 2026";
 
-const body = {
-  fontFamily: "var(--font-body)",
-  color: "var(--color-text-secondary)",
-  lineHeight: "var(--leading-body)",
-  margin: "0 0 16px",
-} as const;
+const body = { color: "var(--color-ink-soft)" } as const;
 
-const h2 = {
-  fontFamily: "var(--font-display)",
-  fontWeight: 400,
-  fontSize: "var(--text-h3)",
-  color: "var(--color-text-strong)",
-  margin: "40px 0 14px",
-} as const;
+const h2 = { margin: "40px 0 14px" } as const;
 
 function Li({ children }: { children: React.ReactNode }) {
   return (
@@ -36,26 +25,13 @@ function Li({ children }: { children: React.ReactNode }) {
 
 export default function PrivacyPage() {
   return (
-    <section
-      style={{
-        maxWidth: "var(--content-width-narrow)",
-        margin: "0 auto",
-        padding: "var(--section-space) var(--page-gutter)",
-      }}
-    >
-      <Eyebrow>Legal</Eyebrow>
-      <SectionHeading as="h1" style={{ margin: "12px 0 8px" }}>
-        Privacy Policy
-      </SectionHeading>
+    <section className="kv-section">
+      <div className="kv-wrap kv-wrap--narrow">
+      <p className="kv-eyebrow">Legal</p>
+      <h1>Privacy Policy</h1>
       <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "var(--text-xs)",
-          letterSpacing: "var(--tracking-nav)",
-          textTransform: "uppercase",
-          color: "var(--color-accent)",
-          margin: "0 0 32px",
-        }}
+        className="kv-muted"
+        style={{ fontSize: "var(--text-xs)", margin: "var(--space-4) 0 var(--space-12)" }}
       >
         Last updated {UPDATED}
       </p>
@@ -115,20 +91,21 @@ export default function PrivacyPage() {
       <h2 style={h2}>Contact</h2>
       <p style={body}>
         Email{" "}
-        <a href={`mailto:${site.email}`} style={{ color: "var(--color-accent)" }}>
+        <a href={`mailto:${site.email}`} className="kv-link">
           {site.email}
         </a>{" "}
         or call{" "}
-        <a href={`tel:${site.phoneHref}`} style={{ color: "var(--color-accent)" }}>
+        <a href={`tel:${site.phoneHref}`} className="kv-link">
           {site.phone}
         </a>
         . We answer privacy requests within 30 days.
       </p>
 
-      <div style={{ marginTop: "48px" }}>
-        <ButtonLink href="/" variant="outline">
-          Back to the site
-        </ButtonLink>
+        <div style={{ marginTop: "var(--space-12)" }}>
+          <Link href="/" className="kv-btn kv-btn--ghost">
+            Back to the site
+          </Link>
+        </div>
       </div>
     </section>
   );

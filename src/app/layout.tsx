@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Tinos } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import { ScrollMotion } from "@/components/ScrollMotion";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
 import "./globals.css";
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,27 +19,12 @@ const inter = Inter({
   display: "swap",
 });
 
-/**
- * Headings are set in Times, which ships with macOS, iOS and Windows, so it is
- * referenced as a system font rather than served — Times New Roman is a
- * Monotype licence we do not hold and cannot redistribute.
- *
- * Tinos is metrically identical to Times New Roman and free (Apache 2.0). It
- * sits last in the stack for Android and Linux, which have no Times. preload is
- * off deliberately: browsers fetch a family only when everything ahead of it in
- * the stack is missing, so the vast majority of visitors never download it.
- */
-const tinos = Tinos({
-  variable: "--font-tinos",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  preload: false,
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: `${site.name} — ${site.tagline}`,
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s — ${site.name}`,
+  },
   description: site.description,
   keywords: [
     "Canberra photographer",
@@ -40,7 +32,7 @@ export const metadata: Metadata = {
     "wedding photography Canberra",
     "event photography ACT",
     "real estate photography Canberra",
-    "social media content Canberra",
+    "brand content Canberra",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -50,14 +42,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
-    images: [
-      {
-        url: "/design/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Lake Burley Griffin on a clear morning, Canberra",
-      },
-    ],
+    images: [{ url: "/design/og.jpg", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
@@ -67,30 +52,50 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Local business data. Only facts we can stand behind: no street address, no
+ * opening hours, no price range, no ratings.
+ */
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  email: site.email,
+  telephone: site.phoneHref,
+  image: `${site.url}/design/og.jpg`,
+  areaServed: { "@type": "City", name: "Canberra" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Canberra",
+    addressRegion: "ACT",
+    addressCountry: "AU",
+  },
+  sameAs: [site.instagram, site.facebook].filter(Boolean),
+  makesOffer: [
+    "Wedding photography and videography",
+    "Event photography and videography",
+    "Real estate photography and video",
+    "Brand and social media content",
+  ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en-AU"
-      className={`${inter.variable} ${tinos.variable} h-full`}
-    >
-      <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
-          style={{
-            background: "var(--color-accent)",
-            color: "var(--color-action-primary-text)",
-            padding: "8px 16px",
-            borderRadius: "var(--radius-control)",
-          }}
-        >
+    <html lang="en-AU" className={`${cormorant.variable} ${inter.variable}`}>
+      <body>
+        <script
+          type="application/ld+json"
+          // Static, author-controlled object — no user input reaches this.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <a href="#main" className="kv-btn kv-btn--accent" data-skip-link>
           Skip to content
         </a>
         <ScrollMotion />
         <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
+        <main id="main">{children}</main>
         <SiteFooter />
       </body>
     </html>

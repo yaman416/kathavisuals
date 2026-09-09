@@ -21,6 +21,7 @@ export async function submitEnquiry(
   const coverage = String(formData.get("coverage") ?? "").trim();
   const date = String(formData.get("date") ?? "").trim();
   const location = String(formData.get("location") ?? "").trim();
+  const budget = String(formData.get("budget") ?? "").trim();
   const details = String(formData.get("details") ?? "").trim();
   const privacy = formData.get("privacy");
 
@@ -53,6 +54,7 @@ export async function submitEnquiry(
     `Coverage: ${coverage || "Not specified"}`,
     `Preferred date: ${date || "—"}`,
     `Location: ${location || "—"}`,
+    `Budget: ${budget || "Not stated"}`,
     "",
     details,
   ].join("\n");

@@ -1,144 +1,131 @@
-import {
-  FacebookIcon,
-  InstagramIcon,
-  MailIcon,
-  MapPinIcon,
-  PhoneIcon,
-  YoutubeIcon,
-} from "@/components/ds/Icons";
-import Image from "next/image";
-import { navLinks, site } from "@/lib/site";
+import Link from "next/link";
+import { Logo } from "@/components/Logo";
+import { nav, services, site } from "@/lib/site";
 
-/** Only the profiles that exist — a dead social link costs trust. */
-type Social = { label: string; href: string; Icon: typeof InstagramIcon };
+const socials = [
+  { label: "Instagram", href: site.instagram },
+  { label: "Facebook", href: site.facebook },
+  { label: "YouTube", href: site.youtube },
+].filter((s): s is { label: string; href: string } => Boolean(s.href));
 
-const socials: Social[] = [];
-if (site.instagram) socials.push({ label: "Instagram", href: site.instagram, Icon: InstagramIcon });
-if (site.facebook) socials.push({ label: "Facebook", href: site.facebook, Icon: FacebookIcon });
-if (site.youtube) socials.push({ label: "YouTube", href: site.youtube, Icon: YoutubeIcon });
-
-const columnHeading = {
+const heading = {
   fontFamily: "var(--font-body)",
-  fontSize: "var(--text-xs)",
+  fontSize: "var(--text-2xs)",
   fontWeight: 600,
-  letterSpacing: "var(--tracking-nav)",
+  letterSpacing: "var(--tracking-label)",
   textTransform: "uppercase",
-  color: "var(--color-text-secondary)",
-  margin: "0 0 8px",
+  color: "var(--archive-sand)",
+  margin: "0 0 var(--space-4)",
+} as const;
+
+const listLink = {
+  display: "inline-flex",
+  alignItems: "center",
+  minHeight: "var(--touch)",
+  fontSize: "var(--text-sm)",
+  color: "var(--sand-tint)",
+  textDecoration: "none",
 } as const;
 
 export function SiteFooter() {
   return (
-    <footer
-      style={{
-        background: "var(--color-bg-secondary)",
-        borderTop: "1px solid var(--color-border)",
-        padding: "var(--space-16) var(--page-gutter) var(--space-8)",
-      }}
-    >
-      <div
-        className="kv-footer-grid"
-        style={{ maxWidth: "var(--content-width)", margin: "0 auto" }}
-      >
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <Image
-            src="/design/logo-ink.png"
-            alt={site.name}
-            width={1562}
-            height={1074}
-            quality={90}
-            /* The column stretches its children by default, which pulls a
-               width:auto image out to the full column width. */
-            style={{ height: "56px", width: "auto", alignSelf: "flex-start" }}
-          />
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-sm)",
-              color: "var(--color-text-secondary)",
-              maxWidth: "32ch",
-              margin: 0,
-            }}
-          >
-            Photography and video for weddings, events, real estate and social media content.
-          </p>
-        </div>
+    <footer className="kv-section--dark" style={{ paddingBlock: "var(--section-tight)" }}>
+      <div className="kv-wrap">
+        <div
+          className="kv-grid"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
+        >
+          <div>
+            <span style={{ color: "var(--story-paper)", display: "inline-block" }}>
+              <Logo />
+            </span>
+            <p className="kv-muted" style={{ marginTop: "var(--space-4)", fontSize: "var(--text-sm)" }}>
+              {site.tagline}
+            </p>
+            <p className="kv-muted" style={{ fontSize: "var(--text-sm)", margin: 0 }}>
+              {site.location}
+            </p>
+          </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <p style={columnHeading}>Quick Links</p>
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="kv-footer-link">
-              {link.label}
-            </a>
-          ))}
-        </div>
+          <nav aria-label="Footer">
+            <h2 style={heading}>Explore</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {nav.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} style={listLink}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <p style={columnHeading}>Follow Us</p>
-          <div style={{ display: "flex", gap: "10px" }}>
-            {socials.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="kv-social-link"
-                target="_blank"
-                rel="noopener noreferrer me"
-              >
-                <Icon width={18} height={18} />
-              </a>
-            ))}
+          <div>
+            <h2 style={heading}>Services</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {services.map((service) => (
+                <li key={service.slug}>
+                  <Link href={`/services#${service.slug}`} style={listLink}>
+                    {service.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 style={heading}>Get in touch</h2>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              <li>
+                <a href={`tel:${site.phoneHref}`} style={listLink}>
+                  {site.phone}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${site.email}`} style={listLink}>
+                  {site.email}
+                </a>
+              </li>
+              {socials.map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer me" style={listLink}>
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <p style={columnHeading}>Get In Touch</p>
-          <a href={`tel:${site.phoneHref}`} className="kv-footer-link" style={{ gap: "8px" }}>
-            <PhoneIcon width={16} height={16} />
-            {site.phone}
-          </a>
-          <a href={`mailto:${site.email}`} className="kv-footer-link" style={{ gap: "8px" }}>
-            <MailIcon width={16} height={16} />
-            {site.email}
-          </a>
-          <span
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "var(--text-sm)",
-              color: "var(--color-text-secondary)",
-              display: "flex",
-              gap: "8px",
-              alignItems: "center",
-              minHeight: "var(--touch-target)",
-            }}
-          >
-            <MapPinIcon width={16} height={16} />
-            {site.location}
-          </span>
-        </div>
-      </div>
-
-      <div
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          marginTop: "48px",
-          paddingTop: "24px",
-          textAlign: "center",
-        }}
-      >
-        <p
+        <div
           style={{
-            fontFamily: "var(--font-body)",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "var(--space-4)",
+            justifyContent: "space-between",
+            marginTop: "var(--space-12)",
+            paddingTop: "var(--space-6)",
+            borderTop: "1px solid rgb(200 185 159 / 26%)",
             fontSize: "var(--text-xs)",
-            color: "var(--color-text-secondary)",
-            margin: 0,
+            color: "var(--archive-sand)",
           }}
         >
-          © {new Date().getFullYear()} {site.name}. All rights reserved.{" "}
-          <a href="/privacy" style={{ color: "var(--color-text-secondary)" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", minHeight: "var(--touch)" }}>
+            © {new Date().getFullYear()} {site.name}
+          </span>
+          <Link
+            href="/privacy"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "var(--touch)",
+              color: "var(--archive-sand)",
+              textDecoration: "none",
+            }}
+          >
             Privacy policy
-          </a>
-        </p>
+          </Link>
+        </div>
       </div>
     </footer>
   );

@@ -1,254 +1,165 @@
-import { Accordion } from "@/components/ds/Accordion";
-import { ProcessStep, ServiceCard } from "@/components/ds/cards";
-import { icons } from "@/components/ds/Icons";
-import { HeroLayers } from "@/components/HeroLayers";
-import { Media } from "@/components/ds/Media";
-import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
-import { ContactSection } from "@/components/ContactSection";
-import { PortfolioSection } from "@/components/PortfolioSection";
-import { processSteps, services, showPortfolio, site } from "@/lib/site";
+import Link from "next/link";
+import { Hero } from "@/components/Hero";
+import { ProjectCard } from "@/components/ProjectCard";
+import { CallToAction } from "@/components/ui/CallToAction";
+import { Media } from "@/components/ui/Media";
+import { pending, people, principles, projects, services, site } from "@/lib/site";
 
-const bodyText = {
-  fontFamily: "var(--font-body)",
-  color: "var(--color-text-secondary)",
-  lineHeight: "var(--leading-body)",
-} as const;
+const featured = projects.slice(0, 6);
 
 export default function HomePage() {
   return (
-    <div style={{ background: "var(--color-bg)" }}>
-      {/* Hero ------------------------------------------------------------ */}
-      <section
-        id="home"
-        className="kv-hero"
-        style={{
-          position: "sticky",
-          minHeight: "min(88vh, 760px)",
-          display: "flex",
-          alignItems: "center",
-          overflow: "hidden",
-          scrollMarginTop: "88px",
-        }}
-      >
-        <HeroLayers
-          frames={[
-            { src: "/design/hero-woodland.jpg", alt: "Eucalypt woodland near Canberra on a spring morning" },
-            { src: "/design/hero-blossom.jpg", alt: "" },
-            { src: "/design/hero-hills.jpg", alt: "" },
-          ]}
-        />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(90deg, rgba(245,242,236,0.97) 0%, rgba(245,242,236,0.95) 18%, rgba(245,242,236,0.88) 32%, rgba(245,242,236,0.72) 44%, rgba(245,242,236,0.5) 56%, rgba(245,242,236,0.3) 68%, rgba(245,242,236,0.16) 80%, rgba(245,242,236,0.08) 100%)",
-          }}
-        />
-        <div
-          className="kv-hero-content"
-          style={{ position: "relative", padding: "0 var(--page-gutter)", maxWidth: "640px" }}
-        >
-          <Eyebrow>{site.eyebrow}</Eyebrow>
-          <SectionHeading as="h1" size="h1" style={{ margin: "16px 0" }}>
-            {site.tagline}
-          </SectionHeading>
-          <Divider width="60px" />
-          <p style={{ ...bodyText, fontSize: "var(--text-base)", maxWidth: "48ch", margin: "20px 0 32px" }}>
-            Photography and video for weddings, events, real estate and social media content. One
-            studio, one considered visual style, across stills and motion.
-          </p>
-          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-            <ButtonLink href="#contact" variant="primary">
-              Enquire Now
-            </ButtonLink>
-            <ButtonLink href={showPortfolio ? "#portfolio" : "#services"} variant="outline">
-              View Our Work
-            </ButtonLink>
+    <>
+      <Hero />
+
+      <div className="kv-below-hero">
+        {/* Introduction ------------------------------------------------- */}
+        <section className="kv-section">
+          <div className="kv-wrap kv-split kv-split--wide-media">
+            <div>
+              <p className="kv-eyebrow">Introduction</p>
+              <h2 style={{ maxWidth: "16ch" }}>Every story begins with a moment.</h2>
+              <p className="kv-lede" style={{ marginTop: "var(--space-6)" }}>
+                {site.name} is a Canberra-based photography and videography team founded by
+                Prakash Khanal, with Yaman Gurung as partner.
+              </p>
+              <p className="kv-muted">
+                Drawing on years of independent creative experience, we now work together under
+                one brand to document people, celebrations, places and businesses with honesty
+                and intention.
+              </p>
+              <Link href="/about" className="kv-link">
+                Read our story →
+              </Link>
+            </div>
+            <Media
+              src="/design/about-landscape.jpg"
+              alt="Open grassland and gum trees outside Canberra"
+              ratio="5 / 4"
+              sizes="(min-width: 900px) 50vw, 100vw"
+            />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div className="kv-over-hero">
-      {/* Service cards --------------------------------------------------- */}
-      <section
-        style={{
-          padding: "var(--section-space-tight) var(--page-gutter) var(--section-space)",
-        }}
-      >
-        <p
-          style={{
-            textAlign: "center",
-            fontFamily: "var(--font-body)",
-            fontSize: "var(--text-xs)",
-            fontWeight: 600,
-            letterSpacing: "var(--tracking-eyebrow)",
-            textTransform: "uppercase",
-            color: "var(--color-text-secondary)",
-            margin: "0 0 32px",
-          }}
-        >
-          Four Services, One Studio
-        </p>
-        <div
-          className="kv-grid-4"
-          style={{
-            border: "1px solid var(--color-border)",
-            maxWidth: "var(--content-width)",
-            margin: "0 auto",
-          }}
-        >
-          {services.map((service) => {
-            const Icon = icons[service.icon];
-            return (
-              <ServiceCard
-                key={service.slug}
-                image={service.image}
-                label={service.name}
-                icon={<Icon width={20} height={20} />}
-                href={`#${service.anchorId}`}
-                placeholderLabel={`/public/design/service-${service.slug}.jpg`}
-              />
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Process --------------------------------------------------------- */}
-      <section
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          borderBottom: "1px solid var(--color-border)",
-        }}
-      >
-        <div
-          className="kv-grid-4"
-          style={{ maxWidth: "var(--content-width)", margin: "0 auto" }}
-        >
-          {processSteps.map((step) => {
-            const Icon = icons[step.icon];
-            return (
-              <ProcessStep
-                key={step.title}
-                icon={<Icon width={20} height={20} />}
-                title={step.title}
-                description={step.description}
-              />
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Services -------------------------------------------------------- */}
-      <section
-        id="services"
-        style={{
-          padding: "var(--section-space) var(--page-gutter)",
-          maxWidth: "var(--content-width-mid)",
-          margin: "0 auto",
-          scrollMarginTop: "88px",
-        }}
-      >
-        <Eyebrow>Services</Eyebrow>
-        <SectionHeading style={{ margin: "12px 0 40px" }}>
-          Four Ways We Tell Your Story.
-        </SectionHeading>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1px",
-            border: "1px solid var(--color-border)",
-          }}
-        >
-          {services.map((service) => (
+        {/* Featured work ------------------------------------------------ */}
+        <section className="kv-section kv-section--tight">
+          <div className="kv-wrap">
             <div
-              key={service.slug}
-              id={service.anchorId}
-              className="kv-service-row"
               style={{
-                background: "var(--color-bg-secondary)",
-                borderBottom: "1px solid var(--color-border)",
-                padding: "32px",
-                scrollMarginTop: "96px",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "var(--space-6)",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                marginBottom: "var(--space-12)",
               }}
             >
-              <Media
-                src={service.image}
-                alt=""
-                label={`/public/design/service-${service.slug}.jpg`}
-                style={{ aspectRatio: "4 / 3", borderRadius: "var(--radius-card)" }}
-                sizes="(min-width: 900px) 42vw, 100vw"
-              />
               <div>
-                <h3
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 400,
-                    color: "var(--color-text-strong)",
-                    fontSize: "var(--text-h3)",
-                    margin: "0 0 8px",
-                  }}
-                >
-                  {service.name}
-                </h3>
-                <p style={{ ...bodyText, fontSize: "var(--text-sm)", margin: "0 0 16px" }}>
-                  {service.copy}
-                </p>
-                <p style={{ ...bodyText, fontSize: "var(--text-sm)", margin: "0 0 20px" }}>
-                  <strong style={{ color: "var(--color-text-primary)" }}>Who it&apos;s for: </strong>
-                  {service.audience}
-                </p>
-                <Accordion items={service.faqs} />
+                <p className="kv-eyebrow">Selected work</p>
+                <h2 style={{ maxWidth: "18ch" }}>Weddings, events, properties and brands.</h2>
               </div>
+              <Link href="/portfolio" className="kv-link">
+                View the full portfolio →
+              </Link>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Portfolio — hidden until there is real client work to show ------ */}
-      {showPortfolio ? <PortfolioSection /> : null}
+            {pending.imageryIsPlaceholder ? (
+              <p className="kv-muted" style={{ fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
+                Placeholder imagery is shown while our client galleries are prepared.
+              </p>
+            ) : null}
 
-      {/* About ----------------------------------------------------------- */}
-      <section
-        id="about"
-        className="kv-split"
-        style={{
-          maxWidth: "var(--content-width)",
-          margin: "0 auto",
-          padding: "var(--section-space) var(--page-gutter)",
-          scrollMarginTop: "88px",
-        }}
-      >
-        <Media
-          src="/design/about-landscape.jpg"
-          alt="Landscape near Canberra, ACT"
-          label="/public/design/about-landscape.jpg"
-          style={{ aspectRatio: "4/3", borderRadius: "var(--radius-card)" }}
-        />
-        <div>
-          <Eyebrow>About Katha Visuals</Eyebrow>
-          <SectionHeading style={{ margin: "12px 0 20px" }}>Our Approach.</SectionHeading>
-          <p style={{ ...bodyText, marginBottom: "16px" }}>
-            Katha Visuals is a Canberra based photography and video studio working across weddings,
-            events, real estate and social media content.
-          </p>
-          <p style={{ ...bodyText, marginBottom: "24px" }}>
-            Book photography, video, or both. Whichever you choose, it is shot by the same team
-            with the same eye, so a project never looks like two suppliers stitched together.
-            Every one gets clear communication, thoughtful preparation on the day and a
-            consistent, considered look across the final delivery.
-          </p>
-          <ButtonLink href="#contact" variant="primary">
-            Enquire Now
-          </ButtonLink>
-        </div>
-      </section>
+            <div className="kv-portfolio">
+              {featured.map((project, i) => (
+                <div key={project.id} className="kv-portfolio__item" data-span={project.span}>
+                  <ProjectCard project={project} priority={i < 2} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      {/* Contact --------------------------------------------------------- */}
-      <ContactSection />
+        {/* Services ----------------------------------------------------- */}
+        <section className="kv-section" style={{ background: "var(--color-surface)" }}>
+          <div className="kv-wrap">
+            <p className="kv-eyebrow">Services</p>
+            <h2 style={{ maxWidth: "16ch" }}>Four ways we work.</h2>
+
+            <div className="kv-grid kv-grid--4" style={{ marginTop: "var(--space-12)" }}>
+              {services.map((service) => (
+                <Link
+                  key={service.slug}
+                  href={`/services#${service.slug}`}
+                  className="kv-card"
+                  style={{ textDecoration: "none", display: "block" }}
+                >
+                  <Media
+                    src={service.image}
+                    alt={`${service.name} photography by ${site.name}`}
+                    ratio="4 / 5"
+                    sizes="(min-width: 900px) 25vw, 50vw"
+                  />
+                  <h3 style={{ fontSize: "var(--text-lg)", marginTop: "var(--space-4)" }}>
+                    {service.name}
+                  </h3>
+                  <p className="kv-muted" style={{ fontSize: "var(--text-sm)" }}>
+                    {service.summary}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why work with us --------------------------------------------- */}
+        <section className="kv-section">
+          <div className="kv-wrap">
+            <p className="kv-eyebrow">Why work with us</p>
+            <h2 style={{ maxWidth: "20ch" }}>What you can expect, on every project.</h2>
+
+            <div className="kv-grid kv-grid--4" style={{ marginTop: "var(--space-12)" }}>
+              {principles.map((principle) => (
+                <div key={principle.title} style={{ borderTop: "2px solid var(--color-accent)", paddingTop: "var(--space-4)" }}>
+                  <h3 style={{ fontSize: "var(--text-lg)" }}>{principle.title}</h3>
+                  <p className="kv-muted" style={{ fontSize: "var(--text-sm)", margin: "var(--space-2) 0 0" }}>
+                    {principle.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* About preview ------------------------------------------------ */}
+        <section className="kv-section" style={{ background: "var(--color-surface)" }}>
+          <div className="kv-wrap kv-split">
+            <Media
+              src={pending.teamPhotograph}
+              alt={`${people[0].name} and ${people[1].name} of ${site.name}`}
+              ratio="4 / 5"
+              sizes="(min-width: 900px) 45vw, 100vw"
+              placeholder="Photograph of Prakash and Yaman required"
+            />
+            <div>
+              <p className="kv-eyebrow">About</p>
+              <h2 style={{ maxWidth: "16ch" }}>The people behind {site.name}</h2>
+              <p className="kv-muted" style={{ marginTop: "var(--space-6)" }}>
+                {site.name} brings together the creative experience of founder Prakash Khanal and
+                partner Yaman Gurung. Based in Canberra and connected by our Nepalese background,
+                we approach every project with cultural awareness, preparation and respect for the
+                people whose stories we document.
+              </p>
+              <Link href="/about" className="kv-link">
+                Meet the team →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials stay unpublished until genuine ones exist. */}
+
+        <CallToAction />
       </div>
-    </div>
+    </>
   );
 }
