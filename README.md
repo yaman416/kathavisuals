@@ -138,8 +138,8 @@ Both faces are referenced only through `--font-display` and `--font-body` in
 ## Interaction and motion
 
 - **Browsers without `animation-timeline`** (Firefox, and Safari before 26)
-  render the page motionless, so `ScrollMotion` drives the same effects from
-  script for those only. It no-ops entirely where CSS timelines work. It writes
+  render the hero motionless, so `ScrollMotion` drives the same cross-fade and
+  drift from script for those only. It no-ops entirely where CSS timelines work. It writes
   nothing but transform and opacity, reads no layout inside the scroll handler,
   and reveals elements with an IntersectionObserver rather than measuring
   positions each frame. `document.documentElement.dataset.motionFallback` is set
