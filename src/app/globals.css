@@ -346,13 +346,118 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
-/* Work galleries. Six columns, four on tablets, two on phones. The grid never
-   drops to a single column, so a section always reads as a gallery rather than
-   a stack. GALLERY_SLOTS is set to 12 to divide evenly into all three. */
-.kv-gallery {
+/* --------------------------------------------------------- work galleries ---
+   A scroll-snap track rather than a grid of thumbnails: one photograph at a
+   readable size, with the next one showing at the edge so it is obvious the
+   track scrolls. Snapping and momentum are the browser's; the arrows only call
+   scrollBy. */
+
+.kv-carousel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+.kv-carousel__count {
+  margin: 0;
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-nav);
+  text-transform: uppercase;
+}
+.kv-carousel__nav { display: flex; align-items: center; gap: var(--space-2); }
+
+.kv-round {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  place-items: center;
+  width: var(--touch);
+  height: var(--touch);
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-ink);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.kv-round:hover:not(:disabled) { background: var(--color-surface-alt); }
+.kv-round:disabled { opacity: 0.35; cursor: default; }
+.kv-round--invert {
+  color: var(--story-paper);
+  border-color: color-mix(in srgb, var(--story-paper) 45%, transparent);
+}
+.kv-round--invert:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--story-paper) 15%, transparent);
+}
+
+.kv-track {
+  display: flex;
   gap: var(--space-4);
+  margin: 0;
+  padding: 0 0 var(--space-4);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+.kv-slide {
+  /* Near full width on a phone, capped on a monitor. Either way the next
+     slide peeks past the edge, which is what says the track scrolls. */
+  flex: 0 0 min(80vw, 780px);
+  scroll-snap-align: start;
+}
+.kv-slide__button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  cursor: zoom-in;
+  background: none;
+  border: 0;
+}
+
+/* ------------------------------------------------------------- lightbox ---
+   Native <dialog>, so the focus trap, inertness and Escape are the browser's. */
+
+.kv-lightbox {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  padding: 0;
+  color: var(--story-paper);
+  background: transparent;
+  border: 0;
+}
+.kv-lightbox::backdrop { background: color-mix(in srgb, var(--forest-ink) 92%, transparent); }
+.kv-lightbox__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--gutter);
+}
+.kv-lightbox__frame { position: relative; flex: 1; min-height: 0; }
+.kv-lightbox__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.kv-lightbox__caption {
+  max-width: 60ch;
+  margin: 0;
+  font-size: var(--text-sm);
+  color: color-mix(in srgb, var(--story-paper) 78%, transparent);
+}
+.kv-lightbox__count {
+  min-width: 6ch;
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-nav);
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .kv-split {
@@ -362,14 +467,6 @@ img, video { max-width: 100%; }
   align-items: center;
 }
 .kv-split--wide-media { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
-
-@media (max-width: 1100px) {
-  .kv-gallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
-@media (max-width: 700px) {
-  .kv-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 
 @media (max-width: 900px) {
   .kv-grid--3, .kv-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }

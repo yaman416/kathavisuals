@@ -333,19 +333,20 @@ export const projects: Project[] = [
 /* -------------------------------------------------------------------------- */
 
 /**
- * Slots in each service's gallery.
+ * The gallery is a scroll track, so it does not need padding out to a fixed
+ * grid. Every photograph in the array is shown at a readable size, and empty
+ * slots are added only up to MIN_SLIDES, which is enough for the track to
+ * scroll and to leave an obvious place for the next photograph.
  *
- * Twelve is the lowest common multiple of the 2, 4 and 6 columns the grid uses
- * across breakpoints, so every screen size ends on a complete row rather than a
- * ragged one. Real photographs fill the slots in order and the remainder render
- * as labelled placeholders, ready to be replaced.
+ * To publish more work, append to the arrays below. Nothing else changes.
  */
-export const GALLERY_SLOTS = 12;
+export const MIN_SLIDES = 4;
 
 export type GallerySlot = { src: string; alt: string } | null;
 
 function slots(images: { src: string; alt: string }[]): GallerySlot[] {
-  return Array.from({ length: GALLERY_SLOTS }, (_, i) => images[i] ?? null);
+  const length = Math.max(MIN_SLIDES, images.length);
+  return Array.from({ length }, (_, i) => images[i] ?? null);
 }
 
 /** Keyed by service slug. Add photographs to the arrays; slots fill in order. */

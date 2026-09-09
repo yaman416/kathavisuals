@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CallToAction } from "@/components/ui/CallToAction";
-import { Media } from "@/components/ui/Media";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { WorkCarousel } from "@/components/WorkCarousel";
 import { galleries, pending, services, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -10,9 +10,6 @@ export const metadata: Metadata = {
     "Wedding, event, real estate and brand photography and video by Katha Visuals in Canberra.",
   alternates: { canonical: "/portfolio" },
 };
-
-/** Six columns at full width, four on tablets, two on phones. */
-const SIZES = "(min-width: 1100px) 16vw, (min-width: 700px) 24vw, 48vw";
 
 export default function PortfolioPage() {
   return (
@@ -76,18 +73,8 @@ export default function PortfolioPage() {
                 {service.summary}
               </p>
 
-              <div className="kv-gallery" style={{ marginTop: "var(--space-10)" }}>
-                {slots.map((slot, i) => (
-                  <Media
-                    key={`${service.slug}-${i}`}
-                    src={slot?.src ?? null}
-                    alt={slot?.alt ?? `${service.name} photograph`}
-                    ratio="1 / 1"
-                    sizes={SIZES}
-                    priority={index === 0 && i < 2}
-                    placeholder="Image to come"
-                  />
-                ))}
+              <div style={{ marginTop: "var(--space-10)" }}>
+                <WorkCarousel slots={slots} label={service.name} priority={index === 0} />
               </div>
             </div>
           </section>
