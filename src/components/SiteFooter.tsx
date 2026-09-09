@@ -47,7 +47,6 @@ export function SiteFooter() {
             width={1562}
             height={1074}
             quality={90}
-          quality={90}
             /* The column stretches its children by default, which pulls a
                width:auto image out to the full column width. */
             style={{ height: "56px", width: "auto", alignSelf: "flex-start" }}

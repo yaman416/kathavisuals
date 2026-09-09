@@ -170,7 +170,6 @@ export function SiteHeader() {
             width={1562}
             height={1074}
             quality={90}
-          quality={90}
             style={{ height: "56px", width: "auto", marginBottom: "16px" }}
           />
 
