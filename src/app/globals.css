@@ -5,40 +5,45 @@
    (_ds/katha-visuals-design-system-.../tokens/*.css)
 --------------------------------------------------------------------------- */
 
+/* ---------------------------------------------------------------------------
+   Warm Ivory palette. The design system was authored dark; these are the same
+   roles re-derived for a light ground. The accent had to darken — the original
+   #a99066 sits at 2.6:1 on white, which fails AA and looks washed out.
+--------------------------------------------------------------------------- */
+
 :root {
   /* colors.css */
-  --black: #050607;
-  --panel: #0a0b0d;
-  --panel-soft: #141518;
-  --ink: #0e0d0c;
-  --ivory: #f3f0e9;
-  --white: #ffffff;
-  --text-muted: #b6b3ae;
-  --gold: #a99066;
-  --gold-hover: #c0a879;
-  --border-subtle: rgb(255 255 255 / 14%);
-  --border-gold: rgb(169 144 102 / 42%);
-  --error: #c0605f;
-  --success: #5f9e78;
-  --warning: #c9a24a;
+  --ink: #17150f;
+  --ink-strong: #100f0b;
+  --cream: #f5f2ec;
+  --paper: #ffffff;
+  --text-muted: #6a6459;
+  --gold: #7d6838;
+  --gold-hover: #5f4f2a;
+  --border-subtle: #dad5cb;
+  --border-gold: rgb(125 104 56 / 40%);
+  --error: #b03a38;
+  --success: #3f7d58;
+  --warning: #8a6b1e;
 
-  --color-bg: var(--black);
-  --color-bg-secondary: var(--panel);
-  --color-surface: var(--panel-soft);
-  --color-text-primary: var(--ivory);
-  --color-text-strong: var(--white);
+  --color-bg: var(--cream);
+  --color-bg-secondary: var(--paper);
+  --color-surface: var(--paper);
+  --color-text-primary: var(--ink);
+  --color-text-strong: var(--ink-strong);
   --color-text-secondary: var(--text-muted);
   --color-accent: var(--gold);
   --color-accent-hover: var(--gold-hover);
   --color-border: var(--border-subtle);
   --color-border-accent: var(--border-gold);
-  --color-action-primary-bg: var(--ivory);
-  --color-action-primary-text: var(--black);
-  --color-action-primary-bg-hover: var(--white);
-  --color-action-outline-border: rgb(243 240 233 / 55%);
-  --color-action-outline-text: var(--ivory);
-  --color-action-outline-border-hover: var(--ivory);
-  --color-focus-ring: var(--gold-hover);
+  --color-action-primary-bg: var(--ink);
+  --color-action-primary-text: var(--cream);
+  --color-action-primary-bg-hover: #2a2620;
+  --color-action-outline-border: rgb(23 21 15 / 28%);
+  --color-action-outline-text: var(--ink);
+  --color-action-outline-border-hover: var(--ink);
+  --color-focus-ring: var(--gold);
+  --color-field-border: rgb(23 21 15 / 26%);
   --color-error: var(--error);
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -89,7 +94,23 @@
   --duration-slow: 240ms;
   --touch-target: 44px;
 
-  color-scheme: dark;
+  color-scheme: light;
+}
+
+/* Sections layered over dark photography flip the roles back, so type and
+   controls on the hero keep the contrast the imagery requires. */
+.kv-on-dark {
+  --color-text-primary: #f3f0e9;
+  --color-text-strong: #ffffff;
+  --color-text-secondary: #b8b4ad;
+  --color-accent: #c9b083;
+  --color-accent-hover: #ddc99f;
+  --color-action-primary-bg: #f3f0e9;
+  --color-action-primary-text: #17150f;
+  --color-action-primary-bg-hover: #ffffff;
+  --color-action-outline-border: rgb(243 240 233 / 55%);
+  --color-action-outline-text: #f3f0e9;
+  --color-action-outline-border-hover: #f3f0e9;
 }
 
 html {
@@ -120,7 +141,7 @@ a:hover {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--black);
+  color: var(--paper);
 }
 
 /* ---------------------------------------------------------------------------
@@ -191,7 +212,7 @@ a:hover {
   width: 100%;
   box-sizing: border-box;
   background: var(--color-bg-secondary);
-  border: 1px solid rgb(255 255 255 / 30%);
+  border: 1px solid var(--color-field-border);
   border-radius: var(--radius-control);
   color: var(--color-text-primary);
   font-family: var(--font-body);
@@ -204,7 +225,7 @@ a:hover {
 
 .kv-field:focus {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgb(169 144 102 / 25%);
+  box-shadow: 0 0 0 3px rgb(125 104 56 / 20%);
 }
 
 .kv-field[aria-invalid="true"] {
@@ -370,9 +391,9 @@ textarea.kv-field {
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(120% 80% at 20% 10%, rgb(169 144 102 / 16%), transparent 60%),
-    radial-gradient(90% 70% at 90% 90%, rgb(243 240 233 / 6%), transparent 55%),
-    var(--color-surface);
+    radial-gradient(120% 80% at 20% 10%, rgb(125 104 56 / 14%), transparent 60%),
+    radial-gradient(90% 70% at 90% 90%, rgb(23 21 15 / 5%), transparent 55%),
+    var(--color-bg);
   display: flex;
   align-items: flex-end;
   padding: 16px;

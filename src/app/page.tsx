@@ -20,6 +20,7 @@ export default function HomePage() {
       {/* Hero ------------------------------------------------------------ */}
       <section
         id="home"
+        className="kv-on-dark"
         style={{
           position: "relative",
           minHeight: "640px",

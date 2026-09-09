@@ -37,6 +37,26 @@ npm run lint    # eslint
 Design tokens live only in `globals.css`. Components reference them as CSS variables
 (`var(--color-accent)`), never as hard-coded values.
 
+## Palette
+
+The site runs the **Warm Ivory** light palette: cream ground `#f5f2ec`, white
+surfaces, ink text `#17150f`, gold accent `#7d6838`.
+
+The design system was authored dark and the tokens were re-derived for a light
+ground. Two things are worth knowing before changing them:
+
+- **The accent had to darken.** The original `#a99066` sits at 2.6:1 on white,
+  which fails WCAG AA and looks washed out. `#7d6838` reaches 4.8:1.
+- **The hero stays dark**, because it is a photograph with type over it. It
+  carries `.kv-on-dark`, which flips the semantic tokens back to their dark
+  values for that subtree only. Put that class on any section laid over dark
+  imagery; never hardcode a light colour to work around it.
+
+`public/design/logo-ink.png` is the supplied logo recoloured to the ink value
+with its alpha preserved — the white original is unreadable on cream.
+`logo-original.png` and `logo-white.png` are kept for dark surfaces and
+watermarks.
+
 ## Imagery
 
 **Every photo on the site is an AI-generated placeholder**, generated with Higgsfield

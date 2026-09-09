@@ -47,7 +47,7 @@ export function ServiceCard({
           justifyContent: "center",
           gap: "10px",
           padding: "16px 12px",
-          background: "var(--black)",
+          background: "var(--color-surface)",
           borderTop: "1px solid var(--color-border)",
         }}
       >

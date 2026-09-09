@@ -69,7 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50"
           style={{
             background: "var(--color-accent)",
-            color: "var(--black)",
+            color: "var(--color-action-primary-text)",
             padding: "8px 16px",
             borderRadius: "var(--radius-control)",
           }}

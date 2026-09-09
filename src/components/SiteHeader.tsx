@@ -76,7 +76,7 @@ export function SiteHeader() {
         aria-label={site.name}
       >
         <Image
-          src="/design/logo-original.png"
+          src="/design/logo-ink.png"
           alt={site.name}
           width={1562}
           height={1074}
@@ -164,7 +164,7 @@ export function SiteHeader() {
           </button>
 
           <Image
-            src="/design/logo-original.png"
+            src="/design/logo-ink.png"
             alt=""
             width={1562}
             height={1074}

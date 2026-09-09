@@ -42,7 +42,7 @@ export function SiteFooter() {
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <Image
-            src="/design/logo-original.png"
+            src="/design/logo-ink.png"
             alt={site.name}
             width={1562}
             height={1074}
