@@ -75,7 +75,7 @@ our portfolio with real client work"* — controlled by `showSampleNote` in
 
 | Slot | File | Crop |
 | --- | --- | --- |
-| Hero background | `hero-lake.jpg` | 21:9. Lake Burley Griffin on a clear morning. The left third is open pale sky and water, which is what the ink headline sits on |
+| Hero background | `hero-lake`, `hero-blossom`, `hero-woodland`, `hero-hills` | 21:9 each, cross-faded on scroll. All keep an open pale left third, which is what the ink headline sits on |
 | About (used twice) | `about-landscape.jpg` | 4:3 |
 | Service cards + detail rows | `service-{weddings,events,real-estate,social}.jpg` | 4:5 |
 | Portfolio grid | `portfolio-{weddings,events,real-estate,social}.jpg` | 4:3 |
@@ -145,8 +145,16 @@ Both faces are referenced only through `--font-display` and `--font-body` in
   positions each frame. `document.documentElement.dataset.motionFallback` is set
   when it is active.
 - **Only the hero animates.** Nothing else on the page moves on scroll — no
-  reveals, wipes or staggers. `document.getAnimations()` should report exactly
-  three: two `kv-hero-settle` and one `kv-hero-lift`.
+  reveals, wipes or staggers.
+- **The hero cross-fades through four Canberra scenes as you scroll**, each
+  drifting at its own rate so the change reads as depth rather than a slideshow.
+  `HeroLayers` stacks them; `globals.css` owns the ranges. Fully reversible —
+  scroll back up and it runs backwards to exactly where it started.
+
+  The ranges must finish before the page covers the hero, or the later
+  cross-fades happen out of sight. At a 900px viewport the hero is covered at
+  829px of scroll and the last fade completes at 792px. If you change the hero
+  height, re-check those numbers.
 - **Nothing animates on its own.** Every animation on the page is bound to a
   `ScrollTimeline`, never a `DocumentTimeline` — the scrollbar is the clock. Stop
   scrolling and everything stops. There is no video, no autoplay, no loop, and

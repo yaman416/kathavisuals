@@ -1,6 +1,7 @@
 import { Accordion } from "@/components/ds/Accordion";
 import { ProcessStep, ServiceCard } from "@/components/ds/cards";
 import { icons } from "@/components/ds/Icons";
+import { HeroLayers } from "@/components/HeroLayers";
 import { Media } from "@/components/ds/Media";
 import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
@@ -29,14 +30,13 @@ export default function HomePage() {
           scrollMarginTop: "88px",
         }}
       >
-        <Media
-          src="/design/hero-lake.jpg"
-          alt="Lake Burley Griffin and Black Mountain at dusk, Canberra"
-          label="Hero image — /public/design/hero-lake.jpg"
-          className="kv-hero-media"
-          style={{ position: "absolute", inset: 0 }}
-          sizes="100vw"
-          priority
+        <HeroLayers
+          frames={[
+            { src: "/design/hero-lake.jpg", alt: "Lake Burley Griffin on a clear morning, Canberra" },
+            { src: "/design/hero-blossom.jpg", alt: "" },
+            { src: "/design/hero-woodland.jpg", alt: "" },
+            { src: "/design/hero-hills.jpg", alt: "" },
+          ]}
         />
         <div
           style={{

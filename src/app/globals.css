@@ -494,37 +494,80 @@ textarea.kv-field {
   background: var(--color-bg);
 }
 
-@keyframes kv-hero-settle {
-  from {
-    transform: scale(1.14) translateY(-2%);
-  }
-  to {
-    transform: scale(1) translateY(4%);
-  }
+/* Each layer drifts at its own rate, so the change reads as depth. */
+@keyframes kv-hero-drift-a {
+  from { transform: scale(1.16) translate3d(0, -1.5%, 0); }
+  to   { transform: scale(1.02) translate3d(0, 5%, 0); }
+}
+@keyframes kv-hero-drift-b {
+  from { transform: scale(1.02) translate3d(0, -5%, 0); }
+  to   { transform: scale(1.18) translate3d(0, 3%, 0); }
+}
+@keyframes kv-hero-drift-c {
+  from { transform: scale(1.2) translate3d(0, 4%, 0); }
+  to   { transform: scale(1.04) translate3d(0, -3%, 0); }
+}
+
+/* Cross-fades. Each layer owns a slice of the scroll and hands over to the
+   next; the last one holds so the hero never fades to nothing. */
+@keyframes kv-layer-out {
+  0%, 55% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+@keyframes kv-layer-through {
+  0%      { opacity: 0; }
+  28%, 62% { opacity: 1; }
+  100%    { opacity: 0; }
+}
+@keyframes kv-layer-in {
+  0%   { opacity: 0; }
+  55%, 100% { opacity: 1; }
 }
 
 @keyframes kv-hero-lift {
-  from {
-    opacity: 1;
-    transform: none;
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-64px);
-  }
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-64px); }
 }
+
+.kv-hero-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Without animation the first frame is the hero and the rest stay hidden. */
+.kv-hero-layer[data-layer="0"] { opacity: 1; }
+.kv-hero-layer:not([data-layer="0"]) { opacity: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
-    .kv-hero-media,
-    .kv-hero-media img {
-      animation: kv-hero-settle 1ms linear both;
+    .kv-hero-layer {
       animation-timeline: scroll();
-      animation-range: 0 100vh;
-      will-change: transform;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      animation-duration: 1ms;
+      will-change: opacity, transform;
     }
 
-    /* The headline and its controls lift away as the page covers the hero. */
+    /* The page covers the hero at roughly 88vh, so the whole sequence has to
+       finish inside that. Ranges past it would cross-fade out of sight. */
+    .kv-hero-layer[data-layer="0"] {
+      animation-name: kv-layer-out, kv-hero-drift-a;
+      animation-range: 0 30vh, 0 88vh;
+    }
+    .kv-hero-layer[data-layer="1"] {
+      animation-name: kv-layer-through, kv-hero-drift-b;
+      animation-range: 10vh 54vh, 0 88vh;
+    }
+    .kv-hero-layer[data-layer="2"] {
+      animation-name: kv-layer-through, kv-hero-drift-c;
+      animation-range: 34vh 76vh, 0 88vh;
+    }
+    .kv-hero-layer[data-layer="3"] {
+      animation-name: kv-layer-in, kv-hero-drift-a;
+      animation-range: 56vh 88vh, 0 88vh;
+    }
+
     .kv-hero-content {
       animation: kv-hero-lift 1ms linear both;
       animation-timeline: scroll();
