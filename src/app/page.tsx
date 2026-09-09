@@ -21,7 +21,7 @@ export default function HomePage() {
               <h2 style={{ maxWidth: "16ch" }}>Every story begins with a moment.</h2>
               <p className="kv-lede" style={{ marginTop: "var(--space-6)" }}>
                 {site.name} is a Canberra-based photography and videography team founded by
-                Prakash Khanal, with Yaman Gurung as partner.
+                Prakash Khanal and Yaman Gurung.
               </p>
               <p className="kv-muted">
                 Drawing on years of independent creative experience, we now work together under
@@ -144,10 +144,10 @@ export default function HomePage() {
               <p className="kv-eyebrow">About</p>
               <h2 style={{ maxWidth: "16ch" }}>The people behind {site.name}</h2>
               <p className="kv-muted" style={{ marginTop: "var(--space-6)" }}>
-                {site.name} brings together the creative experience of founder Prakash Khanal and
-                partner Yaman Gurung. Based in Canberra and connected by our Nepalese background,
-                we approach every project with cultural awareness, preparation and respect for the
-                people whose stories we document.
+                {site.name} brings together the creative experience of its two founders, Prakash
+                Khanal and Yaman Gurung. Both shoot photography and video. Based in Canberra and
+                connected by our Nepalese background, we approach every project with cultural
+                awareness, preparation and respect for the people whose stories we document.
               </p>
               <Link href="/about" className="kv-link">
                 Meet the team →

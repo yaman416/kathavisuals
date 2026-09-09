@@ -8,7 +8,7 @@ import { pending, people, principles, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Katha Visuals is a Canberra photography and videography brand founded by Prakash Khanal with Yaman Gurung as partner.",
+    "Katha Visuals is a Canberra photography and videography brand founded by Prakash Khanal and Yaman Gurung, who both shoot photography and video.",
   alternates: { canonical: "/about" },
 };
 
@@ -18,7 +18,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title="Two creative journeys, one shared vision."
-        lede={`${site.name} is a Canberra-based photography and videography brand founded by Prakash Khanal, with Yaman Gurung as partner.`}
+        lede={`${site.name} is a Canberra-based photography and videography brand founded by Prakash Khanal and Yaman Gurung. We both shoot photography and video.`}
       />
 
       <section className="kv-section" style={{ paddingTop: 0 }}>

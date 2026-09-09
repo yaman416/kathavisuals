@@ -49,17 +49,21 @@ export type Person = {
   portrait: string | null;
 };
 
+/**
+ * Prakash and Yaman hold the same role. The bios are deliberately parallel:
+ * differentiating them would mean inventing detail neither has confirmed.
+ */
 export const people: Person[] = [
   {
     name: "Prakash Khanal",
-    role: "Founder",
-    bio: "Prakash leads the creative direction of Katha Visuals and brings his photography and videography experience into the visual treatment of each project.",
+    role: "Founder, Photographer & Videographer",
+    bio: "Prakash co-founded Katha Visuals and shoots both photography and video across the studio's work, from weddings and events through to property and brand projects.",
     portrait: null,
   },
   {
     name: "Yaman Gurung",
-    role: "Partner",
-    bio: "Yaman works alongside Prakash across the development and delivery of Katha Visuals projects, helping create a considered and consistent experience for clients.",
+    role: "Founder, Photographer & Videographer",
+    bio: "Yaman co-founded Katha Visuals and shoots both photography and video across the studio's work, sharing creative direction and delivery on every project.",
     portrait: null,
   },
 ];
@@ -378,8 +382,7 @@ export const pending = {
   imageryIsPlaceholder: true,
   /** Confirmed detail still needed before it can be written into a bio. */
   bioDetailNeeded: [
-    "Prakash: preferred description of his background, if he wants one published",
-    "Yaman: whether a more specific role than Partner should be stated",
+    "Any detail either founder wants published to distinguish their bios — the two are currently parallel because the roles are identical",
     "Whether an ABN should appear in the footer",
   ],
 };
