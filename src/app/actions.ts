@@ -12,6 +12,34 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  */
 const RESEND_TEST_SENDER = "Katha Visuals <onboarding@resend.dev>";
 
+/**
+ * Mailbox providers, as opposed to domains someone can own. Resend only sends
+ * from a domain verified on the account, and nobody can verify gmail.com, so a
+ * `from` here is rejected every time. Receiving at a Gmail address is fine and
+ * unrelated: that is ENQUIRY_TO_EMAIL.
+ */
+const MAILBOX_PROVIDERS = new Set([
+  "gmail.com",
+  "googlemail.com",
+  "outlook.com",
+  "hotmail.com",
+  "live.com",
+  "live.com.au",
+  "yahoo.com",
+  "yahoo.com.au",
+  "icloud.com",
+  "me.com",
+  "aol.com",
+  "bigpond.com",
+  "optusnet.com.au",
+]);
+
+/** Accepts either "a@b.com" or "Name <a@b.com>". */
+function senderDomain(address: string): string {
+  const match = address.match(/<([^>]+)>/);
+  return (match ? match[1] : address).split("@").pop()?.trim().toLowerCase() ?? "";
+}
+
 export async function submitEnquiry(
   _prev: EnquiryState,
   formData: FormData,
@@ -85,8 +113,19 @@ export async function submitEnquiry(
     return { ok: response.ok, status: response.status, detail: await response.text() };
   };
 
+  let sender = configuredFrom || RESEND_TEST_SENDER;
+  if (configuredFrom && MAILBOX_PROVIDERS.has(senderDomain(configuredFrom))) {
+    console.error(
+      `Enquiry: ENQUIRY_FROM_EMAIL is "${configuredFrom}", which is a mailbox provider, ` +
+        `not a domain that can be verified on Resend. Sending as ${RESEND_TEST_SENDER} instead. ` +
+        `Set it to an address on kathavisuals.com.au once that domain is verified. ` +
+        `This does not affect where enquiries are delivered.`,
+    );
+    sender = RESEND_TEST_SENDER;
+  }
+
   try {
-    let result = await send(configuredFrom || RESEND_TEST_SENDER);
+    let result = await send(sender);
 
     /*
      * Resend refuses a `from` address whose domain is not verified on the
@@ -95,9 +134,9 @@ export async function submitEnquiry(
      * needs no domain and delivers to the account owner. The enquiry arrives;
      * the log below says the domain still needs fixing.
      */
-    if (!result.ok && configuredFrom && (result.status === 403 || result.status === 422)) {
+    if (!result.ok && sender !== RESEND_TEST_SENDER && (result.status === 403 || result.status === 422)) {
       console.error(
-        `Enquiry: Resend rejected from="${configuredFrom}" (${result.status}): ${result.detail}. ` +
+        `Enquiry: Resend rejected from="${sender}" (${result.status}): ${result.detail}. ` +
           `Retrying as ${RESEND_TEST_SENDER}. Verify the domain in Resend to send under your own address.`,
       );
       result = await send(RESEND_TEST_SENDER);
