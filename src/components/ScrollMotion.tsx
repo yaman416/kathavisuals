@@ -21,20 +21,18 @@ function fadeIn(p: number) {
 
 /** Fade window per layer, as a fraction of the viewport height. */
 const WINDOWS: [number, number][] = [
-  [0, 0.3],
-  [0.1, 0.54],
-  [0.34, 0.76],
-  [0.56, 0.88],
+  [0, 0.36],
+  [0.14, 0.64],
+  [0.46, 0.88],
 ];
 
-const SHAPES = [fadeOut, fadeThrough, fadeThrough, fadeIn];
+const SHAPES = [fadeOut, fadeThrough, fadeIn];
 
 /** Drift per layer: [fromScale, toScale, fromY%, toY%] — mirrors the CSS. */
 const DRIFTS: [number, number, number, number][] = [
   [1.16, 1.02, -1.5, 5],
   [1.02, 1.18, -5, 3],
   [1.2, 1.04, 4, -3],
-  [1.16, 1.02, -1.5, 5],
 ];
 
 /**

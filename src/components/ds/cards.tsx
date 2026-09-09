@@ -162,7 +162,9 @@ export function ProcessStep({
       <span aria-hidden="true" style={{ color: "var(--color-accent)" }}>
         {icon}
       </span>
-      <h3
+      {/* A label, not a section heading — making it an h3 skipped a level
+          between the page h1 and the first h2. */}
+      <p
         style={{
           fontFamily: "var(--font-body)",
           fontSize: "var(--text-sm)",
@@ -174,7 +176,7 @@ export function ProcessStep({
         }}
       >
         {title}
-      </h3>
+      </p>
       <p
         style={{
           fontFamily: "var(--font-body)",

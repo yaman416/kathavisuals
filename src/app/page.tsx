@@ -32,9 +32,8 @@ export default function HomePage() {
       >
         <HeroLayers
           frames={[
-            { src: "/design/hero-lake.jpg", alt: "Lake Burley Griffin on a clear morning, Canberra" },
+            { src: "/design/hero-woodland.jpg", alt: "Eucalypt woodland near Canberra on a spring morning" },
             { src: "/design/hero-blossom.jpg", alt: "" },
-            { src: "/design/hero-woodland.jpg", alt: "" },
             { src: "/design/hero-hills.jpg", alt: "" },
           ]}
         />
@@ -72,7 +71,11 @@ export default function HomePage() {
 
       <div className="kv-over-hero">
       {/* Service cards --------------------------------------------------- */}
-      <section style={{ padding: "var(--section-space) var(--page-gutter)" }}>
+      <section
+        style={{
+          padding: "var(--section-space-tight) var(--page-gutter) var(--section-space)",
+        }}
+      >
         <p
           style={{
             textAlign: "center",

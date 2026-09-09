@@ -50,11 +50,20 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    images: [
+      {
+        url: "/design/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Lake Burley Griffin on a clear morning, Canberra",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    images: ["/design/og.jpg"],
   },
 };
 

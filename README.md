@@ -37,6 +37,16 @@ npm run lint    # eslint
 Design tokens live only in `globals.css`. Components reference them as CSS variables
 (`var(--color-accent)`), never as hard-coded values.
 
+## Typography
+
+Running text is capped at `62ch`. It was setting at about 123 characters a line,
+which is roughly twice a comfortable measure — past 80 the eye loses its place
+returning to the left margin, and it is one of the clearest tells of a page that
+was never typeset.
+
+Headings carry `text-wrap: balance` and slight negative tracking; Times sets
+loose at display sizes.
+
 ## Palette
 
 The site runs the **Warm Ivory** light palette: cream ground `#f5f2ec`, white
@@ -75,7 +85,7 @@ our portfolio with real client work"* — controlled by `showSampleNote` in
 
 | Slot | File | Crop |
 | --- | --- | --- |
-| Hero background | `hero-lake`, `hero-blossom`, `hero-woodland`, `hero-hills` | 21:9 each, cross-faded on scroll. All keep an open pale left third, which is what the ink headline sits on |
+| Hero background | `hero-woodland`, `hero-blossom`, `hero-hills` | 21:9, cross-faded on scroll. Lead with the frame that has the most content — a near-empty sky reads as a broken page, not a bright one |
 | About (used twice) | `about-landscape.jpg` | 4:3 |
 | Service cards + detail rows | `service-{weddings,events,real-estate,social}.jpg` | 4:5 |
 | Portfolio grid | `portfolio-{weddings,events,real-estate,social}.jpg` | 4:3 |

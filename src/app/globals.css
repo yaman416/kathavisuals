@@ -78,6 +78,8 @@
   --space-16: 64px;
   --space-20: 80px;
   --section-space: clamp(64px, 9vw, 112px);
+  /* A tighter beat, for sections that follow closely from the one above. */
+  --section-space-tight: clamp(44px, 6vw, 76px);
   --content-width: 1280px;
   --content-width-narrow: 720px;
   --page-gutter: clamp(20px, 4vw, 56px);
@@ -116,6 +118,27 @@
 html {
   scroll-behavior: smooth;
   background: var(--color-bg);
+}
+
+/* Running text was setting at ~123 characters a line. Comfortable reading is
+   45-75; past about 80 the eye loses its place returning to the left margin. */
+p {
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+/* Headings are short and deserve even line lengths rather than an orphan. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Times sets loose at display sizes. A touch of negative tracking closes the
+   gaps the way a compositor would. */
+h1,
+h2 {
+  letter-spacing: -0.014em;
 }
 
 body {
@@ -553,19 +576,16 @@ textarea.kv-field {
        finish inside that. Ranges past it would cross-fade out of sight. */
     .kv-hero-layer[data-layer="0"] {
       animation-name: kv-layer-out, kv-hero-drift-a;
-      animation-range: 0 30vh, 0 88vh;
+      animation-range: 0 36vh, 0 88vh;
     }
     .kv-hero-layer[data-layer="1"] {
       animation-name: kv-layer-through, kv-hero-drift-b;
-      animation-range: 10vh 54vh, 0 88vh;
+      animation-range: 14vh 64vh, 0 88vh;
     }
+    /* The last layer holds, so the hero never fades to nothing. */
     .kv-hero-layer[data-layer="2"] {
-      animation-name: kv-layer-through, kv-hero-drift-c;
-      animation-range: 34vh 76vh, 0 88vh;
-    }
-    .kv-hero-layer[data-layer="3"] {
-      animation-name: kv-layer-in, kv-hero-drift-a;
-      animation-range: 56vh 88vh, 0 88vh;
+      animation-name: kv-layer-in, kv-hero-drift-c;
+      animation-range: 46vh 88vh, 0 88vh;
     }
 
     .kv-hero-content {
