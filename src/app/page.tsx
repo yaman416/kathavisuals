@@ -4,7 +4,7 @@ import { icons } from "@/components/ds/Icons";
 import { Media } from "@/components/ds/Media";
 import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
-import { ScrollFrames } from "@/components/ScrollFrames";
+import { HeroVideo } from "@/components/HeroVideo";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { processSteps, services, showPortfolio, site } from "@/lib/site";
 
@@ -20,10 +20,10 @@ export default function HomePage() {
       {/* Hero ------------------------------------------------------------ */}
       <section
         id="home"
-        className="kv-on-dark"
+        className="kv-on-dark kv-hero"
         style={{
-          position: "relative",
-          minHeight: "640px",
+          position: "sticky",
+          minHeight: "min(88vh, 760px)",
           display: "flex",
           alignItems: "center",
           overflow: "hidden",
@@ -39,7 +39,7 @@ export default function HomePage() {
           sizes="100vw"
           priority
         />
-        <ScrollFrames count={41} basePath="/design/hero-frames" scrubHeight={640} />
+        <HeroVideo src="/design/hero.mp4" poster="/design/hero-scroll-poster.jpg" />
         <div
           style={{
             position: "absolute",
@@ -69,8 +69,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      <div className="kv-over-hero">
       {/* Service cards --------------------------------------------------- */}
-      <section style={{ padding: "var(--section-space) var(--page-gutter)" }}>
+      <section className="kv-reveal" style={{ padding: "var(--section-space) var(--page-gutter)" }}>
         <p
           style={{
             textAlign: "center",
@@ -93,11 +94,12 @@ export default function HomePage() {
             margin: "0 auto",
           }}
         >
-          {services.map((service) => {
+          {services.map((service, i) => {
             const Icon = icons[service.icon];
             return (
               <ServiceCard
                 key={service.slug}
+                index={i}
                 image={service.image}
                 label={service.name}
                 icon={<Icon width={20} height={20} />}
@@ -243,6 +245,7 @@ export default function HomePage() {
 
       {/* Contact --------------------------------------------------------- */}
       <ContactSection />
+      </div>
     </div>
   );
 }

@@ -473,15 +473,32 @@ textarea.kv-field {
 
 
 /* ---------------------------------------------------------------------------
-   Scroll-driven motion. CSS-only via view() timelines, so there is no observer
-   to fail and no state where content sits invisible waiting for JavaScript.
-   Browsers without support simply render the page static.
+   Motion.
+
+   Everything here is CSS scroll-driven animation — `animation-timeline` runs on
+   the compositor, off the main thread, so it cannot stutter the way a scroll
+   listener does. There is no JavaScript on the scroll path at all.
+
+   Browsers without support render the page static, and every rule sits inside
+   prefers-reduced-motion: no-preference.
 --------------------------------------------------------------------------- */
+
+/* The hero pins itself; the page scrolls up over it like a card off a deck. */
+.kv-hero {
+  top: 0;
+  z-index: 0;
+}
+
+.kv-over-hero {
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+}
 
 @keyframes kv-rise {
   from {
-    opacity: 0.4;
-    transform: translateY(16px);
+    opacity: 0;
+    transform: translateY(26px);
   }
   to {
     opacity: 1;
@@ -489,29 +506,84 @@ textarea.kv-field {
   }
 }
 
-@keyframes kv-hero-drift {
+/* Headings wipe up from behind their own baseline. */
+@keyframes kv-unmask {
   from {
-    transform: scale(1.06) translateY(0);
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(14px);
   }
   to {
-    transform: scale(1.06) translateY(4%);
+    opacity: 1;
+    clip-path: inset(0 0 -10% 0);
+    transform: none;
   }
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .kv-reveal {
-      animation: kv-rise linear both;
+/* Images uncover from the left rather than fading. */
+@keyframes kv-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: scale(1.06);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+
+/* The hero settles as it is covered, so being pinned still feels like depth. */
+@keyframes kv-hero-settle {
+  from {
+    transform: scale(1.08);
+    filter: saturate(1.05);
+  }
+  to {
+    transform: scale(1);
+    filter: saturate(0.9);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .kv-reveal,
+    .kv-rise {
+      animation: kv-rise 1ms linear both;
       animation-timeline: view();
-      animation-range: entry 8% cover 26%;
+      animation-range: entry 5% cover 30%;
+      animation-delay: var(--kv-delay, 0ms);
     }
 
-    /* The hero image drifts slightly slower than the page, which reads as depth
-       without the jitter of scroll-linked JavaScript. */
-    .kv-hero-media {
-      animation: kv-hero-drift linear both;
+    .kv-service-row {
+      animation-range: entry 2% cover 24%;
+    }
+
+    h1,
+    h2,
+    .kv-service-row h3 {
+      animation: kv-unmask 1ms linear both;
       animation-timeline: view();
-      animation-range: cover;
+      animation-range: entry 10% cover 34%;
+    }
+
+    /* The hero's own heading is visible on load — it is the first thing read. */
+    .kv-hero h1 {
+      animation: none;
+    }
+
+    .kv-card-media,
+    .kv-split > .kv-card-media {
+      animation: kv-wipe 1ms linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 36%;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .kv-hero-media {
+      animation: kv-hero-settle 1ms linear both;
+      animation-timeline: scroll();
+      animation-range: 0 92vh;
     }
   }
 }

@@ -126,22 +126,23 @@ Both faces are referenced only through `--font-display` and `--font-body` in
 
 ## Interaction and motion
 
-- **Hero scrub** — the hero advances with the scrollbar instead of playing.
-  `ScrollFrames` draws a 41-frame JPEG sequence from `public/design/hero-frames`
-  to a canvas, mapping the first 640px of scroll onto frames 1–41. Frames are
-  drawn rather than seeking a `<video>`: seeking is only smooth when every frame
-  is a keyframe, and iOS Safari is unreliable about it regardless.
-  It is skipped entirely below 900px, on reduced-motion, on Data Saver and on
-  2g/3g — those visitors get `hero-scroll-poster.jpg`, which is the sequence's
-  own first frame, so there is no jump. 2.2MB for the set, ~50KB a frame.
-  Regenerate with:
-  `ffmpeg -i src.mp4 -vf "select='not(mod(n\,3))',scale=1440:-2" -fps_mode passthrough -q:v 7 hero-frames/%03d.jpg`
+- **Pinned hero** — the hero is `position: sticky` and the rest of the page
+  (`.kv-over-hero`) scrolls up over it on an opaque ground. The hero image also
+  settles from a slight scale as it is covered, so being pinned reads as depth.
+- **Hero video** — `public/design/hero.mp4`, 530KB, one continuous dolly.
+  Autoplays muted and loops. The still image underneath is always rendered, so
+  the hero is complete before any script runs. Skipped on reduced-motion, Data
+  Saver and 2g.
+- **Scroll motion** — CSS `animation-timeline` only, which runs on the
+  compositor rather than the main thread, so it cannot stutter. Blocks rise in,
+  headings wipe up from their baseline, images uncover from the left, and the
+  four service cards stagger 90ms apart via `--kv-delay`. There is no JavaScript
+  on the scroll path. Unsupported browsers render the page static, and every
+  rule sits inside `prefers-reduced-motion: no-preference`.
 
-- **Scroll motion** — CSS `animation-timeline: view()` only. Service rows and the
-  About block rise into place; the hero drifts slightly slower than the page.
-  There is no observer to fail and no state where content sits invisible waiting
-  for JavaScript. Unsupported browsers render the page static. All of it is
-  inside `prefers-reduced-motion: no-preference`.
+  A previous version scrubbed a 41-frame sequence from a scroll listener. It was
+  removed: 41 frames across 640px is one frame per 16px, so it stepped rather
+  than moved, and a JS scroll handler jitters by nature.
 - **Scroll spy** — the header marks the section you are in.
 - **Mobile menu** — locks page scroll while open, closes on Escape, and carries
   the phone number.

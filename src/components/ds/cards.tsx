@@ -2,7 +2,7 @@
  * Marketing cards ported from components/marketing/*.jsx.
  * Image scale-on-hover and gold label tint are handled by .kv-card in globals.css.
  */
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Media } from "@/components/ds/Media";
 
 /* ServiceCard -------------------------------------------------------------- */
@@ -13,25 +13,31 @@ export function ServiceCard({
   icon,
   href,
   placeholderLabel,
+  index = 0,
 }: {
   image: string | null;
   label: string;
   icon: ReactNode;
   href: string;
   placeholderLabel: string;
+  /** Position in the row, used to stagger the entrance. */
+  index?: number;
 }) {
   return (
     <a
       href={href}
-      className="kv-card"
-      style={{
-        display: "block",
-        textDecoration: "none",
-        border: "1px solid var(--color-border)",
-        borderRadius: "var(--radius-card)",
-        overflow: "hidden",
-        background: "var(--color-bg-secondary)",
-      }}
+      className="kv-card kv-rise"
+      style={
+        {
+          display: "block",
+          textDecoration: "none",
+          border: "1px solid var(--color-border)",
+          borderRadius: "var(--radius-card)",
+          overflow: "hidden",
+          background: "var(--color-bg-secondary)",
+          "--kv-delay": `${index * 90}ms`,
+        } as CSSProperties
+      }
     >
       <Media
         src={image}
