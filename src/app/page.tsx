@@ -42,7 +42,7 @@ export default function HomePage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(90deg, rgba(245,242,236,0.96) 0%, rgba(245,242,236,0.78) 42%, rgba(245,242,236,0.28) 72%, rgba(245,242,236,0.08) 100%)",
+              "linear-gradient(90deg, rgba(245,242,236,0.97) 0%, rgba(245,242,236,0.95) 18%, rgba(245,242,236,0.88) 32%, rgba(245,242,236,0.72) 44%, rgba(245,242,236,0.5) 56%, rgba(245,242,236,0.3) 68%, rgba(245,242,236,0.16) 80%, rgba(245,242,236,0.08) 100%)",
           }}
         />
         <div
@@ -144,7 +144,7 @@ export default function HomePage() {
         id="services"
         style={{
           padding: "var(--section-space) var(--page-gutter)",
-          maxWidth: "var(--content-width)",
+          maxWidth: "var(--content-width-mid)",
           margin: "0 auto",
           scrollMarginTop: "88px",
         }}
@@ -178,8 +178,8 @@ export default function HomePage() {
                 src={service.image}
                 alt=""
                 label={`/public/design/service-${service.slug}.jpg`}
-                style={{ height: "160px", borderRadius: "var(--radius-card)" }}
-                sizes="(min-width: 900px) 220px, 100vw"
+                style={{ aspectRatio: "4 / 3", borderRadius: "var(--radius-card)" }}
+                sizes="(min-width: 900px) 42vw, 100vw"
               />
               <div>
                 <h3

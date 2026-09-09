@@ -47,6 +47,11 @@ was never typeset.
 Headings carry `text-wrap: balance` and slight negative tracking; Times sets
 loose at display sizes.
 
+Capping the measure has a consequence worth knowing: a 62ch column inside a
+1280px container leaves a void beside it. Sections holding body copy use
+`--content-width-mid` (1040px) rather than the full width, so the text column and
+its image fill the row instead of trailing off into empty ground.
+
 ## Palette
 
 The site runs the **Warm Ivory** light palette: cream ground `#f5f2ec`, white

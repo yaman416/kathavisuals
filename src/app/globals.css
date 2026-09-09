@@ -82,6 +82,9 @@
   --section-space-tight: clamp(44px, 6vw, 76px);
   --content-width: 1280px;
   --content-width-narrow: 720px;
+  /* Between the two: wide enough for an image beside text, narrow enough that
+     a 62ch column does not leave a void alongside it. */
+  --content-width-mid: 1040px;
   --page-gutter: clamp(20px, 4vw, 56px);
 
   /* effects.css */
@@ -443,8 +446,9 @@ textarea.kv-field {
 }
 .kv-service-row {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 28px;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
 }
 .kv-form-grid {
   display: grid;
