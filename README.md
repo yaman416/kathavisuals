@@ -60,7 +60,12 @@ watermarks.
 ## Imagery
 
 **Every photo on the site is an AI-generated placeholder**, generated with Higgsfield
-(Nano Banana Pro) and stored in `public/design/`. They exist so the layout reads
+(Nano Banana Pro) and stored in `public/design/`.
+
+They are all shot bright: open daylight, blue sky, candid smiles. An earlier set
+was prompted for tungsten light and deep shadow, and the page read dark no
+matter how light the palette behind it was — the imagery sets the mood, not the
+background colour. Keep that in mind when swapping in real work. They exist so the layout reads
 correctly until real work replaces them. `logo-white.png` is the one real supplied
 asset.
 
@@ -70,7 +75,7 @@ our portfolio with real client work"* — controlled by `showSampleNote` in
 
 | Slot | File | Crop |
 | --- | --- | --- |
-| Hero background | `hero-lake.jpg` | 21:9. Lake Burley Griffin at dusk. `hero-ranges.jpg` and `hero-bush.jpg` are alternates — one line in `page.tsx` |
+| Hero background | `hero-lake.jpg` | 21:9. Lake Burley Griffin on a clear morning. The left third is open pale sky and water, which is what the ink headline sits on |
 | About (used twice) | `about-landscape.jpg` | 4:3 |
 | Service cards + detail rows | `service-{weddings,events,real-estate,social}.jpg` | 4:5 |
 | Portfolio grid | `portfolio-{weddings,events,real-estate,social}.jpg` | 4:3 |

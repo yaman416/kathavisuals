@@ -548,12 +548,12 @@ textarea.kv-field {
    input. Stop scrolling and it stops. */
 @keyframes kv-hero-settle {
   from {
-    transform: scale(1.18) translateY(-2%);
-    filter: saturate(1.08) brightness(1.02);
+    transform: scale(1.14) translateY(-2%);
+    filter: saturate(1.06) brightness(1.04);
   }
   to {
     transform: scale(1) translateY(4%);
-    filter: saturate(0.86) brightness(0.9);
+    filter: saturate(1) brightness(1);
   }
 }
 

@@ -54,9 +54,9 @@ export function ScrollMotion() {
       const p = Math.min(1, Math.max(0, window.scrollY / span));
 
       if (media) {
-        const scale = 1.18 - 0.18 * p;
+        const scale = 1.14 - 0.14 * p;
         media.style.transform = `scale(${scale.toFixed(4)}) translateY(${(p * 4).toFixed(2)}%)`;
-        media.style.filter = `saturate(${(1.08 - 0.22 * p).toFixed(3)}) brightness(${(1.02 - 0.12 * p).toFixed(3)})`;
+        media.style.filter = `saturate(${(1.06 - 0.06 * p).toFixed(3)}) brightness(${(1.04 - 0.04 * p).toFixed(3)})`;
       }
       if (content) {
         content.style.transform = `translateY(${(-64 * p).toFixed(1)}px)`;

@@ -19,7 +19,7 @@ export default function HomePage() {
       {/* Hero ------------------------------------------------------------ */}
       <section
         id="home"
-        className="kv-on-dark kv-hero"
+        className="kv-hero"
         style={{
           position: "sticky",
           minHeight: "min(88vh, 760px)",
@@ -43,7 +43,7 @@ export default function HomePage() {
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(90deg, rgba(5,6,7,0.96) 0%, rgba(5,6,7,0.6) 55%, rgba(5,6,7,0.2) 100%)",
+              "linear-gradient(90deg, rgba(245,242,236,0.96) 0%, rgba(245,242,236,0.78) 42%, rgba(245,242,236,0.28) 72%, rgba(245,242,236,0.08) 100%)",
           }}
         />
         <div
