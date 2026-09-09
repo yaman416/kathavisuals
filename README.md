@@ -126,11 +126,17 @@ Both faces are referenced only through `--font-display` and `--font-body` in
 
 ## Interaction and motion
 
-- **Hero video** — `public/design/hero.mp4` plays behind the headline. The still
-  image renders underneath it always, so the hero is complete before any script
-  runs. `HeroVideo` skips the download entirely on reduced-motion, Data Saver,
-  and connections the browser reports as 2g/3g, and removes itself if the file
-  fails.
+- **Hero scrub** — the hero advances with the scrollbar instead of playing.
+  `ScrollFrames` draws a 41-frame JPEG sequence from `public/design/hero-frames`
+  to a canvas, mapping the first 640px of scroll onto frames 1–41. Frames are
+  drawn rather than seeking a `<video>`: seeking is only smooth when every frame
+  is a keyframe, and iOS Safari is unreliable about it regardless.
+  It is skipped entirely below 900px, on reduced-motion, on Data Saver and on
+  2g/3g — those visitors get `hero-scroll-poster.jpg`, which is the sequence's
+  own first frame, so there is no jump. 2.2MB for the set, ~50KB a frame.
+  Regenerate with:
+  `ffmpeg -i src.mp4 -vf "select='not(mod(n\,3))',scale=1440:-2" -fps_mode passthrough -q:v 7 hero-frames/%03d.jpg`
+
 - **Scroll motion** — CSS `animation-timeline: view()` only. Service rows and the
   About block rise into place; the hero drifts slightly slower than the page.
   There is no observer to fail and no state where content sits invisible waiting

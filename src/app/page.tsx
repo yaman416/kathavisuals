@@ -4,7 +4,7 @@ import { icons } from "@/components/ds/Icons";
 import { Media } from "@/components/ds/Media";
 import { ButtonLink, Divider, Eyebrow, SectionHeading } from "@/components/ds/primitives";
 import { ContactSection } from "@/components/ContactSection";
-import { HeroVideo } from "@/components/HeroVideo";
+import { ScrollFrames } from "@/components/ScrollFrames";
 import { PortfolioSection } from "@/components/PortfolioSection";
 import { processSteps, services, showPortfolio, site } from "@/lib/site";
 
@@ -31,15 +31,15 @@ export default function HomePage() {
         }}
       >
         <Media
-          src="/design/hero-camera.jpg"
+          src="/design/hero-scroll-poster.jpg"
           alt=""
-          label="Hero image — /public/design/hero-camera.jpg"
+          label="Hero image — /public/design/hero-scroll-poster.jpg"
           className="kv-hero-media"
           style={{ position: "absolute", inset: 0 }}
           sizes="100vw"
           priority
         />
-        <HeroVideo src="/design/hero.mp4" poster="/design/hero-camera.jpg" />
+        <ScrollFrames count={41} basePath="/design/hero-frames" scrubHeight={640} />
         <div
           style={{
             position: "absolute",
