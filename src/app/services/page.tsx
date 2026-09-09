@@ -124,7 +124,7 @@ export default function ServicesPage() {
 
                 {related.length > 0 ? (
                   <div>
-                    <h3 style={columnHeading}>From the portfolio</h3>
+                    <h3 style={columnHeading}>From our work</h3>
                     <div className="kv-grid kv-grid--2">
                       {related.map((project) => (
                         <Link key={project.id} href="/portfolio" className="kv-card" style={{ textDecoration: "none" }}>

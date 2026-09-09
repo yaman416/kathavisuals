@@ -14,7 +14,7 @@ export default function NotFound() {
             Back home
           </Link>
           <Link href="/portfolio" className="kv-btn kv-btn--ghost">
-            View the portfolio
+            See our work
           </Link>
         </div>
       </div>

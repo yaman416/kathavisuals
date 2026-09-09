@@ -1,11 +1,8 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
-import { ProjectCard } from "@/components/ProjectCard";
 import { CallToAction } from "@/components/ui/CallToAction";
 import { Media } from "@/components/ui/Media";
-import { pending, people, principles, projects, services, site } from "@/lib/site";
-
-const featured = projects.slice(0, 6);
+import { pending, people, principles, services, site } from "@/lib/site";
 
 export default function HomePage() {
   return (
@@ -38,44 +35,6 @@ export default function HomePage() {
               ratio="5 / 4"
               sizes="(min-width: 900px) 50vw, 100vw"
             />
-          </div>
-        </section>
-
-        {/* Featured work ------------------------------------------------ */}
-        <section className="kv-section kv-section--tight">
-          <div className="kv-wrap">
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "var(--space-6)",
-                alignItems: "flex-end",
-                justifyContent: "space-between",
-                marginBottom: "var(--space-12)",
-              }}
-            >
-              <div>
-                <p className="kv-eyebrow">Selected work</p>
-                <h2 style={{ maxWidth: "18ch" }}>Weddings, events, properties and brands.</h2>
-              </div>
-              <Link href="/portfolio" className="kv-link">
-                View the full portfolio →
-              </Link>
-            </div>
-
-            {pending.imageryIsPlaceholder ? (
-              <p className="kv-muted" style={{ fontSize: "var(--text-sm)", marginBottom: "var(--space-6)" }}>
-                Placeholder imagery is shown while our client galleries are prepared.
-              </p>
-            ) : null}
-
-            <div className="kv-portfolio">
-              {featured.map((project, i) => (
-                <div key={project.id} className="kv-portfolio__item" data-span={project.span}>
-                  <ProjectCard project={project} priority={i < 2} />
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
