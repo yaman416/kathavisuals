@@ -35,6 +35,7 @@ export function Media({
           fill
           sizes={sizes}
           priority={priority}
+          quality={90}
           style={{ objectFit: "cover" }}
         />
       ) : (

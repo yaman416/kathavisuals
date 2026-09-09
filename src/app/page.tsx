@@ -72,7 +72,7 @@ export default function HomePage() {
 
       <div className="kv-over-hero">
       {/* Service cards --------------------------------------------------- */}
-      <section className="kv-reveal" style={{ padding: "var(--section-space) var(--page-gutter)" }}>
+      <section style={{ padding: "var(--section-space) var(--page-gutter)" }}>
         <p
           style={{
             textAlign: "center",
@@ -95,12 +95,11 @@ export default function HomePage() {
             margin: "0 auto",
           }}
         >
-          {services.map((service, i) => {
+          {services.map((service) => {
             const Icon = icons[service.icon];
             return (
               <ServiceCard
                 key={service.slug}
-                index={i}
                 image={service.image}
                 label={service.name}
                 icon={<Icon width={20} height={20} />}
@@ -164,7 +163,7 @@ export default function HomePage() {
             <div
               key={service.slug}
               id={service.anchorId}
-              className="kv-service-row kv-reveal"
+              className="kv-service-row"
               style={{
                 background: "var(--color-bg-secondary)",
                 borderBottom: "1px solid var(--color-border)",
@@ -211,7 +210,7 @@ export default function HomePage() {
       {/* About ----------------------------------------------------------- */}
       <section
         id="about"
-        className="kv-split kv-reveal"
+        className="kv-split"
         style={{
           maxWidth: "var(--content-width)",
           margin: "0 auto",

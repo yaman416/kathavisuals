@@ -80,6 +80,7 @@ export function SiteHeader() {
           alt={site.name}
           width={1562}
           height={1074}
+          quality={90}
           priority
           style={{ height: "44px", width: "auto" }}
         />
@@ -168,6 +169,8 @@ export function SiteHeader() {
             alt=""
             width={1562}
             height={1074}
+            quality={90}
+          quality={90}
             style={{ height: "56px", width: "auto", marginBottom: "16px" }}
           />
 

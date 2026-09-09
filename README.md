@@ -84,8 +84,14 @@ To swap in a real photo: drop the file in `public/design/` and point the matchin
 `image:` field in `src/lib/site.ts` at it. The hero and about images are set on the
 `<Media>` calls in `src/app/page.tsx`.
 
-Source files were resized and converted to JPEG (quality 76) — hero 2400px wide,
-portfolio 1400px, service cards 1000px tall. Next.js re-encodes to WebP per viewport.
+Sources are generated at 4K and exported with ffmpeg at high quality — hero
+3200px wide, portfolio and about 2200px, service cards 1600px.
+
+**The quality that actually reaches visitors is set in `next.config.ts`.** Next 16
+defaults `images.qualities` to `[75]` and silently coerces any other `quality`
+prop down to it, so raising source resolution alone changes nothing. The
+allowlist is `[75, 90]` and `Media` requests 90; below that, compression shows in
+skies and skin tones.
 
 ## Logo
 
@@ -138,6 +144,9 @@ Both faces are referenced only through `--font-display` and `--font-body` in
   and reveals elements with an IntersectionObserver rather than measuring
   positions each frame. `document.documentElement.dataset.motionFallback` is set
   when it is active.
+- **Only the hero animates.** Nothing else on the page moves on scroll — no
+  reveals, wipes or staggers. `document.getAnimations()` should report exactly
+  three: two `kv-hero-settle` and one `kv-hero-lift`.
 - **Nothing animates on its own.** Every animation on the page is bound to a
   `ScrollTimeline`, never a `DocumentTimeline` — the scrollbar is the clock. Stop
   scrolling and everything stops. There is no video, no autoplay, no loop, and

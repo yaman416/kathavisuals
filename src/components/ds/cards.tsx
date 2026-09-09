@@ -13,20 +13,17 @@ export function ServiceCard({
   icon,
   href,
   placeholderLabel,
-  index = 0,
 }: {
   image: string | null;
   label: string;
   icon: ReactNode;
   href: string;
   placeholderLabel: string;
-  /** Position in the row, used to stagger the entrance. */
-  index?: number;
 }) {
   return (
     <a
       href={href}
-      className="kv-card kv-rise"
+      className="kv-card"
       style={
         {
           display: "block",
@@ -35,7 +32,6 @@ export function ServiceCard({
           borderRadius: "var(--radius-card)",
           overflow: "hidden",
           background: "var(--color-bg-secondary)",
-          "--kv-delay": `${index * 90}ms`,
         } as CSSProperties
       }
     >
