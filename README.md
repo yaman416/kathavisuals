@@ -70,7 +70,7 @@ our portfolio with real client work"* — controlled by `showSampleNote` in
 
 | Slot | File | Crop |
 | --- | --- | --- |
-| Hero background | `hero-camera.jpg` | 21:9, dark left third for the headline |
+| Hero background | `hero-lake.jpg` | 21:9. Lake Burley Griffin at dusk. `hero-ranges.jpg` and `hero-bush.jpg` are alternates — one line in `page.tsx` |
 | About (used twice) | `about-landscape.jpg` | 4:3 |
 | Service cards + detail rows | `service-{weddings,events,real-estate,social}.jpg` | 4:5 |
 | Portfolio grid | `portfolio-{weddings,events,real-estate,social}.jpg` | 4:3 |
@@ -126,6 +126,13 @@ Both faces are referenced only through `--font-display` and `--font-body` in
 
 ## Interaction and motion
 
+- **Browsers without `animation-timeline`** (Firefox, and Safari before 26)
+  render the page motionless, so `ScrollMotion` drives the same effects from
+  script for those only. It no-ops entirely where CSS timelines work. It writes
+  nothing but transform and opacity, reads no layout inside the scroll handler,
+  and reveals elements with an IntersectionObserver rather than measuring
+  positions each frame. `document.documentElement.dataset.motionFallback` is set
+  when it is active.
 - **Nothing animates on its own.** Every animation on the page is bound to a
   `ScrollTimeline`, never a `DocumentTimeline` — the scrollbar is the clock. Stop
   scrolling and everything stops. There is no video, no autoplay, no loop, and

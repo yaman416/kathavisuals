@@ -609,3 +609,41 @@ textarea.kv-field {
     }
   }
 }
+
+
+/* ---------------------------------------------------------------------------
+   Fallback styling for browsers without animation-timeline (Firefox, Safari
+   before 26). ScrollMotion sets data-motion-fallback on <html> and toggles
+   data-shown per element; nothing here applies where CSS timelines work.
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion-fallback] [data-shown] {
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out),
+      clip-path 700ms var(--ease-out);
+    transition-delay: var(--kv-delay, 0ms);
+  }
+
+  [data-motion-fallback] [data-shown="false"] {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+
+  [data-motion-fallback] .kv-card-media[data-shown="false"] {
+    opacity: 1;
+    transform: scale(1.06);
+    clip-path: inset(0 100% 0 0);
+  }
+
+  [data-motion-fallback] [data-shown="true"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+
+  [data-motion-fallback] .kv-hero-media {
+    will-change: transform, filter;
+  }
+}

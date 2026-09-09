@@ -30,9 +30,9 @@ export default function HomePage() {
         }}
       >
         <Media
-          src="/design/hero-scroll-poster.jpg"
-          alt=""
-          label="Hero image — /public/design/hero-scroll-poster.jpg"
+          src="/design/hero-lake.jpg"
+          alt="Lake Burley Griffin and Black Mountain at dusk, Canberra"
+          label="Hero image — /public/design/hero-lake.jpg"
           className="kv-hero-media"
           style={{ position: "absolute", inset: 0 }}
           sizes="100vw"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Tinos } from "next/font/google";
+import { ScrollMotion } from "@/components/ScrollMotion";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
@@ -76,6 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <ScrollMotion />
         <SiteHeader />
         <main id="main" className="flex-1">
           {children}
