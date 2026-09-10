@@ -193,7 +193,8 @@ export function EnquiryForm() {
           id="privacy"
           name="privacy"
           type="checkbox"
-          style={{ width: 20, height: 20, flexShrink: 0, accentColor: "var(--color-accent)" }}
+          /* 24px is the WCAG 2.2 minimum target size; 20 was under it. */
+          style={{ width: 24, height: 24, flexShrink: 0, accentColor: "var(--color-accent)" }}
           aria-invalid={state.fieldErrors?.privacy ? true : undefined}
         />
         <span>

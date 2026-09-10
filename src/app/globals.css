@@ -346,6 +346,66 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
+/* ------------------------------------------------------------------ hero ---
+   The runway is taller than the viewport so the film has distance to play
+   across. Below the scrub width there is no film, so the extra height would be
+   dead scroll past a still image, and it collapses. Doing this in CSS rather
+   than from the scrub hook keeps the server and client render identical. */
+
+.kv-hero { position: relative; height: 180vh; }
+
+.kv-hero__frame {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Eased so no seam resolves where the slope changes. */
+.kv-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(244, 240, 232, 0.96) 0%,
+    rgba(244, 240, 232, 0.93) 12%,
+    rgba(244, 240, 232, 0.87) 22%,
+    rgba(244, 240, 232, 0.78) 31%,
+    rgba(244, 240, 232, 0.66) 40%,
+    rgba(244, 240, 232, 0.53) 49%,
+    rgba(244, 240, 232, 0.4) 58%,
+    rgba(244, 240, 232, 0.28) 68%,
+    rgba(244, 240, 232, 0.18) 78%,
+    rgba(244, 240, 232, 0.1) 88%,
+    rgba(244, 240, 232, 0.05) 100%
+  );
+}
+
+@media (max-width: 899px) {
+  .kv-hero { height: 100vh; }
+
+  /* The headline and lede span the full width here, so a left-to-right scrim
+     leaves their right edge sitting on bare photograph: measured at 3.2:1
+     against ink, short of the 4.5 body text needs. Vertical instead, densest
+     through the band the text occupies. */
+  .kv-hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(244, 240, 232, 0.58) 0%,
+      rgba(244, 240, 232, 0.9) 26%,
+      rgba(244, 240, 232, 0.95) 50%,
+      rgba(244, 240, 232, 0.88) 76%,
+      rgba(244, 240, 232, 0.62) 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kv-hero { height: 100vh; }
+}
+
 /* --------------------------------------------------------- work galleries ---
    A scroll-snap track rather than a grid of thumbnails: one photograph at a
    readable size, with the next one showing at the edge so it is obvious the

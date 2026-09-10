@@ -58,6 +58,7 @@ export function HeroScrub({
 }) {
   const wanted = useSyncExternalStore(subscribe, wantsScrub, () => false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const posterRef = useRef<HTMLImageElement>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -115,6 +116,52 @@ export function HeroScrub({
     };
   }, [wanted, failed, runway]);
 
+  /*
+   * Below the scrub width there is no film, and iOS Safari will not seek one
+   * reliably anyway. The still moves instead: it drifts and grows slightly as
+   * the hero leaves the viewport. A transform is composited on the GPU, so this
+   * costs nothing like decoding frames does, and it works everywhere.
+   */
+  useEffect(() => {
+    if (wanted) return;
+    if (window.matchMedia(REDUCED_MOTION).matches) return;
+
+    const poster = posterRef.current;
+    const section = runway.current;
+    if (!poster || !section) return;
+
+    let raf = 0;
+    let cancelled = false;
+
+    const apply = () => {
+      raf = 0;
+      if (cancelled) return;
+      const rect = section.getBoundingClientRect();
+      if (rect.height === 0) return;
+      // 0 while the hero fills the viewport, 1 once it has scrolled fully past.
+      const progress = Math.min(1, Math.max(0, -rect.top / rect.height));
+      const shift = (progress * 6).toFixed(3);
+      const zoom = (1 + progress * 0.09).toFixed(4);
+      poster.style.transform = `translate3d(0, ${shift}%, 0) scale(${zoom})`;
+    };
+
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+
+    apply();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+
+    return () => {
+      cancelled = true;
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      poster.style.transform = "";
+    };
+  }, [wanted, runway]);
+
   const shared: React.CSSProperties = {
     position: "absolute",
     inset: 0,
@@ -130,7 +177,13 @@ export function HeroScrub({
     <>
       {/* eslint-disable-next-line @next/next/no-img-element -- object-fit cover
           at full-bleed with no layout shift; next/image adds nothing here. */}
-      <img src={poster} alt="" aria-hidden="true" style={shared} />
+      <img
+        ref={posterRef}
+        src={poster}
+        alt=""
+        aria-hidden="true"
+        style={{ ...shared, willChange: "transform" }}
+      />
       {wanted && !failed ? (
         <video
           ref={videoRef}
