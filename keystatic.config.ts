@@ -46,7 +46,11 @@ export default config({
   ui: {
     brand: { name: "Katha Visuals" },
     navigation: {
-      Content: ["services", "people", "principles"],
+      // "Our Work" is not its own entry: that page is built from each
+      // service's photographs, so they are edited inside the service they
+      // belong to rather than kept in a second list that could drift.
+      "Services and Our Work": ["services"],
+      "About the studio": ["people", "principles"],
       Site: ["settings", "enquiry"],
     },
   },
@@ -83,7 +87,7 @@ export default config({
 
     /* ------------------------------------------------------------------ */
     services: singleton({
-      label: "Services",
+      label: "Services and Our Work",
       path: "content/services",
       format: { data: "json" },
       schema: {
@@ -130,7 +134,12 @@ export default config({
                     "Describe the photograph for someone who cannot see it. Read aloud by screen readers.",
                 }),
               }),
-              { label: "Gallery", itemLabel: (item) => item.fields.alt.value || "Photograph" },
+              {
+                label: "Our Work photographs",
+                description:
+                  "These appear on the Our Work page, in this service's section, and the first two also show under this service on the Services page.",
+                itemLabel: (item) => item.fields.alt.value || "Photograph",
+              },
             ),
           }),
           { label: "Services", itemLabel: (item) => item.fields.name.value },
