@@ -367,13 +367,43 @@ img, video { max-width: 100%; }
 }
 
 @media (max-width: 620px) {
-  /* Three columns of links stop fitting. Two lists pair up and the contact
-     block takes the full width rather than orphaning next to a gap. */
+  /* A phone gets a condensed footer rather than the desktop one restacked.
+     Fourteen stacked links is a screenful of nothing but navigation, so the
+     page links become one wrapped row, the services list drops (each service
+     is one tap away under Services), and the socials sit on a single line. */
   .kv-footer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6) var(--space-4);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
   }
-  .kv-footer-contact { grid-column: 1 / -1; }
+
+  .kv-footer-services { display: none; }
+
+  .kv-footer-explore h2 { display: none; }
+  .kv-footer-explore ul {
+    display: flex;
+    flex-wrap: wrap;
+    /* The five labels measure 251px against 335px of room, so 24px of gap
+       pushed Contact onto a line of its own. 16px keeps them on one line with
+       room to spare, and still wraps cleanly on a narrower handset. */
+    column-gap: var(--space-4);
+    row-gap: 0;
+  }
+  .kv-footer-explore a,
+  .kv-footer-social a {
+    /* Above the 24px WCAG 2.2 minimum, but tighter than the 44px used for the
+       stacked desktop lists, which is what made the column so tall. */
+    min-height: 34px;
+  }
+
+  .kv-footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-6);
+    margin-top: var(--space-2);
+  }
+
+  /* The desktop separation is too generous once the columns are gone. */
+  .kv-footer-legal { margin-top: var(--space-8) !important; }
 }
 
 /* ------------------------------------------------------------------ hero ---

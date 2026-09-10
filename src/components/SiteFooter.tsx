@@ -44,7 +44,7 @@ export function SiteFooter() {
             </p>
           </div>
 
-          <nav aria-label="Footer">
+          <nav aria-label="Footer" className="kv-footer-explore">
             <h2 style={heading}>Explore</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {nav.map((item) => (
@@ -57,7 +57,7 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div>
+          <div className="kv-footer-services">
             <h2 style={heading}>Services</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {services.map((service) => (
@@ -83,6 +83,8 @@ export function SiteFooter() {
                   {site.email}
                 </a>
               </li>
+            </ul>
+            <ul className="kv-footer-social" style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {socials.map((s) => (
                 <li key={s.label}>
                   <a href={s.href} target="_blank" rel="noopener noreferrer me" style={listLink}>
@@ -95,6 +97,7 @@ export function SiteFooter() {
         </div>
 
         <div
+          className="kv-footer-legal"
           style={{
             display: "flex",
             flexWrap: "wrap",
