@@ -406,6 +406,20 @@ img, video { max-width: 100%; }
   .kv-footer-legal { margin-top: var(--space-8) !important; }
 }
 
+/* ------------------------------------------------------------------ logo ---
+   The mark is near-black with a metallic emboss: 14.17:1 on Story Paper, but
+   1.06:1 on Forest Ink, where it would simply disappear. On dark ground it is
+   inverted, which reads as silver and keeps the emboss rather than flattening
+   the artwork to a silhouette. */
+
+.kv-logo { flex-shrink: 0; }
+
+/* The drawer is Story Paper, so it is deliberately not in this list. */
+footer .kv-logo,
+.kv-section--dark .kv-logo {
+  filter: invert(1);
+}
+
 /* ------------------------------------------------------------------ hero ---
    The runway is taller than the viewport so the film has distance to play
    across. Below the scrub width there is no film, so the extra height would be
