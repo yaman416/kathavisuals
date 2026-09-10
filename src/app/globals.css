@@ -412,7 +412,13 @@ img, video { max-width: 100%; }
    inverted, which reads as silver and keeps the emboss rather than flattening
    the artwork to a silhouette. */
 
-.kv-logo { flex-shrink: 0; }
+.kv-logo {
+  flex-shrink: 0;
+  /* `img, video { max-width: 100% }` above clamps this to its parent, and the
+     link wrapping it shrinks to fit its child, so the two resolve to zero and
+     the mark disappears. Earlier logos were spans and never hit the rule. */
+  max-width: none;
+}
 
 /* The drawer is Story Paper, so it is deliberately not in this list. */
 footer .kv-logo,
