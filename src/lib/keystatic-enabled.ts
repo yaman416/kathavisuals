@@ -12,4 +12,5 @@
  */
 export const adminIsAvailable =
   process.env.NODE_ENV === "development" ||
+  process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE === "github" ||
   Boolean(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG);

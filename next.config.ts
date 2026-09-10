@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
      */
     qualities: [75, 90],
   },
+
+  /**
+   * Next blocks cross-origin requests to its dev-only resources, and a browser
+   * that resolves localhost to 127.0.0.1 trips that check: hot reload fails and
+   * the page never hydrates. Development only, no effect on a build.
+   */
+  allowedDevOrigins: ["127.0.0.1", "localhost"],
 };
 
 export default nextConfig;

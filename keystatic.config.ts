@@ -31,10 +31,17 @@ export default config({
    * Local mode writes to the filesystem, so it works in development but not on
    * Vercel, where the filesystem is read only. Setting the four env vars
    * switches production to GitHub, where saving commits to the repo.
+   *
+   * NEXT_PUBLIC_KEYSTATIC_STORAGE=github forces GitHub mode before those vars
+   * exist. That is how the App gets created in the first place: without it the
+   * config would stay in local mode and Keystatic would never offer its setup
+   * wizard, so the App could never be made.
    */
-  storage: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
-    ? { kind: "github", repo: { owner: "yaman416", name: "kathavisuals" } }
-    : { kind: "local" },
+  storage:
+    process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG ||
+    process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE === "github"
+      ? { kind: "github", repo: { owner: "yaman416", name: "kathavisuals" } }
+      : { kind: "local" },
 
   ui: {
     brand: { name: "Katha Visuals" },
