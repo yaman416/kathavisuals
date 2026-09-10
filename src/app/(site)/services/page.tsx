@@ -4,7 +4,7 @@ import { Accordion } from "@/components/ui/Accordion";
 import { CallToAction } from "@/components/ui/CallToAction";
 import { Media } from "@/components/ui/Media";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { projects, services, site } from "@/lib/site";
+import { services, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -49,7 +49,8 @@ export default function ServicesPage() {
       </PageHeader>
 
       {services.map((service, index) => {
-        const related = projects.filter((p) => p.category === service.name).slice(0, 2);
+        // Each service carries its own gallery, so related work comes from there.
+        const related = service.gallery.slice(0, 2);
         return (
           <section
             key={service.slug}
@@ -135,16 +136,16 @@ export default function ServicesPage() {
                   <div>
                     <h3 style={columnHeading}>From our work</h3>
                     <div className="kv-grid kv-grid--2">
-                      {related.map((project) => (
+                      {related.map((item) => (
                         <Link
-                          key={project.id}
+                          key={item.src}
                           href={`/portfolio#${service.slug}`}
                           className="kv-card"
                           style={{ textDecoration: "none" }}
                         >
-                          <Media src={project.image} alt={project.alt} ratio="4 / 3" sizes="(min-width: 900px) 22vw, 45vw" />
+                          <Media src={item.src} alt={item.alt} ratio="4 / 3" sizes="(min-width: 900px) 22vw, 45vw" />
                           <p className="kv-muted" style={{ fontSize: "var(--text-xs)", marginTop: "var(--space-2)" }}>
-                            {project.title}
+                            {service.name}
                           </p>
                         </Link>
                       ))}

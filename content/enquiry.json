@@ -1,0 +1,15 @@
+{
+  "coverageOptions": [
+    "Photography only",
+    "Videography only",
+    "Photography and video",
+    "Not sure yet"
+  ],
+  "budgetOptions": [
+    "Prefer not to say",
+    "Under $1,000",
+    "$1,000 – $2,500",
+    "$2,500 – $5,000",
+    "Over $5,000"
+  ]
+}

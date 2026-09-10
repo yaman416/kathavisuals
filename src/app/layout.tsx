@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -80,6 +78,13 @@ const structuredData = {
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 
+/**
+ * Only the document shell, the fonts and the site-wide metadata.
+ *
+ * The header and footer live in the (site) group instead, so /keystatic can
+ * render the admin on its own without the studio's own navigation wrapped
+ * around it.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-AU" className={`${cormorant.variable} ${inter.variable}`}>
@@ -89,12 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           // Static, author-controlled object. No user input reaches this.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-        <a href="#main" className="kv-btn kv-btn--accent" data-skip-link>
-          Skip to content
-        </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

@@ -1,0 +1,184 @@
+{
+  "items": [
+    {
+      "slug": "weddings",
+      "name": "Weddings",
+      "summary": "Honest and thoughtfully composed photography and films that preserve the atmosphere, relationships and meaningful details of your celebration.",
+      "intro": "We cover a wedding the way it actually unfolds. That means arriving early enough to understand the room, staying close to the people who matter, and directing only where it genuinely helps.",
+      "includes": [
+        "Photography, videography, or both",
+        "Coverage planned around your run sheet",
+        "Preview images within 48 hours",
+        "Full edited gallery in one to two weeks",
+        "Private download link, active for 90 days"
+      ],
+      "audience": "Couples who want their day told as one honest story rather than a checklist of poses.",
+      "process": [
+        "A conversation about the day, the people and what matters most to you",
+        "A written plan covering locations, timings and the moments you cannot miss",
+        "Coverage on the day, working quietly around the celebration",
+        "Previews within 48 hours, then the full gallery"
+      ],
+      "faqs": [
+        {
+          "question": "How do we check availability?",
+          "answer": "Send an enquiry with your date and we will get back to you quickly to confirm."
+        },
+        {
+          "question": "Do you offer photography and video together?",
+          "answer": "Yes. You can book stills, film, or both. Whichever you choose, it is shot by the same team with the same eye."
+        },
+        {
+          "question": "How long can we access our photos?",
+          "answer": "Your photos and films arrive as a private download link that stays active for 90 days, which is plenty of time to download everything and share it with family. After that it is archived. If you need it again later, just ask and we will restore it at no cost."
+        },
+        {
+          "question": "Do you travel outside Canberra?",
+          "answer": "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add."
+        }
+      ],
+      "image": "/design/service-weddings.jpg",
+      "gallery": [
+        {
+          "src": "/design/portfolio-weddings.jpg",
+          "alt": "An outdoor wedding ceremony on a lawn in bright daylight"
+        },
+        {
+          "src": "/design/service-weddings.jpg",
+          "alt": "A couple laughing together in a sunlit garden"
+        }
+      ]
+    },
+    {
+      "slug": "events",
+      "name": "Events",
+      "summary": "Professional coverage for private celebrations, community gatherings, cultural occasions and corporate events.",
+      "intro": "Events move quickly and rarely repeat themselves. We plan the coverage in advance so the moments that matter are photographed as they happen rather than reconstructed afterwards.",
+      "includes": [
+        "Half or full day coverage",
+        "Photography, videography, or both",
+        "Preview images within 48 hours",
+        "Full edited gallery in one to two weeks",
+        "Private download link, active for 90 days"
+      ],
+      "audience": "Organisers and hosts who need a clean, usable record of their event for marketing or for memory.",
+      "process": [
+        "A short brief covering the run sheet, the venue and who needs to be photographed",
+        "Coverage planned around the parts of the programme that matter most",
+        "Discreet shooting through the event",
+        "Previews within 48 hours, then the full gallery"
+      ],
+      "faqs": [
+        {
+          "question": "How far in advance should we book?",
+          "answer": "The earlier the better, especially for weekend dates."
+        },
+        {
+          "question": "Can you deliver same day highlights?",
+          "answer": "Not on the night itself. You will have a set of preview images within 48 hours, and the full edited gallery in one to two weeks."
+        },
+        {
+          "question": "How long can we access the files?",
+          "answer": "Your files arrive as a private download link that stays active for 90 days, so there is time to download and share everything you need. After that it is archived, and we will happily restore it on request."
+        },
+        {
+          "question": "Do you cover cultural and community events?",
+          "answer": "Yes. We regularly photograph community occasions and take the time to understand the programme and the customs involved beforehand."
+        }
+      ],
+      "image": "/design/service-events.jpg",
+      "gallery": [
+        {
+          "src": "/design/portfolio-events.jpg",
+          "alt": "Guests seated at a long outdoor table under a white canopy"
+        },
+        {
+          "src": "/design/service-events.jpg",
+          "alt": "Guests laughing together at an outdoor garden party"
+        }
+      ]
+    },
+    {
+      "slug": "real-estate",
+      "name": "Real Estate",
+      "summary": "Clean, considered property photography and video created to present spaces accurately and attractively.",
+      "intro": "Property work is a deadline business. We shoot for the listing, deliver quickly, and keep the rooms looking like themselves rather than like a rendering.",
+      "includes": [
+        "Interior and exterior photography",
+        "Walkthrough video on request",
+        "Aerial stills and video, flown in-house",
+        "Delivery within 24 to 48 hours",
+        "Private download link, active for 90 days"
+      ],
+      "audience": "Agents and owners who want listings that stand out and photograph well online.",
+      "process": [
+        "Confirm the property, access and the listing deadline",
+        "Shoot the rooms and exterior in the best available light",
+        "Edit for accurate colour and straight verticals",
+        "Deliver within 24 to 48 hours"
+      ],
+      "faqs": [
+        {
+          "question": "Do you shoot drone footage?",
+          "answer": "Yes. We fly our own drone, so aerial stills and video can be added to any property shoot."
+        },
+        {
+          "question": "How quickly can we get images?",
+          "answer": "Property images are delivered within 24 to 48 hours, so you can list without waiting."
+        }
+      ],
+      "image": "/design/service-real-estate.jpg",
+      "gallery": [
+        {
+          "src": "/design/service-real-estate.jpg",
+          "alt": "A white living room filled with morning daylight"
+        },
+        {
+          "src": "/design/portfolio-real-estate.jpg",
+          "alt": "A contemporary home exterior in clear morning light"
+        }
+      ]
+    },
+    {
+      "slug": "brand-content",
+      "name": "Brand Content",
+      "summary": "Photography and short-form video for businesses, products, campaigns and social media.",
+      "intro": "Content that has to work on a feed has different rules to a gallery. We plan the shoot around where it will actually be published and deliver it in the formats you need.",
+      "includes": [
+        "Creative direction and a shot list",
+        "Stills and short-form video",
+        "Formats cut for the platforms you use",
+        "Commercial usage licence",
+        "Private download link, active for 90 days"
+      ],
+      "audience": "Businesses and creators who need a steady supply of images and video that look like their brand.",
+      "process": [
+        "A brief covering the product, the audience and where the work will run",
+        "A shot list agreed before the day",
+        "The shoot, on location or at your premises",
+        "Delivery in the crops and formats you asked for"
+      ],
+      "faqs": [
+        {
+          "question": "Do you offer ongoing content packages?",
+          "answer": "Not yet. We book shoots individually at the moment, so tell us what you need and we will quote that piece of work."
+        },
+        {
+          "question": "Can you edit for specific platforms?",
+          "answer": "Yes, we can format content for the platforms you use most."
+        }
+      ],
+      "image": "/design/service-social.jpg",
+      "gallery": [
+        {
+          "src": "/design/service-social.jpg",
+          "alt": "Coffee and pastries on a marble counter beside a sunlit window"
+        },
+        {
+          "src": "/design/portfolio-social.jpg",
+          "alt": "An overhead arrangement of plates, fruit and flowers on pale marble"
+        }
+      ]
+    }
+  ]
+}
