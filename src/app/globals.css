@@ -347,22 +347,33 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
 /* ---------------------------------------------------------------- footer ---
-   Four blocks side by side on a monitor. On a phone the brand keeps the full
-   width and the three link lists pair up two across, rather than every list
-   stacking into one long column. */
+   Explicit column counts at each size rather than auto-fit. Auto-fit picks the
+   track count from the available width without knowing there are four blocks,
+   so at around 900px it settled on three and left "Get in touch" alone on a
+   second row beside a column of dead space. Every rule below divides the blocks
+   evenly, so no row is left ragged. */
 
 .kv-footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* The brand block carries the mark and two lines, so it takes a little more. */
+  grid-template-columns: 1.35fr 1fr 1fr 1.1fr;
   gap: var(--space-8) var(--space-6);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1000px) {
+  /* Brand across the top, then the three lists in one even row. */
+  .kv-footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kv-footer-brand { grid-column: 1 / -1; }
+}
+
+@media (max-width: 620px) {
+  /* Three columns of links stop fitting. Two lists pair up and the contact
+     block takes the full width rather than orphaning next to a gap. */
   .kv-footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6) var(--space-4);
   }
-  .kv-footer-brand { grid-column: 1 / -1; }
+  .kv-footer-contact { grid-column: 1 / -1; }
 }
 
 /* ------------------------------------------------------------------ hero ---

@@ -70,7 +70,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div>
+          <div className="kv-footer-contact">
             <h2 style={heading}>Get in touch</h2>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               <li>
