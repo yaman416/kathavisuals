@@ -346,6 +346,25 @@ img, video { max-width: 100%; }
 .kv-portfolio__item[data-span="wide"] { grid-column: span 4; }
 .kv-portfolio__item[data-span="tall"] { grid-column: span 2; }
 
+/* ---------------------------------------------------------------- footer ---
+   Four blocks side by side on a monitor. On a phone the brand keeps the full
+   width and the three link lists pair up two across, rather than every list
+   stacking into one long column. */
+
+.kv-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-8) var(--space-6);
+}
+
+@media (max-width: 720px) {
+  .kv-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
+  .kv-footer-brand { grid-column: 1 / -1; }
+}
+
 /* ------------------------------------------------------------------ hero ---
    The runway is taller than the viewport so the film has distance to play
    across. Below the scrub width there is no film, so the extra height would be

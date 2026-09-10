@@ -31,11 +31,8 @@ export function SiteFooter() {
   return (
     <footer className="kv-section--dark" style={{ paddingBlock: "var(--section-tight)" }}>
       <div className="kv-wrap">
-        <div
-          className="kv-grid"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
-        >
-          <div>
+        <div className="kv-footer-grid">
+          <div className="kv-footer-brand">
             <span style={{ color: "var(--story-paper)", display: "inline-block" }}>
               <Logo />
             </span>

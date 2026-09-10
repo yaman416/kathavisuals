@@ -49,7 +49,15 @@ export function SiteHeader() {
   const isCurrent = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  /*
+   * The drawer is a sibling of the header, not a child. `.kv-header` carries a
+   * backdrop-filter, which makes it the containing block for fixed-position
+   * descendants: `inset: 0` inside it resolved against the header's 72px box
+   * rather than the viewport, so the drawer's background painted only 72px tall
+   * and the page showed through behind the links.
+   */
   return (
+    <>
     <header className="kv-header">
       <div className="kv-wrap kv-header__inner">
         <Link href="/" aria-label={`${site.name} home`} style={{ textDecoration: "none" }}>
@@ -84,6 +92,7 @@ export function SiteHeader() {
           <MenuIcon open={open} />
         </button>
       </div>
+    </header>
 
       {open ? (
         <div className="kv-drawer" role="dialog" aria-modal="true" aria-label="Menu">
@@ -125,6 +134,6 @@ export function SiteHeader() {
           </div>
         </div>
       ) : null}
-    </header>
+    </>
   );
 }

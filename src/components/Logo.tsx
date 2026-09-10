@@ -60,7 +60,10 @@ export function Logo({
         display: "inline-flex",
         alignItems: "center",
         gap: "12px",
-        color: "var(--color-ink)",
+        /* Inherited, not fixed: the footer sets a light colour on dark ground.
+           Hard-coding ink here painted the mark at 1.00 contrast on the footer,
+           which is to say invisibly. */
+        color: "inherit",
       }}
     >
       <Monogram size={size} />
