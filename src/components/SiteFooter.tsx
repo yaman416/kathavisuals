@@ -33,8 +33,8 @@ export function SiteFooter() {
       <div className="kv-wrap">
         <div className="kv-footer-grid">
           <div className="kv-footer-brand">
-            <span style={{ color: "var(--story-paper)", display: "inline-block" }}>
-              <Logo />
+            <span style={{ display: "inline-block" }}>
+              <Logo tone="light" />
             </span>
             <p className="kv-muted" style={{ marginTop: "var(--space-4)", fontSize: "var(--text-sm)" }}>
               {site.tagline}

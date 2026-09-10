@@ -1,32 +1,41 @@
 import Image from "next/image";
 
 /**
- * The Katha Visuals lockup.
+ * The studio's own logo.
  *
- * The artwork is a KV monogram with a metallic emboss, so it carries tonal
- * gradients rather than one flat colour. That rules out the mask-and-tint
- * approach used for a single-colour mark: masking would flatten it to a
- * silhouette and throw the emboss away. It is drawn as an image instead.
+ * Supplied as two PNGs of identical artwork in two colourways: `logo-ink.png`
+ * is near-black for light ground, `logo-original.png` is white for dark. They
+ * are the same 1562x1074 image with the same 379,748 opaque pixels, so they can
+ * be swapped without anything shifting.
  *
- * Being near-black it measures 14.17:1 on Story Paper and 1.06:1 on Forest
- * Ink, so on dark ground it is inverted, which reads as silver rather than
- * disappearing. `.kv-section--dark` and the footer do that in globals.css.
+ * `tone` picks the colourway. Everything on the site sits on Story Paper except
+ * the footer, so ink is the default and the footer asks for the light one.
+ * Using ink on the dark footer is what once painted the mark at 1.00 contrast,
+ * which is to say invisibly.
  *
- * `size` is the rendered height in pixels; width follows the 1.069:1 ratio.
+ * `size` is the rendered height in pixels; width follows the 1.454:1 ratio.
  */
 
-export function Logo({ size = 52, className = "" }: { size?: number; className?: string }) {
-  const width = Math.round(size * (954 / 892));
+export function Logo({
+  size = 44,
+  tone = "ink",
+  className = "",
+}: {
+  size?: number;
+  tone?: "ink" | "light";
+  className?: string;
+}) {
+  const width = Math.round(size * (1562 / 1074));
   return (
     <Image
-      src="/design/logo.svg"
+      src={tone === "light" ? "/design/logo-original.png" : "/design/logo-ink.png"}
       alt=""
       aria-hidden="true"
-      width={width}
-      height={size}
+      width={1562}
+      height={1074}
       priority
       className={`kv-logo ${className}`}
-      style={{ display: "block", width, height: size }}
+      style={{ display: "block", height: size, width }}
     />
   );
 }

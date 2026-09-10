@@ -407,23 +407,13 @@ img, video { max-width: 100%; }
 }
 
 /* ------------------------------------------------------------------ logo ---
-   The mark is near-black with a metallic emboss: 14.17:1 on Story Paper, but
-   1.06:1 on Forest Ink, where it would simply disappear. On dark ground it is
-   inverted, which reads as silver and keeps the emboss rather than flattening
-   the artwork to a silhouette. */
+   Two colourways of one file rather than a filter, so the artwork is never
+   altered. `img, video { max-width: 100% }` above would otherwise clamp the
+   mark against the link that wraps it, and the pair resolve to zero width. */
 
 .kv-logo {
   flex-shrink: 0;
-  /* `img, video { max-width: 100% }` above clamps this to its parent, and the
-     link wrapping it shrinks to fit its child, so the two resolve to zero and
-     the mark disappears. Earlier logos were spans and never hit the rule. */
   max-width: none;
-}
-
-/* The drawer is Story Paper, so it is deliberately not in this list. */
-footer .kv-logo,
-.kv-section--dark .kv-logo {
-  filter: invert(1);
 }
 
 /* ------------------------------------------------------------------ hero ---
