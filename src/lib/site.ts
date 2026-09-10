@@ -72,6 +72,13 @@ export const people: Person[] = [
 /* Services                                                                   */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * How long a delivered client gallery stays online, in days. Confirmed by
+ * Prakash and Yaman. Re-activation after this window is free on request, so
+ * the copy below says so rather than implying the files are gone.
+ */
+export const GALLERY_DAYS = 90;
+
 export type Faq = { question: string; answer: string };
 
 export type Service = {
@@ -100,6 +107,7 @@ export const services: Service[] = [
       "Coverage planned around your run sheet",
       "Preview images within 48 hours",
       "Full edited gallery in one to two weeks",
+      `Online gallery available for ${GALLERY_DAYS} days`,
     ],
     audience:
       "Couples who want their day told as one honest story rather than a checklist of poses.",
@@ -121,6 +129,10 @@ export const services: Service[] = [
           "Yes. You can book stills, film, or both. Whichever you choose, it is shot by the same team with the same eye.",
       },
       {
+        question: "How long can we access our gallery?",
+        answer: `Your online gallery stays up for ${GALLERY_DAYS} days, which is plenty of time to download everything and share it with family. After that it is archived. If you need it back later, just ask and we will restore it at no cost.`,
+      },
+      {
         question: "Do you travel outside Canberra?",
         answer:
           "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add.",
@@ -140,6 +152,7 @@ export const services: Service[] = [
       "Photography, videography, or both",
       "Preview images within 48 hours",
       "Full edited gallery in one to two weeks",
+      `Online gallery available for ${GALLERY_DAYS} days`,
     ],
     audience:
       "Organisers and hosts who need a clean, usable record of their event for marketing or for memory.",
@@ -158,6 +171,10 @@ export const services: Service[] = [
         question: "Can you deliver same day highlights?",
         answer:
           "Not on the night itself. You will have a set of preview images within 48 hours, and the full edited gallery in one to two weeks.",
+      },
+      {
+        question: "How long can we access the gallery?",
+        answer: `The online gallery stays up for ${GALLERY_DAYS} days so you can download and share everything you need. After that it is archived, and we will happily restore it on request.`,
       },
       {
         question: "Do you cover cultural and community events?",
@@ -179,6 +196,7 @@ export const services: Service[] = [
       "Walkthrough video on request",
       "Aerial stills and video, flown in-house",
       "Delivery within 24 to 48 hours",
+      `Online gallery available for ${GALLERY_DAYS} days`,
     ],
     audience:
       "Agents and owners who want listings that stand out and photograph well online.",
@@ -214,6 +232,7 @@ export const services: Service[] = [
       "Stills and short-form video",
       "Formats cut for the platforms you use",
       "Commercial usage licence",
+      `Online gallery available for ${GALLERY_DAYS} days`,
     ],
     audience:
       "Businesses and creators who need a steady supply of images and video that look like their brand.",
