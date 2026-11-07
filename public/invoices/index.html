@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="Katha Invoices">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script>
@@ -22,7 +22,7 @@
 (function(){
   if(!/[?&]demo\b/.test(location.search))return;
   window.KATHA_DEMO=true;
-  const ME="demo@kathavisuals.com.au";
+  const ME="demo@kathavisuals.com.au";try{if(!localStorage.getItem("katha_me"))localStorage.setItem("katha_me","Yaman")}catch(e){}
   const T={
     settings:[{id:"business",data:{tradingName:"KATHA VISUALS",legalName:"Y GURUNG & P KHANAL",abn:"52 680 103 232",address:"Canberra ACT",
       email:"kathavisualscbr@gmail.com",phone:"0410 494 321 or 0426 369 124",gstRegistered:true,gstStart:"2026-10-01",
@@ -32,7 +32,11 @@
       noteBusiness:"Thank you for your booking. Payment within 7 days, please, using the invoice number as the reference.",
       priceList:[{"desc": "Portrait session, 1 hour, one location, 40 edited photos", "mode": "incl", "name": "Portrait session", "price": 299}, {"desc": "Engagement or pre-wedding shoot, 90 minutes, up to 2 locations, 60+ edited photos", "mode": "incl", "name": "Engagement or pre-wedding", "price": 450}, {"desc": "Pre-wedding shoot added to a wedding booking, 90 minutes, up to 2 locations, 60+ edited photos", "mode": "incl", "name": "Pre-wedding, with a wedding booking", "price": 350}, {"desc": "Photography, up to 2 hours, 150+ edited photos, online gallery", "mode": "incl", "name": "Small event, photo", "price": 450}, {"desc": "Photography, up to 4 hours, 300+ edited photos", "mode": "incl", "name": "Half day, photo", "price": 750}, {"desc": "Wedding photography, up to 8 hours, 500+ edited photos, sneak peek in 3 days", "mode": "incl", "name": "Wedding, photo", "price": 2200}, {"desc": "Extra wedding day photography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, photo", "price": 850}, {"desc": "Videography, up to 2 hours, 3 to 4 minute highlight film", "mode": "incl", "name": "Small event, video", "price": 650}, {"desc": "Videography, up to 4 hours, 5 to 6 minute film", "mode": "incl", "name": "Half day, video", "price": 1100}, {"desc": "Wedding videography, up to 8 hours, 6 to 8 minute film plus the full ceremony", "mode": "incl", "name": "Wedding, video", "price": 2400}, {"desc": "Extra wedding day videography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, video", "price": 1100}, {"desc": "Photography and videography, up to 2 hours, online gallery plus highlight film", "mode": "incl", "name": "Small event, photo + video", "price": 1050}, {"desc": "Photography and videography, up to 4 hours, gallery plus 5 to 6 minute film", "mode": "incl", "name": "Half day, photo + video", "price": 1750}, {"desc": "Wedding photography and videography, up to 8 hours, full gallery, 6 to 8 minute film and a pre-wedding shoot", "mode": "incl", "name": "Wedding, photo + video", "price": 4200}, {"desc": "Extra wedding day photography and videography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, photo + video", "price": 1800}, {"desc": "Extra hour of photography", "mode": "incl", "name": "Extra hour, photo", "price": 150}, {"desc": "Extra hour of wedding photography", "mode": "incl", "name": "Extra hour, photo (wedding)", "price": 250}, {"desc": "Extra hour of videography", "mode": "incl", "name": "Extra hour, video", "price": 200}, {"desc": "Extra hour of wedding videography", "mode": "incl", "name": "Extra hour, video (wedding)", "price": 250}, {"desc": "Extra hour of photography and videography", "mode": "incl", "name": "Extra hour, photo + video", "price": 300}, {"desc": "Extra hour of wedding photography and videography", "mode": "incl", "name": "Extra hour, photo + video (wedding)", "price": 450}, {"desc": "Social reel, 30 to 60 seconds, edited for Instagram and TikTok", "mode": "incl", "name": "Social reel", "price": 250}, {"desc": "Raw footage, every clip from the day, unedited", "mode": "incl", "name": "Raw footage", "price": 250}, {"desc": "Express delivery, full gallery within 7 days", "mode": "incl", "name": "Full gallery in 7 days", "price": 150}, {"desc": "Second photographer", "mode": "incl", "name": "Second photographer", "price": 500}, {"desc": "Printed album", "mode": "incl", "name": "Printed album", "price": 650}, {"desc": "Travel beyond 50 km of Canberra, return trip, per km", "mode": "incl", "name": "Travel, per km", "price": 1}]}}],
     clients:[{id:"demo-client",data:{name:"Sample Client",business:"",abn:"",email:"",mode:"incl",createdAt:"2026-11-01T10:00:00+11:00"}}],
-    invoices:[],
+    invoices:(()=>{const d=n=>{const x=new Date();x.setDate(x.getDate()+n);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")};
+      return [{id:"KV-2026-001",data:{number:"KV-2026-001",client:{name:"Sita Thapa",business:"",abn:"",email:"0400 000 000"},event:"Weaning ceremony, Belconnen",eventDate:d(-10),issueDate:d(-9),dueDate:d(-2),
+        items:[{desc:"Photography, up to 2 hours, 150+ edited photos, online gallery",qty:1,price:450}],gstMode:"incl",deposit:0,note:"",paidAmount:0,paidDate:"",status:"sent",total:450,gst:40.91,createdBy:"Yaman",createdAt:d(-9)}},
+        {id:"KV-2026-002",data:{number:"KV-2026-002",client:{name:"Ram and Gita",business:"",abn:"",email:"@ramgita"},event:"Engagement shoot",eventDate:d(5),issueDate:d(-3),dueDate:d(2),
+        items:[{desc:"Engagement or pre-wedding shoot, 90 minutes, up to 2 locations, 60+ edited photos",qty:1,price:450}],gstMode:"incl",deposit:0,note:"",paidAmount:0,paidDate:"",status:"sent",total:450,gst:40.91,createdBy:"Prakash",createdAt:d(-3)}}]})(),
     members:[{email:ME,name:"Demo",added_at:"1"}]
   };
   function q(t){const st={f:[],op:"select",body:null,single:false};
@@ -48,11 +52,12 @@
     return api}
   window.supabase={createClient(){return{
     from:q,
+    async rpc(){return{data:"ok",error:null}},
     channel(){const c={on(){return c},subscribe(){return c}};return c},
     auth:{async getSession(){return{data:{session:{user:{email:ME}}}}},onAuthStateChange(){return{data:{subscription:{unsubscribe(){}}}}},
-      async signInWithOtp(){return{error:null}},async signOut(){location.href=location.pathname;return{error:null}}}}}};
+      async signInWithOtp(){return{error:null}},async signInWithPassword(){return{data:{session:{user:{email:ME}}},error:null}},async updateUser(){return{data:{},error:null}},async signOut(){location.href=location.pathname;return{error:null}}}}}};
   document.addEventListener("DOMContentLoaded",()=>{const b=document.createElement("div");
-    b.style.cssText="background:#A3261F;color:#fff;text-align:center;font:600 13px/1.4 Montserrat,Arial,sans-serif;padding:10px 16px;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))";
+    b.style.cssText="background:#A3261F;color:#fff;text-align:center;font:600 13px/1.4 Inter,Arial,sans-serif;padding:10px 16px;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))";
     b.textContent="Demo mode: try anything. Nothing is saved, and the bank details are placeholders.";document.body.prepend(b)});
 })();
 </script>
@@ -63,8 +68,8 @@
   --sindoor:#A3261F; --on-sindoor:#FFFFFF; --surface:#FFFFFF; --field:#FFFFFF;
   --good:#1F6B45; --good-bg:#DCEBE2; --warn:#7A5A0B; --warn-bg:#F1E6C8; --bad:#A3261F; --bad-bg:#F3DCDA; --idle-bg:#E4E2DD;
   --logo-filter:none;
-  --sans:"Montserrat","Helvetica Neue",Arial,sans-serif;
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Inter",-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:var(--sheet);
   --sheet:"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -157,7 +162,7 @@ h2{font-size:15px;font-weight:600;margin:0}
 /* forms */
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 .field>label,.field>.lab{font-size:12px;font-weight:600;color:var(--ink-muted)}
-input[type=text],input[type=email],input[type=number],input[type=date],select,textarea{
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],select,textarea{
   width:100%;background:var(--field);border:1px solid var(--hairline);border-radius:6px;padding:9px 11px;min-width:0}
 textarea{resize:vertical;min-height:64px}
 input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
@@ -211,11 +216,12 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .sheet .s-parties strong{font-size:14px;font-weight:700;display:block}
 .sheet .s-parties .m{color:#5E6062}
 .sheet table{width:100%;border-collapse:collapse;margin-top:30px;font-size:12px}
-.sheet th{background:#141516;color:#fff;font-weight:700;text-align:left;padding:9px 12px;font-size:11px}
+.sheet thead tr{background:#141516}
+.sheet th{background:transparent;color:#fff;font-weight:700;text-align:left;padding:9px 12px;font-size:11px}
 .sheet th.r,.sheet td.r{text-align:right}
 .sheet td{padding:10px 12px;border-bottom:1px solid #E4E2DD;vertical-align:top}
 .sheet .s-bottom{display:flex;justify-content:space-between;gap:30px;margin-top:18px}
-.sheet .s-note{font-size:11px;color:#5E6062;font-style:italic;max-width:300px;line-height:1.5;padding-top:6px}
+.sheet .s-note{font-size:11px;color:#5E6062;max-width:300px;line-height:1.5;padding-top:6px}
 .sheet .s-tot{width:300px;font-size:12px}
 .sheet .s-tot div{display:flex;justify-content:space-between;padding:5px 12px}
 .sheet .s-tot .strong{font-weight:700;font-size:13px}
@@ -228,7 +234,7 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .sheet .s-pay strong{font-weight:700}
 .sheet .s-terms{margin-top:22px;font-size:11px;color:#5E6062;line-height:1.6;white-space:pre-wrap}
 .sheet .s-foot{position:absolute;left:68px;right:68px;bottom:44px;border-top:1px solid #C9C7C2;padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:#5E6062}
-.sheet .s-foot i{font-family:var(--serif);font-size:13px;color:#141516}
+.sheet .s-foot i{font-family:var(--sheet);font-style:normal;font-weight:700;font-size:11px;color:#141516}
 
 /* sticky actions */
 .actionbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--hairline);z-index:20;
@@ -246,6 +252,8 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .citem div{min-width:0}
 .citem strong{display:block}
 .citem span{font-size:12px;color:var(--ink-muted)}
+.rem .late{color:var(--bad)}
+.rem b{font-weight:600}
 .plist{display:flex;flex-direction:column;gap:8px}
 .prow{display:grid;grid-template-columns:minmax(0,1fr) 100px 120px 32px;gap:8px;align-items:center}
 @media (max-width:520px){.prow{grid-template-columns:minmax(0,1fr) 84px 32px}.prow select{grid-column:1/3}}
@@ -427,7 +435,6 @@ function buildPdf(inv){
   let yy=y+5;
   if(inv.client?.business){col(INK);doc.text(inv.client.business,M,yy);yy+=4.4}
   if(inv.client?.abn){col(MUT);doc.text("ABN "+inv.client.abn,M,yy);yy+=4.4}
-  if(inv.client?.email){col(MUT);doc.text(inv.client.email,M,yy);yy+=4.4}
   // table
   y=Math.max(yy,y+ev.length*4.6)+8;
   doc.setFillColor(...INK);doc.rect(M,y,R-M,8,"F");
@@ -457,7 +464,7 @@ function buildPdf(inv){
   doc.setFont("helvetica","bold");doc.setFontSize(11);col(INK);doc.text(c.owing<=0.004&&+inv.paidAmount>0?"Paid in full":"Balance due",tx+3,y+6.6);
   col(SIN);doc.text(money(c.owing),R-3,y+6.6,{align:"right"});
   // gst note
-  doc.setFont("helvetica","italic");doc.setFontSize(7.8);col(MUT);
+  doc.setFont("helvetica","normal");doc.setFontSize(7.8);col(MUT);
   const gnote=c.tax?(inv.gstMode==="excl"?"All items are taxable sales. GST is shown separately.":"Total price includes GST. All items are taxable sales."):(s.gstRegistered?"No GST: this work was completed before Katha Visuals registered for GST.":"Katha Visuals is not registered for GST. No GST is included.");
   doc.text(doc.splitTextToSize(gnote,88),M,ty0+4);
   y+=20;
@@ -472,7 +479,7 @@ function buildPdf(inv){
   if(inv.note){doc.setFont("helvetica","normal");doc.setFontSize(8.2);col(MUT);doc.text(doc.splitTextToSize(inv.note,R-M),M,y)}
   // footer
   doc.setDrawColor(...HAIR);doc.line(M,280,R,280);
-  doc.setFont("times","italic");doc.setFontSize(10);col(INK);doc.text("Where moments become stories",M,286);
+  doc.setFont("helvetica","bold");doc.setFontSize(8.4);col(INK);doc.text("Where moments become stories",M,286);
   doc.setFont("helvetica","normal");doc.setFontSize(7.6);col(MUT);doc.text(`${titleCase(s.tradingName)}  |  ABN ${s.abn}  |  ${s.email}`,R,286,{align:"right"});
   return doc.output("blob");
 }
@@ -496,7 +503,7 @@ function sheetHTML(inv){
     <div class="s-top"><img class="s-logo" src="${LOGO_PDF}" alt=""><div class="s-title"><h3>${c.tax?"TAX INVOICE":"INVOICE"}</h3><p>${esc(inv.number)}</p></div></div>
     <div class="s-meta"><div class="s-from">${esc(s.legalName)} trading as ${esc(titleCase(s.tradingName))}<br><b>ABN ${esc(s.abn)}</b><br><span class="m">${esc(s.address)}<br>${esc(s.email)}&nbsp;&nbsp;&nbsp;${esc(s.phone)}</span></div>
       <div class="s-dates"><span>Issue date</span><strong>${esc(nice(inv.issueDate))}</strong><span>Due date</span><strong>${esc(nice(inv.dueDate))}</strong>${inv.eventDate?`<span>Event date</span><strong>${esc(nice(inv.eventDate))}</strong>`:""}</div></div>
-    <div class="s-parties"><div><div class="s-lab">Bill to</div><strong>${esc(cl.name)||'<span style="color:#C9C7C2">Client name</span>'}</strong>${cl.business?esc(cl.business)+"<br>":""}${cl.abn?`<span class="m">ABN ${esc(cl.abn)}</span><br>`:""}${cl.email?`<span class="m">${esc(cl.email)}</span>`:""}</div>
+    <div class="s-parties"><div><div class="s-lab">Bill to</div><strong>${esc(cl.name)||'<span style="color:#C9C7C2">Client name</span>'}</strong>${cl.business?esc(cl.business)+"<br>":""}${cl.abn?`<span class="m">ABN ${esc(cl.abn)}</span><br>`:""}</div>
       <div><div class="s-lab">Event</div><strong>${esc(inv.event)||'<span style="color:#C9C7C2">Event</span>'}</strong></div></div>
     <table><thead><tr><th>Description</th><th class="r">Qty</th><th class="r">Unit price</th><th class="r">${amtHead}</th></tr></thead>
       <tbody>${lines.map(i=>`<tr><td>${esc(i.desc)}</td><td class="r">${i.qty===""?"":esc(+i.qty||0)}</td><td class="r">${i.price===""?"":money(i.price)}</td><td class="r">${i.price===""?"":money((+i.qty||0)*(+i.price||0))}</td></tr>`).join("")}</tbody></table>
@@ -535,7 +542,7 @@ function render(){
 function renderNotice(){
   const n=$("#notice");let h="";
   if(!state.db)h="";
-  else if(!state.canWrite)h=`<div class="banner" style="margin-top:16px">You can view invoices here, but your access doesn't allow changes. Sign out and back in, or ask Yaman to check your email is under Business, Who can sign in.</div>`;
+  else if(!state.canWrite)h=`<div class="banner" style="margin-top:16px">You can view invoices here, but your access doesn't allow changes. Sign out and sign back in.</div>`;
   else if(state.timedOut&&!(state.loaded.invoices&&state.loaded.settings))h=`<div class="banner" style="margin-top:16px">Your saved invoices can't be reached yet. Check your connection; this page keeps trying.</div>`;
   n.innerHTML=h;
 }
@@ -552,6 +559,8 @@ function renderList(){
     const got=(+i.paidAmount||0)+((i.depositDate||i.issueDate||"")>=fy?c.deposit:0);
     if(i.paidDate&&i.paidDate>=fy){paidFY+=+i.paidAmount||0;gstFY+=c.total?(+i.paidAmount||0)*c.gst/c.total:0}
   });
+  const rem=reminderList();
+  document.title=(rem.length?"("+rem.length+") ":"")+"Katha Invoices";
   const f=state.filter;
   const shown=inv.filter(i=>{const st=statusOf(i);return f==="all"||(f==="unpaid"&&["sent","overdue","part"].includes(st))||(f==="paid"&&st==="paid")||(f==="draft"&&st==="draft")});
   const loading=state.db&&!state.loaded.invoices;
@@ -563,6 +572,7 @@ function renderList(){
       <div class="tile"><span class="label">Received this financial year</span><b class="num">${money(paidFY)}</b><small>Since 1 July, by date paid</small></div>
       <div class="tile"><span class="label">GST in those payments</span><b class="num">${money(gstFY)}</b><small>Belongs to the ATO. Keep it in the Tax Reserve.</small></div>
     </div>
+    ${remindersHTML(rem)}
     <div class="toolbar"><div class="seg" role="group" aria-label="Filter invoices">
       ${[["unpaid","Unpaid"],["paid","Paid"],["draft","Drafts"],["all","All"]].map(([k,l])=>`<button type="button" data-filter="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}
     </div><span class="muted">${shown.length} invoice${shown.length===1?"":"s"}</span></div>
@@ -572,11 +582,43 @@ function renderList(){
   const cb=$("#csvBtn");if(cb)cb.onclick=exportCSV;
   document.querySelectorAll("[data-filter]").forEach(b=>b.onclick=()=>{state.filter=b.dataset.filter;renderList()});
   document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openInvoice(b.dataset.open));
+  document.querySelectorAll("[data-remcopy]").forEach(b=>b.onclick=async()=>{const i=state.invoices.find(x=>x.number===b.dataset.remcopy);if(!i)return;
+    const ok=await copyText(reminderMsg(i));if(!ok){toast("Couldn't copy. Open the invoice and copy the details by hand.");return}
+    toast("Reminder copied. Paste it into Instagram, Messenger or a text.");recordReminder(i)});
+  document.querySelectorAll("[data-remsms]").forEach(a=>a.addEventListener("click",()=>{const i=state.invoices.find(x=>x.number===a.dataset.remsms);if(i)recordReminder(i)}));
   document.querySelectorAll("[data-pdf]").forEach(b=>b.onclick=()=>downloadInvoice(state.invoices.find(i=>i.number===b.dataset.pdf),b));
   document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>{state.payOpen=state.payOpen===b.dataset.pay?null:b.dataset.pay;renderList()});
   document.querySelectorAll("[data-paysave]").forEach(b=>b.onclick=()=>markPaid(b.dataset.paysave));
   document.querySelectorAll("[data-payamt]").forEach(el=>el.oninput=()=>{const i=state.invoices.find(x=>x.number===el.dataset.payamt);const h=document.getElementById("payhint-"+cssId(i.number));if(h)h.textContent=reserveHint(+el.value||0,i)});
 }
+/* ---------- reminders ---------- */
+function daysUntil(d){return Math.round((new Date(d+"T00:00:00")-new Date(todayISO()+"T00:00:00"))/864e5)}
+function reminderList(){
+  return state.invoices.filter(i=>["sent","overdue","part"].includes(statusOf(i))&&i.dueDate&&daysUntil(i.dueDate)<=3&&calc(i,state.settings).owing>0.004)
+    .sort((a,b)=>(a.dueDate||"").localeCompare(b.dueDate||""));
+}
+function dueText(i){const n=daysUntil(i.dueDate);return n<0?(-n)+" day"+(n===-1?"":"s")+" overdue":n===0?"Due today":"Due in "+n+" day"+(n===1?"":"s")}
+function phoneOf(i){const v=(i.client?.email||"").replace(/[\s()-]/g,"");return /^\+?\d{8,13}$/.test(v)?v:""}
+function reminderMsg(i){
+  const s=state.settings,c=calc(i,s),n=daysUntil(i.dueDate);
+  const nm=(i.client?.name||"").trim(),first=!nm||/^the\s/i.test(nm)||i.client?.business?"there":nm.split(/\s+/)[0];
+  const when=n<0?"was due on "+nice(i.dueDate):n===0?"is due today":"is due on "+nice(i.dueDate);
+  const bank=s.bsb&&s.accountNumber?" You can pay by bank transfer to "+(s.accountName||"Katha Visuals")+", BSB "+s.bsb+", account "+s.accountNumber+", using "+i.number+" as the reference.":"";
+  const from=state.me&&!/@/.test(state.me)?state.me+", Katha Visuals":"Katha Visuals";
+  return "Hi "+first+", a friendly reminder that invoice "+i.number+(i.event?" for "+i.event:"")+" "+when+". The balance is "+money(c.owing)+"."+bank+" If you have already paid, thank you, and please ignore this message.\n\n"+from;
+}
+function remindersHTML(rem){
+  if(!rem.length)return "";
+  return `<div class="card rem"><div class="card-head"><h2>Reminders</h2><span class="muted">${rem.length} to chase</span></div>
+    <div class="clist">${rem.map(i=>{const late=daysUntil(i.dueDate)<0,ph=phoneOf(i),c=calc(i,state.settings);
+      return `<div class="citem"><div><strong>${esc(i.client?.name||"No client")}</strong><span>${esc(i.number)}, ${money(c.owing)}, <b class="${late?"late":""}">${dueText(i)}</b>${i.remindedAt?", last reminded "+esc(nice(i.remindedAt)):""}</span></div>
+      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
+    <span class="muted" style="font-size:12px">Copy the message and send it the way you usually talk to the client. It is logged as reminded today.</span></div>`;
+}
+async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){
+  try{const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();return ok}catch(e2){return false}}}
+async function recordReminder(i){if(!state.db||!state.canWrite)return;
+  try{await state.db.doc("invoices/"+i.number).update({remindedAt:todayISO(),remindCount:(+i.remindCount||0)+1})}catch(e){}}
 function exportCSV(){
   const rows=[["Number","Client","Business","Event","Event date","Issue date","Due date","Status","Total","GST","Deposit","Paid","Date paid","Balance","Created by"]];
   state.invoices.slice().sort((a,b)=>(a.number||"").localeCompare(b.number||"")).forEach(i=>{const c=calc(i,state.settings);
@@ -590,7 +632,7 @@ function rowHTML(i){
   const open=state.payOpen===i.number;
   return `<div class="row">
     <span class="no num"><strong>${esc(i.number)}</strong></span>
-    <span class="who"><strong>${esc(i.client?.name||"No client")}</strong><span>${esc([i.event||"",i.eventDate?nice(i.eventDate):"",i.createdBy?"by "+who(i.createdBy):"",st==="paid"&&i.paidBy?"payment recorded by "+who(i.paidBy):""].filter(Boolean).join(", "))}</span></span>
+    <span class="who"><strong>${esc(i.client?.name||"No client")}</strong><span>${esc([i.event||"",i.eventDate?nice(i.eventDate):"",i.createdBy?"by "+who(i.createdBy):"",st==="paid"&&i.paidBy?"payment recorded by "+who(i.paidBy):"",st!=="paid"&&i.remindedAt?"reminded "+nice(i.remindedAt):""].filter(Boolean).join(", "))}</span></span>
     <span class="date num muted">${st==="draft"?"Not sent":esc(nice(i.dueDate))}</span>
     <span class="amt num">${money(st==="paid"?c.total:c.owing)}</span>
     <span class="chip ${st}">${STATUS_TEXT[st]}</span>
@@ -649,7 +691,7 @@ function _renderEditor(){
             <select id="clientPick" ${ro?"disabled":""}><option value="">New client (type below)</option>${clientOpts}</select></div>
           <div class="grid2">
             <div class="field"><label for="cName">Client name</label><input type="text" id="cName" value="${esc(d.client.name)}" placeholder="e.g. Sita and Ram Thapa"></div>
-            <div class="field"><label for="cEmail">Email</label><input type="email" id="cEmail" value="${esc(d.client.email)}" placeholder="name@example.com"></div>
+            <div class="field"><label for="cEmail">Phone or Instagram (optional)</label><input type="text" id="cEmail" value="${esc(d.client.email)}" placeholder="0400 000 000 or @name" autocomplete="off"></div>
             <div class="field"><label for="cBiz">Business name (optional)</label><input type="text" id="cBiz" value="${esc(d.client.business)}"></div>
             <div class="field"><label for="cAbn">Their ABN (optional)</label><input type="text" id="cAbn" value="${esc(d.client.abn)}" inputmode="numeric"></div>
           </div>
@@ -749,7 +791,7 @@ function wireEditor(){
   document.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>{const k=b.dataset.note;d.note=k==="private"?s.notePrivate:k==="business"?s.noteBusiness:"";$("#note").value=d.note;touch()});
   $("#saveBtn").onclick=()=>saveDraft(true);
   $("#pdfBtn").onclick=e=>downloadInvoice(state.draft,e.currentTarget,true);
-  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
+  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
 }
 function cleanInvoice(d){
   const c=calc(d,state.settings);
@@ -761,6 +803,7 @@ function cleanInvoice(d){
   if(d.createdAt)o.createdAt=d.createdAt;else o.createdAt=o.updatedAt;
   if(state.me){o.updatedBy=state.me;o.createdBy=d.createdBy||state.me}else if(d.createdBy)o.createdBy=d.createdBy;
   if(d.paidBy)o.paidBy=d.paidBy;
+  if(d.remindedAt){o.remindedAt=d.remindedAt;o.remindCount=+d.remindCount||1}
   if(d.sentDate)o.sentDate=d.sentDate;
   return o;
 }
@@ -826,7 +869,7 @@ function renderClients(){
       <div class="field"><label for="ecName">Name</label><input type="text" id="ecName" value="${esc(ec?.name)}"></div>
       <div class="grid2"><div class="field"><label for="ecBiz">Business name</label><input type="text" id="ecBiz" value="${esc(ec?.business)}"></div>
         <div class="field"><label for="ecAbn">ABN</label><input type="text" id="ecAbn" value="${esc(ec?.abn)}"></div></div>
-      <div class="field"><label for="ecEmail">Email</label><input type="email" id="ecEmail" value="${esc(ec?.email)}"></div>
+      <div class="field"><label for="ecEmail">Phone or Instagram (optional)</label><input type="text" id="ecEmail" value="${esc(ec?.email)}" placeholder="0400 000 000 or @name" autocomplete="off"></div>
       <div class="field"><span class="lab">How their prices work</span><div class="toggle" role="group" aria-label="Price type">
         <button type="button" data-ecmode="incl" aria-pressed="${(ec?.mode||"incl")!=="excl"}">Price includes GST</button><button type="button" data-ecmode="excl" aria-pressed="${ec?.mode==="excl"}">Price + GST</button></div>
         <span class="muted" style="font-size:12px">Private clients: price includes GST. Businesses that agreed a rate "plus GST", like Saharsh Pavilion: price + GST.</span></div>
@@ -879,18 +922,16 @@ function renderBusiness(){
           <button class="x btn ghost sm" type="button" data-pdel="${i}" aria-label="Remove">&times;</button></div>`).join("")||`<p class="muted">No shortcuts yet.</p>`}</div></div>
       <div class="card"><h2>Tax Reserve estimate</h2><div class="grid2">${f("taxRate","Tax rate on profit (0.32 = 32%)","number",'step="0.01" min="0" max="0.6"')}${f("costPct","Costs as share of income (0.11 = 11%)","number",'step="0.01" min="0" max="0.9"')}</div>
         <span class="muted" style="font-size:12px">Used for the "move to Tax Reserve" figure when you mark an invoice paid. 32% suits wages between $45,001 and $135,000. Your accountant can confirm.</span></div>
-      <div class="card"><h2>Who can sign in</h2>
-        <span class="muted" style="font-size:12px">Only these emails can open Katha Invoices. Everyone on the list can see and change everything.</span>
-        <div class="clist mlist">${MEMBERS.map(m=>`<div class="citem"><div><strong>${esc(m.name||m.email)}</strong><span>${esc(m.email)}${m.email===state.me?" (you)":""}</span></div>${m.email===state.me?"":`<button class="btn sm ghost" type="button" data-mdel="${esc(m.email)}">Remove</button>`}</div>`).join("")}</div>
-        <div class="grid2"><div class="field"><label for="mName">Name</label><input type="text" id="mName" autocomplete="off"></div><div class="field"><label for="mEmail">Email</label><input type="email" id="mEmail" autocomplete="off"></div></div>
-        <div><button class="btn sm" type="button" id="mAdd">Add person</button></div><div id="mConfirm"></div></div>
+      <div class="card"><h2>Password</h2>
+        <span class="muted" style="font-size:12px">You both sign in with ${esc(userShim._email||LOGIN_EMAIL)} and the same password. Use at least 10 characters. After a change, sign in again on your other phones and laptops.</span>
+        <div class="grid2"><div class="field"><label for="pw1">New password</label><input type="password" id="pw1" autocomplete="new-password"></div><div class="field"><label for="pw2">Type it again</label><input type="password" id="pw2" autocomplete="new-password"></div></div>
+        <div><button class="btn sm" type="button" id="pwSave">Change password</button></div></div>
     </div></div></section>`;
-  const ma=$("#mAdd");if(ma)ma.onclick=async()=>{const email=$("#mEmail").value.trim().toLowerCase(),name=$("#mName").value.trim();
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){toast("Enter a full email address.");return}
-    const {error}=await supa.from("members").insert({email,name});if(error){toast(error.code==="23505"?"That email is already on the list.":"Couldn't add them just now.");return}
-    toast(email+" can now sign in.");loadMembers()};
-  document.querySelectorAll("[data-mdel]").forEach(x=>x.onclick=()=>{const em=x.dataset.mdel;$("#mConfirm").innerHTML=`<div class="banner bad" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">Remove ${esc(em)}? They won't be able to sign in. <button class="btn sm accent" type="button" id="mYes">Remove</button></div>`;
-    $("#mYes").onclick=async()=>{const {error}=await supa.from("members").delete().eq("email",em);if(error){toast("Couldn't remove them just now.");return}toast("Removed.");loadMembers()}});
+  const pw=$("#pwSave");if(pw)pw.onclick=async()=>{const a=$("#pw1").value,b2=$("#pw2").value;
+    if(a.length<10){toast("Use at least 10 characters.");return}if(a!==b2){toast("The two passwords don't match.");return}
+    pw.disabled=true;const {error}=await supa.auth.updateUser({password:a});pw.disabled=false;
+    if(error){toast((error.message||"").toLowerCase().includes("same")?"That's already the password.":"Couldn't change it just now. Try again.");return}
+    $("#pw1").value="";$("#pw2").value="";toast("Password changed.")};
   document.querySelectorAll("[data-b]").forEach(el=>el.oninput=()=>{const k=el.dataset.b;b[k]=["termsDays","taxRate","costPct"].includes(k)?+el.value:el.value});
   $("#b_gstRegistered").onchange=e=>b.gstRegistered=e.target.checked;
   document.querySelectorAll("[data-p]").forEach(el=>el.oninput=el.onchange=()=>{const p=b.priceList[+el.dataset.p];const k=el.dataset.pk;p[k]=k==="price"?+el.value:el.value;if(k==="name")p.desc=p.desc&&p.desc!==p.name?p.desc:el.value});
@@ -909,32 +950,68 @@ let tt;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clea
 addEventListener("hashchange",()=>{if(!booted)return;const v=(location.hash||"#invoices").slice(1);if(v==="new"&&state.view!=="new")newDraft();setView(v)});
 addEventListener("beforeunload",e=>{if(state.dirty&&state.view==="new"){e.preventDefault();e.returnValue=""}});
 let booted=false;
+const LOGIN_EMAIL="kathavisualscbr@gmail.com";
+const PEOPLE=["Yaman","Prakash"];
+function lsGet(k){try{return localStorage.getItem(k)||""}catch(e){return""}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function okMsg(t){return `<div class="banner" style="background:var(--good-bg);color:var(--good)">${t}</div>`}
+function badMsg(t){return `<div class="banner bad">${esc(t)}</div>`}
 function renderLogin(msg){
   document.body.classList.add("signed-out");bar("");$("#notice").innerHTML="";
   $("#app").innerHTML=`<section class="view"><div class="card login-card"><h1>Sign in</h1>
-    <p class="muted" style="margin:0">Enter your email and we'll send you a sign-in link. No password needed.</p>
-    <form id="loginForm"><div class="field"><label for="lEmail">Email</label><input type="email" id="lEmail" required autocomplete="email" inputmode="email"></div>
-    <button class="btn primary" type="submit" id="lBtn">Email me a sign-in link</button></form><div id="lMsg">${msg||""}</div></div></section>`;
-  $("#loginForm").onsubmit=async e=>{e.preventDefault();const email=$("#lEmail").value.trim().toLowerCase();const b=$("#lBtn");b.disabled=true;b.textContent="Sending...";
-    const {error}=await supa.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
-    b.disabled=false;b.textContent="Email me a sign-in link";
-    if(!error){$("#lMsg").innerHTML=`<div class="banner" style="background:var(--good-bg);color:var(--good)">Check your inbox at <strong>${esc(email)}</strong> and tap the link. Open it on this device. It can take a minute, and may land in spam.</div>`;return}
-    const m=(error.message||"").toLowerCase();
-    let t="Couldn't send the email just now. Try again in a minute.";
-    if(m.includes("database error")||m.includes("not on the")||m.includes("signups not allowed"))t="That email isn't on the Katha list. Ask Yaman or Prakash to add it under Business, Who can sign in.";
-    else if(m.includes("rate")||error.status===429)t="Too many sign-in emails just now. Wait a few minutes, then try again.";
-    else if(m.includes("not authorized"))t="Sign-in emails aren't set up for this address yet. Ask Yaman to finish the email setup.";
-    $("#lMsg").innerHTML=`<div class="banner bad">${esc(t)}</div>`}
+    <form id="loginForm"><div class="field"><label for="lEmail">Email</label><input type="email" id="lEmail" required autocomplete="username" inputmode="email" value="${esc(LOGIN_EMAIL)}"></div>
+    <div class="field"><label for="lPass">Password</label><input type="password" id="lPass" required autocomplete="current-password"></div>
+    <button class="btn primary" type="submit" id="lBtn">Sign in</button></form><div id="lMsg">${msg||""}</div>
+    <span class="muted" style="font-size:12px">Forgot the password? Yaman can set a new one.</span></div></section>`;
+  if(!$("#lPass").value)$("#lPass").focus();
+  $("#loginForm").onsubmit=async e=>{e.preventDefault();const email=$("#lEmail").value.trim().toLowerCase(),password=$("#lPass").value;const b=$("#lBtn");b.disabled=true;b.textContent="Signing in...";
+    const {data,error}=await supa.auth.signInWithPassword({email,password});
+    b.disabled=false;b.textContent="Sign in";
+    if(!error&&data&&data.session){boot(data.session);return}
+    const m=((error&&error.message)||"").toLowerCase();
+    $("#lMsg").innerHTML=badMsg(m.includes("invalid")?"That email and password don't match. Check the password and try again.":m.includes("rate")||(error&&error.status===429)?"Too many tries. Wait a few minutes, then try again.":"Couldn't sign in just now. Check your connection and try again.")}
+}
+function renderSetup(token){
+  document.body.classList.add("signed-out");bar("");$("#notice").innerHTML="";
+  $("#app").innerHTML=`<section class="view"><div class="card login-card"><h1>Set the password</h1>
+    <p class="muted" style="margin:0">This is the one password you and Prakash will both use with ${esc(LOGIN_EMAIL)}. Use at least 10 characters. This link works once.</p>
+    <form id="setupForm"><div class="field"><label for="sPass">New password</label><input type="password" id="sPass" required minlength="10" autocomplete="new-password"></div>
+    <div class="field"><label for="sPass2">Type it again</label><input type="password" id="sPass2" required minlength="10" autocomplete="new-password"></div>
+    <button class="btn primary" type="submit" id="sBtn">Save password and sign in</button></form><div id="sMsg"></div></div></section>`;
+  $("#sPass").focus();
+  $("#setupForm").onsubmit=async e=>{e.preventDefault();const a=$("#sPass").value,b2=$("#sPass2").value;
+    if(a.length<10){$("#sMsg").innerHTML=badMsg("Use at least 10 characters.");return}
+    if(a!==b2){$("#sMsg").innerHTML=badMsg("The two passwords don't match.");return}
+    const btn=$("#sBtn");btn.disabled=true;btn.textContent="Saving...";
+    const {data,error}=await supa.rpc("set_password_with_link",{p_token:token,p_password:a});
+    btn.disabled=false;btn.textContent="Save password and sign in";
+    const r=error?"error":data;
+    if(r!=="ok"){$("#sMsg").innerHTML=badMsg({used:"This link has already been used. Sign in with the password instead.",expired:"This link has expired. Ask for a new one.",invalid:"This link isn't valid. Check you copied all of it.",too_short:"Use at least 10 characters."}[r]||"Couldn't save the password just now. Try again.");return}
+    history.replaceState(null,"",location.pathname);
+    const s=await supa.auth.signInWithPassword({email:LOGIN_EMAIL,password:a});
+    if(s.data&&s.data.session)boot(s.data.session);else renderLogin(okMsg("Password saved. Sign in with it now."))}
+}
+function pickPerson(){return new Promise(res=>{
+  $("#app").innerHTML=`<section class="view"><div class="card login-card"><h1>Who's using this device?</h1>
+    <p class="muted" style="margin:0">So invoices show who made them. You can switch any time from the top of the page.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">${PEOPLE.map(p=>`<button class="btn primary" type="button" data-person="${p}" style="flex:1">${p}</button>`).join("")}</div></div></section>`;
+  document.querySelectorAll("[data-person]").forEach(b=>b.onclick=()=>{lsSet("katha_me",b.dataset.person);res(b.dataset.person)})})}
+function renderWho(){
+  $("#who").innerHTML=`<span>${esc(state.me)} on this device</span><button class="btn sm ghost" type="button" id="switchMe">Switch to ${esc(PEOPLE.find(p=>p!==state.me)||"")}</button><button class="btn sm ghost" type="button" id="signOut">Sign out</button>`;
+  $("#switchMe").onclick=()=>{state.me=PEOPLE.find(p=>p!==state.me);lsSet("katha_me",state.me);renderWho();render();toast("Now working as "+state.me+".")};
+  $("#signOut").onclick=async()=>{if(state.dirty&&!confirmLeave())return;await supa.auth.signOut();location.hash="";location.reload()};
 }
 async function boot(session){
   if(booted)return;booted=true;
   const email=(session.user.email||"").toLowerCase();
-  userShim._email=email;state.me=email;state.db=db;state.user=userShim;state.dl=dlShim;
+  userShim._email=email;state.db=db;state.user=userShim;state.dl=dlShim;
   await loadMembers();
-  if(!MEMBERS.some(m=>m.email===email)){booted=false;await supa.auth.signOut();renderLogin(`<div class="banner bad">${esc(email)} isn't on the Katha list.</div>`);return}
+  if(!MEMBERS.some(m=>m.email===email)){booted=false;await supa.auth.signOut();renderLogin(badMsg(email+" can't open Katha Invoices."));return}
+  PEOPLE.forEach(p=>state.names[p]=p);
+  let me=lsGet("katha_me");if(!PEOPLE.includes(me))me=await pickPerson();
+  state.me=me;
   document.body.classList.remove("signed-out");
-  $("#who").innerHTML=`<span>Signed in as ${esc(email)}</span><button class="btn sm ghost" type="button" id="signOut">Sign out</button>`;
-  $("#signOut").onclick=async()=>{if(state.dirty&&!confirmLeave())return;await supa.auth.signOut();location.hash="";location.reload()};
+  renderWho();
   const v=(location.hash||"#invoices").slice(1);
   newDraft();setView(["invoices","new","clients","business"].includes(v)?v:"invoices");
   const timer=setTimeout(()=>{state.timedOut=true;renderNotice()},10000);
@@ -952,7 +1029,9 @@ async function boot(session){
 }
 function confirmLeave(){return window.confirm("You have unsaved changes on this invoice. Sign out anyway?")}
 (async function start(){
-  supa.auth.onAuthStateChange((ev,s)=>{if(s&&!booted&&(ev==="SIGNED_IN"||ev==="INITIAL_SESSION"))boot(s)});
+  supa.auth.onAuthStateChange((ev,s)=>{if(/^#setup=/.test(location.hash))return;if(s&&!booted&&(ev==="SIGNED_IN"||ev==="INITIAL_SESSION"))boot(s)});
+  const setup=(location.hash.match(/^#setup=([A-Za-z0-9_-]{20,})$/)||[])[1];
+  if(setup){renderSetup(setup);return}
   const {data}=await supa.auth.getSession();
   if(data&&data.session)boot(data.session);else if(!booted)renderLogin();
 })();
