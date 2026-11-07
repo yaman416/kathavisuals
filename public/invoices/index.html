@@ -16,6 +16,46 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,400&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+/* Demo mode (?demo): the real app on a pretend database in this tab only.
+   Nothing is sent anywhere and everything disappears on reload. */
+(function(){
+  if(!/[?&]demo\b/.test(location.search))return;
+  window.KATHA_DEMO=true;
+  const ME="demo@kathavisuals.com.au";
+  const T={
+    settings:[{id:"business",data:{tradingName:"KATHA VISUALS",legalName:"Y GURUNG & P KHANAL",abn:"52 680 103 232",address:"Canberra ACT",
+      email:"kathavisualscbr@gmail.com",phone:"0410 494 321 or 0426 369 124",gstRegistered:true,gstStart:"2026-10-01",
+      bankName:"Commonwealth Bank",accountName:"Katha Visuals",bsb:"000-000",accountNumber:"DEMO ONLY",termsDays:7,prefix:"KV-2026-",
+      taxRate:0.32,costPct:0.11,defaultMode:"incl",
+      notePrivate:"A 30% deposit secures your date. The balance is due 7 days before the event (14 days before weddings). Edited photos are delivered once the balance is paid.",
+      noteBusiness:"Thank you for your booking. Payment within 7 days, please, using the invoice number as the reference.",
+      priceList:[{"desc": "Portrait session, 1 hour, one location, 40 edited photos", "mode": "incl", "name": "Portrait session", "price": 299}, {"desc": "Engagement or pre-wedding shoot, 90 minutes, up to 2 locations, 60+ edited photos", "mode": "incl", "name": "Engagement or pre-wedding", "price": 450}, {"desc": "Pre-wedding shoot added to a wedding booking, 90 minutes, up to 2 locations, 60+ edited photos", "mode": "incl", "name": "Pre-wedding, with a wedding booking", "price": 350}, {"desc": "Photography, up to 2 hours, 150+ edited photos, online gallery", "mode": "incl", "name": "Small event, photo", "price": 450}, {"desc": "Photography, up to 4 hours, 300+ edited photos", "mode": "incl", "name": "Half day, photo", "price": 750}, {"desc": "Wedding photography, up to 8 hours, 500+ edited photos, sneak peek in 3 days", "mode": "incl", "name": "Wedding, photo", "price": 2200}, {"desc": "Extra wedding day photography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, photo", "price": 850}, {"desc": "Videography, up to 2 hours, 3 to 4 minute highlight film", "mode": "incl", "name": "Small event, video", "price": 650}, {"desc": "Videography, up to 4 hours, 5 to 6 minute film", "mode": "incl", "name": "Half day, video", "price": 1100}, {"desc": "Wedding videography, up to 8 hours, 6 to 8 minute film plus the full ceremony", "mode": "incl", "name": "Wedding, video", "price": 2400}, {"desc": "Extra wedding day videography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, video", "price": 1100}, {"desc": "Photography and videography, up to 2 hours, online gallery plus highlight film", "mode": "incl", "name": "Small event, photo + video", "price": 1050}, {"desc": "Photography and videography, up to 4 hours, gallery plus 5 to 6 minute film", "mode": "incl", "name": "Half day, photo + video", "price": 1750}, {"desc": "Wedding photography and videography, up to 8 hours, full gallery, 6 to 8 minute film and a pre-wedding shoot", "mode": "incl", "name": "Wedding, photo + video", "price": 4200}, {"desc": "Extra wedding day photography and videography (Mehndi, Haldi, Sangeet or reception), up to 4 hours", "mode": "incl", "name": "Extra wedding day, photo + video", "price": 1800}, {"desc": "Extra hour of photography", "mode": "incl", "name": "Extra hour, photo", "price": 150}, {"desc": "Extra hour of wedding photography", "mode": "incl", "name": "Extra hour, photo (wedding)", "price": 250}, {"desc": "Extra hour of videography", "mode": "incl", "name": "Extra hour, video", "price": 200}, {"desc": "Extra hour of wedding videography", "mode": "incl", "name": "Extra hour, video (wedding)", "price": 250}, {"desc": "Extra hour of photography and videography", "mode": "incl", "name": "Extra hour, photo + video", "price": 300}, {"desc": "Extra hour of wedding photography and videography", "mode": "incl", "name": "Extra hour, photo + video (wedding)", "price": 450}, {"desc": "Social reel, 30 to 60 seconds, edited for Instagram and TikTok", "mode": "incl", "name": "Social reel", "price": 250}, {"desc": "Raw footage, every clip from the day, unedited", "mode": "incl", "name": "Raw footage", "price": 250}, {"desc": "Express delivery, full gallery within 7 days", "mode": "incl", "name": "Full gallery in 7 days", "price": 150}, {"desc": "Second photographer", "mode": "incl", "name": "Second photographer", "price": 500}, {"desc": "Printed album", "mode": "incl", "name": "Printed album", "price": 650}, {"desc": "Travel beyond 50 km of Canberra, return trip, per km", "mode": "incl", "name": "Travel, per km", "price": 1}]}}],
+    clients:[{id:"demo-client",data:{name:"Sample Client",business:"",abn:"",email:"",mode:"incl",createdAt:"2026-11-01T10:00:00+11:00"}}],
+    invoices:[],
+    members:[{email:ME,name:"Demo",added_at:"1"}]
+  };
+  function q(t){const st={f:[],op:"select",body:null,single:false};
+    const run=()=>{let rows=T[t]||(T[t]=[]);const key=t==="members"?"email":"id";const match=r=>st.f.every(([k,v])=>r[k]===v);
+      if(st.op==="select"){const out=rows.filter(match).map(r=>JSON.parse(JSON.stringify(r)));return{data:st.single?(out[0]||null):out,error:null}}
+      if(st.op==="upsert"){const i=rows.findIndex(r=>r[key]===st.body[key]);const row={...st.body,updated_by:ME};if(i>=0)rows[i]=row;else rows.push(row);return{error:null}}
+      if(st.op==="insert"){if(rows.some(r=>r[key]===st.body[key]))return{error:{code:"23505",message:"duplicate"}};rows.push({...st.body,added_at:String(Date.now())});return{error:null}}
+      if(st.op==="update"){rows.filter(match).forEach(r=>Object.assign(r,st.body));return{error:null}}
+      if(st.op==="delete"){T[t]=rows.filter(r=>!match(r));return{error:null}}};
+    const api={select(){return api},eq(k,v){st.f.push([k,v]);return api},order(){return api},maybeSingle(){st.single=true;return api},
+      upsert(b){st.op="upsert";st.body=b;return api},insert(b){st.op="insert";st.body=b;return api},update(b){st.op="update";st.body=b;return api},delete(){st.op="delete";return api},
+      then(res,rej){try{res(run())}catch(e){rej(e)}}};
+    return api}
+  window.supabase={createClient(){return{
+    from:q,
+    channel(){const c={on(){return c},subscribe(){return c}};return c},
+    auth:{async getSession(){return{data:{session:{user:{email:ME}}}}},onAuthStateChange(){return{data:{subscription:{unsubscribe(){}}}}},
+      async signInWithOtp(){return{error:null}},async signOut(){location.href=location.pathname;return{error:null}}}}}};
+  document.addEventListener("DOMContentLoaded",()=>{const b=document.createElement("div");
+    b.style.cssText="background:#A3261F;color:#fff;text-align:center;font:600 13px/1.4 Montserrat,Arial,sans-serif;padding:10px 16px;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)))";
+    b.textContent="Demo mode: try anything. Nothing is saved, and the bank details are placeholders.";document.body.prepend(b)});
+})();
+</script>
 <style>
 /* Layout: a quiet studio desk. Top bar with four views; the editor is form on the left, a live A4 sheet on the right. */
 :root{
@@ -307,7 +347,7 @@ const fyStart=()=>{const d=new Date();const y=d.getMonth()>=6?d.getFullYear():d.
 
 const DEFAULTS={
   tradingName:"KATHA VISUALS",legalName:"Y GURUNG & P KHANAL",abn:"52 680 103 232",
-  address:"Unit 23, 97 Eastern Valley Way, Belconnen ACT 2617",email:"kathavisualscbr@gmail.com",phone:"0410 494 321",
+  address:"",email:"kathavisualscbr@gmail.com",phone:"0410 494 321",
   gstRegistered:true,gstStart:"2026-10-01",bankName:"Commonwealth Bank",accountName:"",bsb:"",accountNumber:"",
   termsDays:7,prefix:"KV-2026-",taxRate:0.32,costPct:0.11,defaultMode:"incl",
   notePrivate:"A 30% deposit secures your date. The balance is due 7 days before the event (14 days before weddings). Edited photos are delivered once the balance is paid.",
