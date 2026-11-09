@@ -206,6 +206,7 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .sheet .s-title{text-align:right}
 .sheet .s-title h3{margin:0;font-size:30px;font-weight:700;color:#A3261F;letter-spacing:.02em}
 .sheet .s-title p{margin:6px 0 0;font-size:14px;font-weight:600}
+.sheet .s-title p.s-rev{margin-top:4px;font-size:12px;font-weight:400;color:#5E6062}
 .sheet .s-meta{display:flex;justify-content:space-between;margin-top:30px;font-size:12px;line-height:1.65}
 .sheet .s-from b{font-weight:700}
 .sheet .s-from .m{color:#5E6062}
@@ -429,6 +430,7 @@ function buildPdf(inv){
   doc.setFont("helvetica","bold");doc.setFontSize(22);col(SIN);
   doc.text(c.tax?"TAX INVOICE":"INVOICE",R,24,{align:"right"});
   doc.setFontSize(10.5);col(INK);doc.text(inv.number||"",R,31,{align:"right"});
+  if(inv.revisedDate){doc.setFont("helvetica","normal");doc.setFontSize(8.6);col(MUT);doc.text("Revised "+nice(inv.revisedDate),R,36,{align:"right"});doc.setFont("helvetica","bold")}
   // from
   let y=56;doc.setFontSize(8.6);
   doc.setFont("helvetica","normal");col(INK);doc.text(`${s.legalName} trading as ${titleCase(s.tradingName)}`,M,y);
@@ -512,7 +514,7 @@ function sheetHTML(inv){
   const gnote=c.tax?(inv.gstMode==="excl"?"All items are taxable sales. GST is shown separately.":"Total price includes GST. All items are taxable sales."):(s.gstRegistered?"No GST: this work was completed before Katha Visuals registered for GST.":"Katha Visuals is not registered for GST. No GST is included.");
   const cl=inv.client||{};
   return `<div class="sheet" id="sheet">
-    <div class="s-top"><img class="s-logo" src="${LOGO_PDF}" alt=""><div class="s-title"><h3>${c.tax?"TAX INVOICE":"INVOICE"}</h3><p>${esc(inv.number)}</p></div></div>
+    <div class="s-top"><img class="s-logo" src="${LOGO_PDF}" alt=""><div class="s-title"><h3>${c.tax?"TAX INVOICE":"INVOICE"}</h3><p>${esc(inv.number)}</p>${inv.revisedDate?`<p class="s-rev">Revised ${esc(nice(inv.revisedDate))}</p>`:""}</div></div>
     <div class="s-meta"><div class="s-from">${esc(s.legalName)} trading as ${esc(titleCase(s.tradingName))}<br><b>ABN ${esc(s.abn)}</b><br><span class="m">${esc(s.address)}<br>${esc(s.email)}&nbsp;&nbsp;&nbsp;${esc(s.phone)}</span></div>
       <div class="s-dates"><span>Issue date</span><strong>${esc(nice(inv.issueDate))}</strong><span>Due date</span><strong>${esc(nice(inv.dueDate))}</strong>${inv.eventDate?`<span>Event date</span><strong>${esc(nice(inv.eventDate))}</strong>`:""}</div></div>
     <div class="s-parties"><div><div class="s-lab">Bill to</div><strong>${esc(cl.name)||'<span style="color:#C9C7C2">Client name</span>'}</strong>${cl.business?esc(cl.business)+"<br>":""}${cl.abn?`<span class="m">ABN ${esc(cl.abn)}</span><br>`:""}</div>
@@ -662,6 +664,8 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);return tru
 async function recordReminder(i){if(!state.db||!state.canWrite)return;
   try{await state.db.doc("invoices/"+i.number).update({remindedAt:todayISO(),remindCount:(+i.remindCount||0)+1})}catch(e){}}
 /* ---------- send: share sheet, email, DM ---------- */
+function firstEmailed(d){const e=(d.emails||[]).find(x=>x.kind==="invoice");return e?String(e.at).slice(0,10):(d.sentDate||"")}
+function invoiceSubject(d){return (d.revisedDate?"Revised tax invoice ":"Tax invoice ")+d.number+" from Katha Visuals"}
 function invoiceEmail(d){
   const s=state.settings,c=calc(d,s),g=greetName(d),past=d.eventDate&&d.eventDate<todayISO();
   const paid=(+c.deposit||0)+(+d.paidAmount||0);
@@ -671,7 +675,7 @@ function invoiceEmail(d){
   const bank=bankLines(s,d.number);
   const thanks="Thank you for choosing Katha Visuals. "+(d.eventDate?(past?"It was a pleasure working with you.":"We are looking forward to working with you."):"We appreciate your business.");
   const phone=(s.phone||"").split(/\s+or\s+/)[0];
-  return [(g?"Dear "+g+",":"Hello,"),"",thanks,"","Please find attached tax invoice "+d.number+". A summary is below.","",
+  return [(g?"Dear "+g+",":"Hello,"),"",thanks,"",(d.revisedDate?"Please find attached revised tax invoice "+d.number+", which replaces the invoice we sent "+(firstEmailed(d)===todayISO()?"earlier today":firstEmailed(d)?"on "+nice(firstEmailed(d)):"earlier")+". A summary is below.":"Please find attached tax invoice "+d.number+". A summary is below."),"",
     ...summary,"",
     ...(bank.length?["Payment can be made by bank transfer to:",...bank,"","Please use the invoice number as your payment reference so we can match your payment.",""]:[]),
     "If you have any questions about this invoice, simply reply to this email"+(phone?" or call us on "+phone:"")+".","",
@@ -730,6 +734,7 @@ async function openSend(btn){
     dlg.innerHTML=`<div class="send-in">
       <div class="send-head"><h2>Send ${esc(d.number)} to ${esc(d.client.name||"your client")}</h2><button class="btn sm ghost" type="button" id="sendClose">Close</button></div>
       <div class="seg" role="group" aria-label="Message style"><button type="button" data-style="email" aria-pressed="${email?"true":"false"}">Email</button><button type="button" data-style="dm" aria-pressed="${email?"false":"true"}">Direct message</button></div>
+      ${(d.emails||[]).some(x=>x.kind==="invoice")?`<label class="muted" style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="sendRevised" ${d.revisedDate?"checked":""}> Mark as revised. It replaces the invoice emailed ${esc(nice(firstEmailed(d)))}.</label>`:""}
       <div class="field" id="toField"><label for="sendTo">Send to</label><input type="email" id="sendTo" value="${esc(email)}" placeholder="client@example.com" autocomplete="off"></div>
       <div class="field"><label for="sendMsg">Message</label><textarea id="sendMsg">${esc(invoiceMsg(d,email?"email":"dm"))}</textarea></div>
       <div class="send-actions">
@@ -759,6 +764,8 @@ async function openSend(btn){
         if(canShareFile(SEND.img)){b.textContent="Share image now";toast("Image ready. Tap Share image now.");return}}
       if(canShareFile(SEND.img)){try{await navigator.share({files:[SEND.img],text:msg(),title:"Invoice "+SEND.num});markSentNow()}catch(err){}return}
       await dlShim.save({filename:SEND.img.name,data:SEND.img});markSentNow();toast(SEND.img.name+" downloaded. Send it with the message.")};
+    const rv=$("#sendRevised");if(rv)rv.onchange=async()=>{const d=state.draft;d.revisedDate=rv.checked?todayISO():"";await saveDraft(false,false);
+      SEND.pdf=new File([buildPdf(d)],d.number+".pdf",{type:"application/pdf"});SEND.img=null;if(!SEND.edited)$("#sendMsg").value=invoiceMsg(d,SEND.style)};
     const em=$("#sEmail");
     const toVal=()=>$("#sendTo").value.trim().toLowerCase();
     const setAuto=on=>{SEND.auto=on;em.textContent=on?"Send email now":"Open in email app";em.classList.toggle("accent",on&&SEND.style==="email")};
@@ -770,7 +777,7 @@ async function openSend(btn){
         em.disabled=true;em.textContent="Sending...";$("#sendStatus").innerHTML="";
         const d=state.draft;
         if(to!==(d.client.email||"").trim().toLowerCase()&&/@/.test(to)){d.client.email=to;await saveDraft(false,false)}
-        const r=await sendEmailNow({number:SEND.num,to,subject:"Tax invoice "+SEND.num+" from Katha Visuals",text:emailText(),pdf:SEND.pdf,kind:"invoice"});
+        const r=await sendEmailNow({number:SEND.num,to,subject:invoiceSubject(state.draft),text:emailText(),pdf:SEND.pdf,kind:"invoice"});
         em.disabled=false;
         if(!r.ok){em.textContent="Send email now";$("#sendStatus").innerHTML=`<div class="banner bad">${esc(r.message)} You can also use Open in email app.</div>`;SEND.allowManual=true;return}
         em.textContent="Sent";await markSentNow();await logEmail(SEND.num,{at:new Date().toISOString(),to,kind:"invoice",id:r.id||"",by:state.me||""});
@@ -779,7 +786,7 @@ async function openSend(btn){
       const email=to||emailOf({client:state.draft.client});
       if(canShareFile(SEND.pdf)&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[SEND.pdf],text:emailText(),title:"Tax invoice "+SEND.num+" from Katha Visuals"});markSentNow();toast("Pick Gmail or Mail, then check the address is "+email+".")}catch(e){}return}
       await dlShim.save({filename:SEND.pdf.name,data:SEND.pdf});
-      location.href="mailto:"+encodeURIComponent(email||"")+"?subject="+encodeURIComponent("Tax invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(emailText());
+      location.href="mailto:"+encodeURIComponent(email||"")+"?subject="+encodeURIComponent(invoiceSubject(state.draft))+"&body="+encodeURIComponent(emailText());
       markSentNow();toast("PDF downloaded. Attach it to the email before you press send.")};
     dlg.showModal();
   }finally{btn.disabled=false;btn.textContent=old}
@@ -958,7 +965,7 @@ function wireEditor(){
   $("#saveBtn").onclick=()=>saveDraft(true);
   $("#pdfBtn").onclick=e=>downloadInvoice(state.draft,e.currentTarget,true);
   const snd=$("#sendBtn");if(snd)snd.onclick=e=>openSend(e.currentTarget);
-  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,emails:[],number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
+  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,emails:[],revisedDate:"",number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
 }
 function cleanInvoice(d){
   const c=calc(d,state.settings);
@@ -972,6 +979,7 @@ function cleanInvoice(d){
   if(d.paidBy)o.paidBy=d.paidBy;
   if(d.remindedAt){o.remindedAt=d.remindedAt;o.remindCount=+d.remindCount||1}
   if(Array.isArray(d.emails)&&d.emails.length)o.emails=d.emails.slice(-20);
+  if(d.revisedDate)o.revisedDate=d.revisedDate;
   if(d.sentDate)o.sentDate=d.sentDate;
   return o;
 }
