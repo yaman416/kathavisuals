@@ -584,7 +584,7 @@ function renderList(){
   document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openInvoice(b.dataset.open));
   document.querySelectorAll("[data-remcopy]").forEach(b=>b.onclick=async()=>{const i=state.invoices.find(x=>x.number===b.dataset.remcopy);if(!i)return;
     const ok=await copyText(reminderMsg(i));if(!ok){toast("Couldn't copy. Open the invoice and copy the details by hand.");return}
-    toast("Reminder copied. Paste it into Instagram, Messenger or a text.");recordReminder(i)});
+    toast("Reminder copied. Paste it into Instagram, Messenger, email or a text.");recordReminder(i)});
   document.querySelectorAll("[data-remsms]").forEach(a=>a.addEventListener("click",()=>{const i=state.invoices.find(x=>x.number===a.dataset.remsms);if(i)recordReminder(i)}));
   document.querySelectorAll("[data-pdf]").forEach(b=>b.onclick=()=>downloadInvoice(state.invoices.find(i=>i.number===b.dataset.pdf),b));
   document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>{state.payOpen=state.payOpen===b.dataset.pay?null:b.dataset.pay;renderList()});
@@ -599,6 +599,7 @@ function reminderList(){
 }
 function dueText(i){const n=daysUntil(i.dueDate);return n<0?(-n)+" day"+(n===-1?"":"s")+" overdue":n===0?"Due today":"Due in "+n+" day"+(n===1?"":"s")}
 function phoneOf(i){const v=(i.client?.email||"").replace(/[\s()-]/g,"");return /^\+?\d{8,13}$/.test(v)?v:""}
+function emailOf(i){const v=(i.client?.email||"").trim();return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?v:""}
 function reminderMsg(i){
   const s=state.settings,c=calc(i,s),n=daysUntil(i.dueDate);
   const nm=(i.client?.name||"").trim(),first=!nm||/^the\s/i.test(nm)||i.client?.business?"there":nm.split(/\s+/)[0];
@@ -612,7 +613,7 @@ function remindersHTML(rem){
   return `<div class="card rem"><div class="card-head"><h2>Reminders</h2><span class="muted">${rem.length} to chase</span></div>
     <div class="clist">${rem.map(i=>{const late=daysUntil(i.dueDate)<0,ph=phoneOf(i),c=calc(i,state.settings);
       return `<div class="citem"><div><strong>${esc(i.client?.name||"No client")}</strong><span>${esc(i.number)}, ${money(c.owing)}, <b class="${late?"late":""}">${dueText(i)}</b>${i.remindedAt?", last reminded "+esc(nice(i.remindedAt)):""}</span></div>
-      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
+      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${emailOf(i)?`<a class="btn sm" href="mailto:${esc(emailOf(i))}?subject=${encodeURIComponent("Payment reminder, invoice "+i.number)}&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Email</a>`:""}${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
     <span class="muted" style="font-size:12px">Copy the message and send it the way you usually talk to the client. It is logged as reminded today.</span></div>`;
 }
 async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){
@@ -691,7 +692,7 @@ function _renderEditor(){
             <select id="clientPick" ${ro?"disabled":""}><option value="">New client (type below)</option>${clientOpts}</select></div>
           <div class="grid2">
             <div class="field"><label for="cName">Client name</label><input type="text" id="cName" value="${esc(d.client.name)}" placeholder="e.g. Sita and Ram Thapa"></div>
-            <div class="field"><label for="cEmail">Phone or Instagram (optional)</label><input type="text" id="cEmail" value="${esc(d.client.email)}" placeholder="0400 000 000 or @name" autocomplete="off"></div>
+            <div class="field"><label for="cEmail">Phone, email or Instagram (optional)</label><input type="text" id="cEmail" value="${esc(d.client.email)}" placeholder="Phone, email or @instagram" autocomplete="off"></div>
             <div class="field"><label for="cBiz">Business name (optional)</label><input type="text" id="cBiz" value="${esc(d.client.business)}"></div>
             <div class="field"><label for="cAbn">Their ABN (optional)</label><input type="text" id="cAbn" value="${esc(d.client.abn)}" inputmode="numeric"></div>
           </div>
@@ -869,7 +870,7 @@ function renderClients(){
       <div class="field"><label for="ecName">Name</label><input type="text" id="ecName" value="${esc(ec?.name)}"></div>
       <div class="grid2"><div class="field"><label for="ecBiz">Business name</label><input type="text" id="ecBiz" value="${esc(ec?.business)}"></div>
         <div class="field"><label for="ecAbn">ABN</label><input type="text" id="ecAbn" value="${esc(ec?.abn)}"></div></div>
-      <div class="field"><label for="ecEmail">Phone or Instagram (optional)</label><input type="text" id="ecEmail" value="${esc(ec?.email)}" placeholder="0400 000 000 or @name" autocomplete="off"></div>
+      <div class="field"><label for="ecEmail">Phone, email or Instagram (optional)</label><input type="text" id="ecEmail" value="${esc(ec?.email)}" placeholder="Phone, email or @instagram" autocomplete="off"></div>
       <div class="field"><span class="lab">How their prices work</span><div class="toggle" role="group" aria-label="Price type">
         <button type="button" data-ecmode="incl" aria-pressed="${(ec?.mode||"incl")!=="excl"}">Price includes GST</button><button type="button" data-ecmode="excl" aria-pressed="${ec?.mode==="excl"}">Price + GST</button></div>
         <span class="muted" style="font-size:12px">Private clients: price includes GST. Businesses that agreed a rate "plus GST", like Saharsh Pavilion: price + GST.</span></div>
