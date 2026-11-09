@@ -161,6 +161,7 @@ h2{font-size:15px;font-weight:600;margin:0}
 
 /* forms */
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
+[hidden]{display:none!important}
 .field>label,.field>.lab{font-size:12px;font-weight:600;color:var(--ink-muted)}
 input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],select,textarea{
   width:100%;background:var(--field);border:1px solid var(--hairline);border-radius:6px;padding:9px 11px;min-width:0}
@@ -596,6 +597,16 @@ function renderList(){
   document.querySelectorAll("[data-remcopy]").forEach(b=>b.onclick=async()=>{const i=state.invoices.find(x=>x.number===b.dataset.remcopy);if(!i)return;
     const ok=await copyText(reminderMsg(i));if(!ok){toast("Couldn't copy. Open the invoice and copy the details by hand.");return}
     toast("Reminder copied. Paste it into Instagram, Messenger, email or a text.");recordReminder(i)});
+  document.querySelectorAll("[data-rememail]").forEach(b=>b.onclick=async()=>{
+    const i=state.invoices.find(x=>x.number===b.dataset.rememail);if(!i)return;const to=emailOf(i);
+    const subject="Payment reminder: invoice "+i.number+" from Katha Visuals";
+    if(!(await autoEmailOn())){location.href="mailto:"+encodeURIComponent(to)+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(reminderEmail(i));recordReminder(i);return}
+    if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="Email "+to+"?";b.classList.add("accent");setTimeout(()=>{if(b.isConnected&&b.dataset.armed==="1"){b.dataset.armed="";b.textContent="Email";b.classList.remove("accent")}},6000);return}
+    b.disabled=true;b.textContent="Sending...";
+    const r=await sendEmailNow({number:i.number,to,subject,text:reminderEmail(i),pdf:buildPdf(i),kind:"reminder"});
+    b.disabled=false;b.dataset.armed="";
+    if(!r.ok){b.textContent="Email";b.classList.remove("accent");toast(r.message);return}
+    toast("Reminder emailed to "+to+".");recordReminder(i);logEmail(i.number,{at:new Date().toISOString(),to,kind:"reminder",id:r.id||"",by:state.me||""})});
   document.querySelectorAll("[data-remsms]").forEach(a=>a.addEventListener("click",()=>{const i=state.invoices.find(x=>x.number===a.dataset.remsms);if(i)recordReminder(i)}));
   document.querySelectorAll("[data-pdf]").forEach(b=>b.onclick=()=>downloadInvoice(state.invoices.find(i=>i.number===b.dataset.pdf),b));
   document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>{state.payOpen=state.payOpen===b.dataset.pay?null:b.dataset.pay;renderList()});
@@ -643,7 +654,7 @@ function remindersHTML(rem){
   return `<div class="card rem"><div class="card-head"><h2>Reminders</h2><span class="muted">${rem.length} to chase</span></div>
     <div class="clist">${rem.map(i=>{const late=daysUntil(i.dueDate)<0,ph=phoneOf(i),c=calc(i,state.settings);
       return `<div class="citem"><div><strong>${esc(i.client?.name||"No client")}</strong><span>${esc(i.number)}, ${money(c.owing)}, <b class="${late?"late":""}">${dueText(i)}</b>${i.remindedAt?", last reminded "+esc(nice(i.remindedAt)):""}</span></div>
-      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${emailOf(i)?`<a class="btn sm" href="mailto:${esc(emailOf(i))}?subject=${encodeURIComponent("Payment reminder: invoice "+i.number+" from Katha Visuals")}&body=${encodeURIComponent(reminderEmail(i))}" data-remsms="${esc(i.number)}">Email</a>`:""}${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
+      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${emailOf(i)?`<button class="btn sm" type="button" data-rememail="${esc(i.number)}">Email</button>`:""}${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
     <span class="muted" style="font-size:12px">Copy the message and send it the way you usually talk to the client. It is logged as reminded today.</span></div>`;
 }
 async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){
@@ -685,6 +696,25 @@ async function invoiceImage(d){
   }finally{host.remove()}
 }
 const SEND={pdf:null,img:null,num:""};
+let AUTO_EMAIL=null; // null unknown, true on, false off
+async function autoEmailOn(){
+  if(window.KATHA_DEMO)return true;
+  if(AUTO_EMAIL!==null)return AUTO_EMAIL;
+  try{const r=await fetch("/api/invoices/send",{cache:"no-store"});AUTO_EMAIL=r.ok&&!!(await r.json()).configured}catch(e){AUTO_EMAIL=false}
+  return AUTO_EMAIL;
+}
+function blobToBase64(b){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(",")[1]||"");fr.onerror=rej;fr.readAsDataURL(b)})}
+async function sendEmailNow({number,to,subject,text,pdf,kind}){
+  if(window.KATHA_DEMO){await new Promise(r=>setTimeout(r,600));return{ok:true,id:"demo",to}}
+  let token="";try{token=(await supa.auth.getSession()).data.session.access_token}catch(e){}
+  if(!token)return{ok:false,message:"Your sign-in has expired. Sign out and back in, then try again."};
+  try{const r=await fetch("/api/invoices/send",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},
+      body:JSON.stringify({number,to,subject,text,kind,pdfBase64:await blobToBase64(pdf)})});
+    const j=await r.json().catch(()=>({}));return r.ok&&j.ok?j:{ok:false,message:j.message||"The email didn't go. Try again in a minute."}}
+  catch(e){return{ok:false,message:"No connection. Check your internet and try again."}}
+}
+async function logEmail(number,entry){if(!state.db||!state.canWrite)return;
+  try{const ref=state.db.doc("invoices/"+number);const cur=await ref.get();const list=((cur.exists&&cur.data().emails)||[]).concat([entry]).slice(-20);await ref.update({emails:list})}catch(e){}}
 function canShareFile(f){try{return !!(navigator.canShare&&navigator.canShare({files:[f]}))}catch(e){return false}}
 async function markSentNow(){const d=state.draft;if(d.status!=="draft"||!state.db||!state.canWrite)return;
   d.status="sent";d.sentDate=todayISO();try{await state.db.doc("invoices/"+d.number).update({status:"sent",sentDate:d.sentDate})}catch(e){}}
@@ -700,15 +730,17 @@ async function openSend(btn){
     dlg.innerHTML=`<div class="send-in">
       <div class="send-head"><h2>Send ${esc(d.number)} to ${esc(d.client.name||"your client")}</h2><button class="btn sm ghost" type="button" id="sendClose">Close</button></div>
       <div class="seg" role="group" aria-label="Message style"><button type="button" data-style="email" aria-pressed="${email?"true":"false"}">Email</button><button type="button" data-style="dm" aria-pressed="${email?"false":"true"}">Direct message</button></div>
+      <div class="field" id="toField"><label for="sendTo">Send to</label><input type="email" id="sendTo" value="${esc(email)}" placeholder="client@example.com" autocomplete="off"></div>
       <div class="field"><label for="sendMsg">Message</label><textarea id="sendMsg">${esc(invoiceMsg(d,email?"email":"dm"))}</textarea></div>
       <div class="send-actions">
         ${sharePdf?`<button class="btn accent wide" type="button" id="sShare">Share PDF and message</button>`:""}
         <button class="btn ${sharePdf?"":"accent"}" type="button" id="sCopy">Copy message</button>
         <button class="btn" type="button" id="sPdf">Download PDF</button>
         <button class="btn" type="button" id="sImg">${sharePdf?"Share as image":"Download as image"}</button>
-        ${email?`<button class="btn" type="button" id="sEmail">Email</button>`:`<button class="btn" type="button" disabled title="Add an email under Phone, email or Instagram">No email saved</button>`}
+        <button class="btn" type="button" id="sEmail">Email</button>
       </div>
-      <p class="send-hint">${email?"Email goes to "+esc(email)+". ":""}${sharePdf?"Share opens your phone's menu: Messenger, WhatsApp, Gmail and more, with the PDF attached. ":""}Instagram doesn't take PDFs, so send the image there with the message. Sending marks the invoice as sent.</p>
+      <div id="sendStatus" role="status"></div>
+      <p class="send-hint">${sharePdf?"Share opens your phone's menu: Messenger, WhatsApp, Gmail and more, with the PDF attached. ":""}Instagram doesn't take PDFs, so send the image there with the message. Sending marks the invoice as sent.</p>
     </div>`;
     SEND.style=email?"email":"dm";SEND.edited=false;
     const msg=()=>$("#sendMsg").value;
@@ -716,7 +748,7 @@ async function openSend(btn){
     $("#sendMsg").addEventListener("input",()=>{SEND.edited=true});
     dlg.querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{if(SEND.style===b.dataset.style)return;
       SEND.style=b.dataset.style;dlg.querySelectorAll("[data-style]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
-      $("#sendMsg").value=invoiceMsg(state.draft,SEND.style);SEND.edited=false});
+      $("#sendMsg").value=invoiceMsg(state.draft,SEND.style);SEND.edited=false;if(typeof setAuto==="function")setAuto(!!SEND.auto)});
     $("#sendClose").onclick=()=>dlg.close();
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
     const sh=$("#sShare");if(sh)sh.onclick=async()=>{try{await navigator.share({files:[SEND.pdf],text:msg(),title:"Invoice "+SEND.num});markSentNow();toast("Shared. Invoice marked as sent.")}catch(e){if(e&&e.name!=="AbortError")toast("Couldn't open sharing. Use Copy message and Download PDF instead.")}};
@@ -727,10 +759,27 @@ async function openSend(btn){
         if(canShareFile(SEND.img)){b.textContent="Share image now";toast("Image ready. Tap Share image now.");return}}
       if(canShareFile(SEND.img)){try{await navigator.share({files:[SEND.img],text:msg(),title:"Invoice "+SEND.num});markSentNow()}catch(err){}return}
       await dlShim.save({filename:SEND.img.name,data:SEND.img});markSentNow();toast(SEND.img.name+" downloaded. Send it with the message.")};
-    const em=$("#sEmail");if(em)em.onclick=async()=>{
+    const em=$("#sEmail");
+    const toVal=()=>$("#sendTo").value.trim().toLowerCase();
+    const setAuto=on=>{SEND.auto=on;em.textContent=on?"Send email now":"Open in email app";em.classList.toggle("accent",on&&SEND.style==="email")};
+    setAuto(false);autoEmailOn().then(on=>{if(document.getElementById("sendDlg")?.open)setAuto(on)});
+    em.onclick=async()=>{
+      const to=toVal();
+      if(SEND.auto){
+        if(!/^[^\s@,;<>]+@[^\s@,;<>]+\.[^\s@,;<>]+$/.test(to)){$("#sendStatus").innerHTML=`<div class="banner bad">Enter the client's email address above.</div>`;$("#sendTo").focus();return}
+        em.disabled=true;em.textContent="Sending...";$("#sendStatus").innerHTML="";
+        const d=state.draft;
+        if(to!==(d.client.email||"").trim().toLowerCase()&&/@/.test(to)){d.client.email=to;await saveDraft(false,false)}
+        const r=await sendEmailNow({number:SEND.num,to,subject:"Tax invoice "+SEND.num+" from Katha Visuals",text:emailText(),pdf:SEND.pdf,kind:"invoice"});
+        em.disabled=false;
+        if(!r.ok){em.textContent="Send email now";$("#sendStatus").innerHTML=`<div class="banner bad">${esc(r.message)} You can also use Open in email app.</div>`;SEND.allowManual=true;return}
+        em.textContent="Sent";await markSentNow();await logEmail(SEND.num,{at:new Date().toISOString(),to,kind:"invoice",id:r.id||"",by:state.me||""});
+        $("#sendStatus").innerHTML=`<div class="banner" style="background:var(--good-bg);color:var(--good)">Emailed to ${esc(to)} with ${esc(SEND.num)}.pdf attached. A copy went to the Katha Gmail.</div>`;
+        toast("Invoice emailed to "+to+".");return}
+      const email=to||emailOf({client:state.draft.client});
       if(canShareFile(SEND.pdf)&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[SEND.pdf],text:emailText(),title:"Tax invoice "+SEND.num+" from Katha Visuals"});markSentNow();toast("Pick Gmail or Mail, then check the address is "+email+".")}catch(e){}return}
       await dlShim.save({filename:SEND.pdf.name,data:SEND.pdf});
-      location.href="mailto:"+encodeURIComponent(email)+"?subject="+encodeURIComponent("Tax invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(emailText());
+      location.href="mailto:"+encodeURIComponent(email||"")+"?subject="+encodeURIComponent("Tax invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(emailText());
       markSentNow();toast("PDF downloaded. Attach it to the email before you press send.")};
     dlg.showModal();
   }finally{btn.disabled=false;btn.textContent=old}
@@ -748,7 +797,7 @@ function rowHTML(i){
   const open=state.payOpen===i.number;
   return `<div class="row">
     <span class="no num"><strong>${esc(i.number)}</strong></span>
-    <span class="who"><strong>${esc(i.client?.name||"No client")}</strong><span>${esc([i.event||"",i.eventDate?nice(i.eventDate):"",i.createdBy?"by "+who(i.createdBy):"",st==="paid"&&i.paidBy?"payment recorded by "+who(i.paidBy):"",st!=="paid"&&i.remindedAt?"reminded "+nice(i.remindedAt):""].filter(Boolean).join(", "))}</span></span>
+    <span class="who"><strong>${esc(i.client?.name||"No client")}</strong><span>${esc([i.event||"",i.eventDate?nice(i.eventDate):"",i.createdBy?"by "+who(i.createdBy):"",st==="paid"&&i.paidBy?"payment recorded by "+who(i.paidBy):"",st!=="paid"&&i.remindedAt?"reminded "+nice(i.remindedAt):"",(i.emails||[]).some(e=>e.kind==="invoice")?"emailed "+nice((i.emails.filter(e=>e.kind==="invoice").pop().at||"").slice(0,10)):""].filter(Boolean).join(", "))}</span></span>
     <span class="date num muted">${st==="draft"?"Not sent":esc(nice(i.dueDate))}</span>
     <span class="amt num">${money(st==="paid"?c.total:c.owing)}</span>
     <span class="chip ${st}">${STATUS_TEXT[st]}</span>
@@ -909,7 +958,7 @@ function wireEditor(){
   $("#saveBtn").onclick=()=>saveDraft(true);
   $("#pdfBtn").onclick=e=>downloadInvoice(state.draft,e.currentTarget,true);
   const snd=$("#sendBtn");if(snd)snd.onclick=e=>openSend(e.currentTarget);
-  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
+  const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,emails:[],number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
 }
 function cleanInvoice(d){
   const c=calc(d,state.settings);
@@ -922,6 +971,7 @@ function cleanInvoice(d){
   if(state.me){o.updatedBy=state.me;o.createdBy=d.createdBy||state.me}else if(d.createdBy)o.createdBy=d.createdBy;
   if(d.paidBy)o.paidBy=d.paidBy;
   if(d.remindedAt){o.remindedAt=d.remindedAt;o.remindCount=+d.remindCount||1}
+  if(Array.isArray(d.emails)&&d.emails.length)o.emails=d.emails.slice(-20);
   if(d.sentDate)o.sentDate=d.sentDate;
   return o;
 }
