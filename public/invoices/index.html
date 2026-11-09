@@ -262,6 +262,7 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .send-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .send-actions .btn{justify-content:center;width:100%;min-width:0;white-space:normal;text-align:center}
 .send-actions .wide{grid-column:1/-1}
+.send-dlg .seg{align-self:flex-start}
 .send-hint{font-size:12px;color:var(--ink-muted);margin:0;line-height:1.5}
 .rem b{font-weight:600}
 .plist{display:flex;flex-direction:column;gap:8px}
@@ -610,9 +611,28 @@ function reminderList(){
 function dueText(i){const n=daysUntil(i.dueDate);return n<0?(-n)+" day"+(n===-1?"":"s")+" overdue":n===0?"Due today":"Due in "+n+" day"+(n===1?"":"s")}
 function phoneOf(i){const v=(i.client?.email||"").replace(/[\s()-]/g,"");return /^\+?\d{8,13}$/.test(v)?v:""}
 function emailOf(i){const v=(i.client?.email||"").trim();return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?v:""}
+const FULL_NAMES={Yaman:"Yaman Gurung",Prakash:"Prakash Khanal"};
+function greetName(inv){
+  const nm=(inv.client?.name||"").trim(),biz=(inv.client?.business||"").trim();
+  if(biz||/^the\s/i.test(nm))return (biz||nm).replace(/^the\s+/i,"")+" team";
+  if(!nm)return "";
+  return /\s(and|&)\s/i.test(nm)?nm:nm.split(/\s+/)[0];
+}
+function senderName(full){const m=state.me&&!/@/.test(state.me)?state.me:"";return m?(full?(FULL_NAMES[m]||m):m):""}
+function bankLines(s,num){return s.bsb&&s.accountNumber?["Account name: "+(s.accountName||"Katha Visuals"),"BSB: "+s.bsb,"Account number: "+s.accountNumber,"Reference: "+num]:[]}
+function reminderEmail(i){
+  const s=state.settings,c=calc(i,s),n=daysUntil(i.dueDate),g=greetName(i);
+  const when=n<0?"was due on "+nice(i.dueDate):n===0?"is due today":"is due on "+nice(i.dueDate);
+  const bank=bankLines(s,i.number);
+  return [(g?"Dear "+g+",":"Hello,"),"",
+    "I hope you are well. This is a friendly reminder that invoice "+i.number+(i.event?" for "+i.event:"")+" "+when+", with "+money(c.owing)+" still outstanding.","",
+    ...(bank.length?["Payment can be made by bank transfer to:",...bank,""]:[]),
+    "If you have already made this payment, thank you, and please disregard this email. If anything is unclear, simply reply and we will be happy to help.","",
+    "Kind regards,",senderName(true)||"Katha Visuals"].join("\n");
+}
 function reminderMsg(i){
   const s=state.settings,c=calc(i,s),n=daysUntil(i.dueDate);
-  const nm=(i.client?.name||"").trim(),first=!nm||/^the\s/i.test(nm)||i.client?.business?"there":nm.split(/\s+/)[0];
+  const first=greetName(i)||"there";
   const when=n<0?"was due on "+nice(i.dueDate):n===0?"is due today":"is due on "+nice(i.dueDate);
   const bank=s.bsb&&s.accountNumber?" You can pay by bank transfer to "+(s.accountName||"Katha Visuals")+", BSB "+s.bsb+", account "+s.accountNumber+", using "+i.number+" as the reference.":"";
   const from=state.me&&!/@/.test(state.me)?state.me+", Katha Visuals":"Katha Visuals";
@@ -623,7 +643,7 @@ function remindersHTML(rem){
   return `<div class="card rem"><div class="card-head"><h2>Reminders</h2><span class="muted">${rem.length} to chase</span></div>
     <div class="clist">${rem.map(i=>{const late=daysUntil(i.dueDate)<0,ph=phoneOf(i),c=calc(i,state.settings);
       return `<div class="citem"><div><strong>${esc(i.client?.name||"No client")}</strong><span>${esc(i.number)}, ${money(c.owing)}, <b class="${late?"late":""}">${dueText(i)}</b>${i.remindedAt?", last reminded "+esc(nice(i.remindedAt)):""}</span></div>
-      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${emailOf(i)?`<a class="btn sm" href="mailto:${esc(emailOf(i))}?subject=${encodeURIComponent("Payment reminder, invoice "+i.number)}&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Email</a>`:""}${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
+      <span style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end">${emailOf(i)?`<a class="btn sm" href="mailto:${esc(emailOf(i))}?subject=${encodeURIComponent("Payment reminder: invoice "+i.number+" from Katha Visuals")}&body=${encodeURIComponent(reminderEmail(i))}" data-remsms="${esc(i.number)}">Email</a>`:""}${ph?`<a class="btn sm" href="sms:${esc(ph)}?&body=${encodeURIComponent(reminderMsg(i))}" data-remsms="${esc(i.number)}">Text</a>`:""}<button class="btn sm ${late?"accent":""}" type="button" data-remcopy="${esc(i.number)}">Copy reminder</button></span></div>`}).join("")}</div>
     <span class="muted" style="font-size:12px">Copy the message and send it the way you usually talk to the client. It is logged as reminded today.</span></div>`;
 }
 async function copyText(t){try{await navigator.clipboard.writeText(t);return true}catch(e){
@@ -631,13 +651,29 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);return tru
 async function recordReminder(i){if(!state.db||!state.canWrite)return;
   try{await state.db.doc("invoices/"+i.number).update({remindedAt:todayISO(),remindCount:(+i.remindCount||0)+1})}catch(e){}}
 /* ---------- send: share sheet, email, DM ---------- */
-function invoiceMsg(d){
-  const s=state.settings,c=calc(d,s);
-  const nm=(d.client?.name||"").trim(),first=!nm||/^the\s/i.test(nm)||d.client?.business?"there":nm.split(/\s+/)[0];
-  const bank=s.bsb&&s.accountNumber?"\n\nPay by bank transfer to:\n"+(s.accountName||"Katha Visuals")+"\nBSB "+s.bsb+"\nAccount "+s.accountNumber+"\nReference "+d.number:"";
-  const from=state.me&&!/@/.test(state.me)?state.me+", Katha Visuals":"Katha Visuals";
-  return "Hi "+first+", thank you for choosing Katha Visuals. Here is your invoice "+d.number+(d.event?" for "+d.event:"")+".\n\nAmount due: "+money(c.owing)+(d.dueDate?", by "+nice(d.dueDate):"")+bank+"\n\nThank you!\n"+from;
+function invoiceEmail(d){
+  const s=state.settings,c=calc(d,s),g=greetName(d),past=d.eventDate&&d.eventDate<todayISO();
+  const paid=(+c.deposit||0)+(+d.paidAmount||0);
+  const summary=["Invoice number: "+d.number,...(d.event?["Event: "+d.event]:[]),...(d.eventDate?["Event date: "+nice(d.eventDate)]:[]),
+    "Total"+(c.tax?" (incl. GST)":"")+": "+money(c.total),...(paid>0.004?["Received so far: "+money(paid)]:[]),
+    "Amount due: "+money(c.owing),...(d.dueDate?["Due date: "+nice(d.dueDate)]:[])];
+  const bank=bankLines(s,d.number);
+  const thanks="Thank you for choosing Katha Visuals. "+(d.eventDate?(past?"It was a pleasure working with you.":"We are looking forward to working with you."):"We appreciate your business.");
+  const phone=(s.phone||"").split(/\s+or\s+/)[0];
+  return [(g?"Dear "+g+",":"Hello,"),"",thanks,"","Please find attached tax invoice "+d.number+". A summary is below.","",
+    ...summary,"",
+    ...(bank.length?["Payment can be made by bank transfer to:",...bank,"","Please use the invoice number as your payment reference so we can match your payment.",""]:[]),
+    "If you have any questions about this invoice, simply reply to this email"+(phone?" or call us on "+phone:"")+".","",
+    "Kind regards,",senderName(true)||"Katha Visuals"].join("\n");
 }
+function invoiceDM(d){
+  const s=state.settings,c=calc(d,s),g=greetName(d)||"there";
+  const bank=s.bsb&&s.accountNumber?["Bank transfer: "+(s.accountName||"Katha Visuals")+", BSB "+s.bsb+", account "+s.accountNumber,"Reference: "+d.number]:[];
+  return ["Hi "+g+", thank you for choosing Katha Visuals! Your invoice "+d.number+(d.event?" for "+d.event:"")+" is attached.","",
+    "Amount due: "+money(c.owing)+(d.dueDate?" by "+nice(d.dueDate):""),...bank,"",
+    "Any questions, just message us here. Thank you!",(senderName(false)?senderName(false)+", ":"")+"Katha Visuals"].join("\n");
+}
+function invoiceMsg(d,style){return style==="email"?invoiceEmail(d):invoiceDM(d)}
 function loadScript(src){return new Promise((res,rej)=>{const el=document.createElement("script");el.src=src;el.onload=res;el.onerror=rej;document.head.appendChild(el)})}
 async function invoiceImage(d){
   if(!window.html2canvas)await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
@@ -663,7 +699,8 @@ async function openSend(btn){
     let dlg=document.getElementById("sendDlg");if(!dlg){dlg=document.createElement("dialog");dlg.id="sendDlg";dlg.className="send-dlg";document.body.appendChild(dlg)}
     dlg.innerHTML=`<div class="send-in">
       <div class="send-head"><h2>Send ${esc(d.number)} to ${esc(d.client.name||"your client")}</h2><button class="btn sm ghost" type="button" id="sendClose">Close</button></div>
-      <div class="field"><label for="sendMsg">Message</label><textarea id="sendMsg">${esc(invoiceMsg(d))}</textarea></div>
+      <div class="seg" role="group" aria-label="Message style"><button type="button" data-style="email" aria-pressed="${email?"true":"false"}">Email</button><button type="button" data-style="dm" aria-pressed="${email?"false":"true"}">Direct message</button></div>
+      <div class="field"><label for="sendMsg">Message</label><textarea id="sendMsg">${esc(invoiceMsg(d,email?"email":"dm"))}</textarea></div>
       <div class="send-actions">
         ${sharePdf?`<button class="btn accent wide" type="button" id="sShare">Share PDF and message</button>`:""}
         <button class="btn ${sharePdf?"":"accent"}" type="button" id="sCopy">Copy message</button>
@@ -673,7 +710,13 @@ async function openSend(btn){
       </div>
       <p class="send-hint">${email?"Email goes to "+esc(email)+". ":""}${sharePdf?"Share opens your phone's menu: Messenger, WhatsApp, Gmail and more, with the PDF attached. ":""}Instagram doesn't take PDFs, so send the image there with the message. Sending marks the invoice as sent.</p>
     </div>`;
+    SEND.style=email?"email":"dm";SEND.edited=false;
     const msg=()=>$("#sendMsg").value;
+    const emailText=()=>SEND.style==="email"?msg():invoiceEmail(state.draft);
+    $("#sendMsg").addEventListener("input",()=>{SEND.edited=true});
+    dlg.querySelectorAll("[data-style]").forEach(b=>b.onclick=()=>{if(SEND.style===b.dataset.style)return;
+      SEND.style=b.dataset.style;dlg.querySelectorAll("[data-style]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+      $("#sendMsg").value=invoiceMsg(state.draft,SEND.style);SEND.edited=false});
     $("#sendClose").onclick=()=>dlg.close();
     dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
     const sh=$("#sShare");if(sh)sh.onclick=async()=>{try{await navigator.share({files:[SEND.pdf],text:msg(),title:"Invoice "+SEND.num});markSentNow();toast("Shared. Invoice marked as sent.")}catch(e){if(e&&e.name!=="AbortError")toast("Couldn't open sharing. Use Copy message and Download PDF instead.")}};
@@ -685,9 +728,9 @@ async function openSend(btn){
       if(canShareFile(SEND.img)){try{await navigator.share({files:[SEND.img],text:msg(),title:"Invoice "+SEND.num});markSentNow()}catch(err){}return}
       await dlShim.save({filename:SEND.img.name,data:SEND.img});markSentNow();toast(SEND.img.name+" downloaded. Send it with the message.")};
     const em=$("#sEmail");if(em)em.onclick=async()=>{
-      if(canShareFile(SEND.pdf)&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[SEND.pdf],text:msg(),title:"Invoice "+SEND.num+" from Katha Visuals"});markSentNow();toast("Pick Gmail or Mail, then check the address is "+email+".")}catch(e){}return}
+      if(canShareFile(SEND.pdf)&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[SEND.pdf],text:emailText(),title:"Tax invoice "+SEND.num+" from Katha Visuals"});markSentNow();toast("Pick Gmail or Mail, then check the address is "+email+".")}catch(e){}return}
       await dlShim.save({filename:SEND.pdf.name,data:SEND.pdf});
-      location.href="mailto:"+encodeURIComponent(email)+"?subject="+encodeURIComponent("Invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(msg());
+      location.href="mailto:"+encodeURIComponent(email)+"?subject="+encodeURIComponent("Tax invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(emailText());
       markSentNow();toast("PDF downloaded. Attach it to the email before you press send.")};
     dlg.showModal();
   }finally{btn.disabled=false;btn.textContent=old}
