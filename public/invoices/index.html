@@ -253,6 +253,16 @@ input:hover,select:hover,textarea:hover{border-color:var(--ink-muted)}
 .citem strong{display:block}
 .citem span{font-size:12px;color:var(--ink-muted)}
 .rem .late{color:var(--bad)}
+.send-dlg{border:0;border-radius:14px;padding:0;width:calc(100% - 32px);max-width:520px;max-height:calc(100% - 32px);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.send-dlg::backdrop{background:rgba(20,21,22,.6)}
+.send-in{display:flex;flex-direction:column;gap:12px;padding:20px}
+.send-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.send-head h2{margin:0;font-size:18px}
+.send-dlg textarea{min-height:190px;font-size:14px;line-height:1.5}
+.send-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.send-actions .btn{justify-content:center;width:100%;min-width:0;white-space:normal;text-align:center}
+.send-actions .wide{grid-column:1/-1}
+.send-hint{font-size:12px;color:var(--ink-muted);margin:0;line-height:1.5}
 .rem b{font-weight:600}
 .plist{display:flex;flex-direction:column;gap:8px}
 .prow{display:grid;grid-template-columns:minmax(0,1fr) 100px 120px 32px;gap:8px;align-items:center}
@@ -620,6 +630,68 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);return tru
   try{const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();return ok}catch(e2){return false}}}
 async function recordReminder(i){if(!state.db||!state.canWrite)return;
   try{await state.db.doc("invoices/"+i.number).update({remindedAt:todayISO(),remindCount:(+i.remindCount||0)+1})}catch(e){}}
+/* ---------- send: share sheet, email, DM ---------- */
+function invoiceMsg(d){
+  const s=state.settings,c=calc(d,s);
+  const nm=(d.client?.name||"").trim(),first=!nm||/^the\s/i.test(nm)||d.client?.business?"there":nm.split(/\s+/)[0];
+  const bank=s.bsb&&s.accountNumber?"\n\nPay by bank transfer to:\n"+(s.accountName||"Katha Visuals")+"\nBSB "+s.bsb+"\nAccount "+s.accountNumber+"\nReference "+d.number:"";
+  const from=state.me&&!/@/.test(state.me)?state.me+", Katha Visuals":"Katha Visuals";
+  return "Hi "+first+", thank you for choosing Katha Visuals. Here is your invoice "+d.number+(d.event?" for "+d.event:"")+".\n\nAmount due: "+money(c.owing)+(d.dueDate?", by "+nice(d.dueDate):"")+bank+"\n\nThank you!\n"+from;
+}
+function loadScript(src){return new Promise((res,rej)=>{const el=document.createElement("script");el.src=src;el.onload=res;el.onerror=rej;document.head.appendChild(el)})}
+async function invoiceImage(d){
+  if(!window.html2canvas)await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
+  const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;width:794px;pointer-events:none";
+  host.innerHTML=sheetHTML(d);document.body.appendChild(host);
+  try{const el=host.querySelector(".sheet")||host.firstElementChild;el.style.transform="none";
+    const cv=await window.html2canvas(el,{scale:1.6,backgroundColor:"#ffffff",logging:false});
+    return await new Promise(r=>cv.toBlob(r,"image/jpeg",0.92));
+  }finally{host.remove()}
+}
+const SEND={pdf:null,img:null,num:""};
+function canShareFile(f){try{return !!(navigator.canShare&&navigator.canShare({files:[f]}))}catch(e){return false}}
+async function markSentNow(){const d=state.draft;if(d.status!=="draft"||!state.db||!state.canWrite)return;
+  d.status="sent";d.sentDate=todayISO();try{await state.db.doc("invoices/"+d.number).update({status:"sent",sentDate:d.sentDate})}catch(e){}}
+async function openSend(btn){
+  if(!window.jspdf){toast("The PDF maker didn't load. Check your connection and reload.");return}
+  const old=btn.textContent;btn.disabled=true;btn.textContent="Preparing...";
+  try{
+    const ok=await saveDraft(false,false);if(!ok)return;
+    const d=state.draft,email=emailOf({client:d.client});
+    SEND.num=d.number;SEND.img=null;SEND.pdf=new File([buildPdf(d)],d.number+".pdf",{type:"application/pdf"});
+    const sharePdf=canShareFile(SEND.pdf);
+    let dlg=document.getElementById("sendDlg");if(!dlg){dlg=document.createElement("dialog");dlg.id="sendDlg";dlg.className="send-dlg";document.body.appendChild(dlg)}
+    dlg.innerHTML=`<div class="send-in">
+      <div class="send-head"><h2>Send ${esc(d.number)} to ${esc(d.client.name||"your client")}</h2><button class="btn sm ghost" type="button" id="sendClose">Close</button></div>
+      <div class="field"><label for="sendMsg">Message</label><textarea id="sendMsg">${esc(invoiceMsg(d))}</textarea></div>
+      <div class="send-actions">
+        ${sharePdf?`<button class="btn accent wide" type="button" id="sShare">Share PDF and message</button>`:""}
+        <button class="btn ${sharePdf?"":"accent"}" type="button" id="sCopy">Copy message</button>
+        <button class="btn" type="button" id="sPdf">Download PDF</button>
+        <button class="btn" type="button" id="sImg">${sharePdf?"Share as image":"Download as image"}</button>
+        ${email?`<button class="btn" type="button" id="sEmail">Email</button>`:`<button class="btn" type="button" disabled title="Add an email under Phone, email or Instagram">No email saved</button>`}
+      </div>
+      <p class="send-hint">${email?"Email goes to "+esc(email)+". ":""}${sharePdf?"Share opens your phone's menu: Messenger, WhatsApp, Gmail and more, with the PDF attached. ":""}Instagram doesn't take PDFs, so send the image there with the message. Sending marks the invoice as sent.</p>
+    </div>`;
+    const msg=()=>$("#sendMsg").value;
+    $("#sendClose").onclick=()=>dlg.close();
+    dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+    const sh=$("#sShare");if(sh)sh.onclick=async()=>{try{await navigator.share({files:[SEND.pdf],text:msg(),title:"Invoice "+SEND.num});markSentNow();toast("Shared. Invoice marked as sent.")}catch(e){if(e&&e.name!=="AbortError")toast("Couldn't open sharing. Use Copy message and Download PDF instead.")}};
+    $("#sCopy").onclick=async()=>{if(await copyText(msg())){markSentNow();toast("Message copied. Paste it into the chat, then attach the PDF or image.")}else toast("Couldn't copy. Select the message and copy it by hand.")};
+    $("#sPdf").onclick=async()=>{await dlShim.save({filename:SEND.pdf.name,data:SEND.pdf});markSentNow();toast(SEND.pdf.name+" downloaded.")};
+    $("#sImg").onclick=async e=>{const b=e.currentTarget,t=b.textContent;
+      if(!SEND.img){b.disabled=true;b.textContent="Making image...";try{const bl=await invoiceImage(state.draft);SEND.img=new File([bl],SEND.num+".jpg",{type:"image/jpeg"})}catch(err){toast("Couldn't make the image. Use the PDF instead.");return}finally{b.disabled=false;b.textContent=t}
+        if(canShareFile(SEND.img)){b.textContent="Share image now";toast("Image ready. Tap Share image now.");return}}
+      if(canShareFile(SEND.img)){try{await navigator.share({files:[SEND.img],text:msg(),title:"Invoice "+SEND.num});markSentNow()}catch(err){}return}
+      await dlShim.save({filename:SEND.img.name,data:SEND.img});markSentNow();toast(SEND.img.name+" downloaded. Send it with the message.")};
+    const em=$("#sEmail");if(em)em.onclick=async()=>{
+      if(canShareFile(SEND.pdf)&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){try{await navigator.share({files:[SEND.pdf],text:msg(),title:"Invoice "+SEND.num+" from Katha Visuals"});markSentNow();toast("Pick Gmail or Mail, then check the address is "+email+".")}catch(e){}return}
+      await dlShim.save({filename:SEND.pdf.name,data:SEND.pdf});
+      location.href="mailto:"+encodeURIComponent(email)+"?subject="+encodeURIComponent("Invoice "+SEND.num+" from Katha Visuals")+"&body="+encodeURIComponent(msg());
+      markSentNow();toast("PDF downloaded. Attach it to the email before you press send.")};
+    dlg.showModal();
+  }finally{btn.disabled=false;btn.textContent=old}
+}
 function exportCSV(){
   const rows=[["Number","Client","Business","Event","Event date","Issue date","Due date","Status","Total","GST","Deposit","Paid","Date paid","Balance","Created by"]];
   state.invoices.slice().sort((a,b)=>(a.number||"").localeCompare(b.number||"")).forEach(i=>{const c=calc(i,state.settings);
@@ -739,7 +811,8 @@ function _renderEditor(){
   bar(`<span class="status-pill">${state.dirty?"Unsaved changes":d._new?"Not saved yet":"Saved"}</span>
     <span class="grp">${!d._new&&state.canWrite&&state.db?`<button class="btn ghost" type="button" id="dupBtn">Duplicate</button>`:""}
     <button class="btn" type="button" id="saveBtn" ${ro||!state.db?"disabled":""}>Save</button>
-    <button class="btn accent" type="button" id="pdfBtn">Download PDF</button></span>`);
+    <button class="btn" type="button" id="pdfBtn">Download PDF</button>
+    <button class="btn accent" type="button" id="sendBtn" ${ro||!state.db?"disabled":""}>Send</button></span>`);
   wireEditor();refreshPreview();
 }
 function refreshPreview(){
@@ -792,6 +865,7 @@ function wireEditor(){
   document.querySelectorAll("[data-note]").forEach(b=>b.onclick=()=>{const k=b.dataset.note;d.note=k==="private"?s.notePrivate:k==="business"?s.noteBusiness:"";$("#note").value=d.note;touch()});
   $("#saveBtn").onclick=()=>saveDraft(true);
   $("#pdfBtn").onclick=e=>downloadInvoice(state.draft,e.currentTarget,true);
+  const snd=$("#sendBtn");if(snd)snd.onclick=e=>openSend(e.currentTarget);
   const dup=$("#dupBtn");if(dup)dup.onclick=()=>{const c=JSON.parse(JSON.stringify(d));Object.assign(c,{_new:true,createdBy:"",updatedBy:"",paidBy:"",remindedAt:"",remindCount:0,number:nextNumber(),status:"draft",issueDate:todayISO(),dueDate:addDays(todayISO(),s.termsDays),paidAmount:0,paidDate:"",deposit:0});state.draft=c;state.dirty=true;renderEditor();toast("Copied into a new draft, "+c.number+".")};
 }
 function cleanInvoice(d){
