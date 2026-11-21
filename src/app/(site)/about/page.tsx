@@ -23,13 +23,21 @@ export default function AboutPage() {
 
       <section className="kv-section" style={{ paddingTop: 0 }}>
         <div className="kv-wrap kv-split kv-split--wide-media" style={{ alignItems: "start" }}>
-          <Media
-            src={pending.teamPhotograph}
-            alt={`${people[0].name} and ${people[1].name} of ${site.name}`}
-            ratio="4 / 5"
-            sizes="(min-width: 900px) 50vw, 100vw"
-            placeholder="Photograph of Prakash and Yaman required"
-          />
+          {pending.teamPhotograph ? (
+            <Media
+              src={pending.teamPhotograph}
+              alt={`${people[0].name} and ${people[1].name} of ${site.name}`}
+              ratio="4 / 5"
+              sizes="(min-width: 900px) 50vw, 100vw"
+            />
+          ) : (
+            <Media
+              src="/work/pasni.jpg"
+              alt="A family seated on stage at their son's Pasni, photographed by Katha Visuals"
+              ratio="4 / 5"
+              sizes="(min-width: 900px) 50vw, 100vw"
+            />
+          )}
           <div>
             <p className="kv-muted">
               Before working together under {site.name}, we built our experience independently
@@ -57,14 +65,15 @@ export default function AboutPage() {
 
           <div className="kv-grid kv-grid--2" style={{ marginTop: "var(--space-12)", gap: "var(--space-12)" }}>
             {people.map((person) => (
-              <article key={person.name}>
-                <Media
-                  src={person.portrait}
-                  alt={`${person.name}, ${person.role} at ${site.name}`}
-                  ratio="1 / 1"
-                  sizes="(min-width: 900px) 45vw, 100vw"
-                  placeholder={`Photograph of ${person.name.split(" ")[0]} required`}
-                />
+              <article key={person.name} style={{ borderTop: "1px solid var(--color-border-soft)", paddingTop: "var(--space-6)" }}>
+                {person.portrait ? (
+                  <Media
+                    src={person.portrait}
+                    alt={`${person.name}, ${person.role} at ${site.name}`}
+                    ratio="1 / 1"
+                    sizes="(min-width: 900px) 45vw, 100vw"
+                  />
+                ) : null}
                 <h3 style={{ marginTop: "var(--space-4)" }}>{person.name}</h3>
                 <p
                   className="kv-eyebrow"

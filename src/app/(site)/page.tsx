@@ -1,124 +1,161 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Hero } from "@/components/Hero";
 import { CallToAction } from "@/components/ui/CallToAction";
-import { Media } from "@/components/ui/Media";
-import { pending, people, principles, services, site } from "@/lib/site";
+import { site } from "@/lib/site";
+
+/*
+ * Light gallery homepage. The photographs lead and the words stay out of their
+ * way: a three-photo opening, one centred line, then pairs of pictures with
+ * small captions. Every photo here is real Katha Visuals work.
+ */
+
+const occasions = [
+  { name: "Weddings", body: "Nepali, Hindu and modern weddings, from Haldi and Mehndi to the reception." },
+  { name: "Pasni", body: "First rice feeding ceremonies, with family on every side of the frame." },
+  { name: "Celebrations", body: "Birthdays, puja, community and cultural events across Canberra." },
+  { name: "Engagements", body: "Proposals and pre-wedding shoots, planned around the light." },
+  { name: "Maternity", body: "Soft, natural sessions outdoors or at home, for the two of you." },
+  { name: "Brands", body: "Photo and short-form video for local businesses and properties." },
+];
+
+function Photo({
+  src,
+  alt,
+  sizes,
+  position,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  position?: string;
+  priority?: boolean;
+}) {
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes={sizes}
+      quality={90}
+      priority={priority}
+      style={{ objectFit: "cover", objectPosition: position }}
+    />
+  );
+}
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      {/* Opening: three photographs ------------------------------------- */}
+      <section aria-label="Recent work" className="kv-triptych">
+        <div>
+          <Photo
+            src="/work/pasni.jpg"
+            alt="A family seated on stage at their son's Pasni"
+            sizes="(min-width: 900px) 44vw, 100vw"
+            position="50% 45%"
+            priority
+          />
+        </div>
+        <div>
+          <Photo
+            src="/work/nepali-wedding.jpg"
+            alt="A Nepali bride and groom smiling at each other in front of a thangka"
+            sizes="(min-width: 900px) 28vw, 50vw"
+            priority
+          />
+        </div>
+        <div>
+          <Photo
+            src="/work/maternity.jpg"
+            alt="A couple at a maternity session among roses"
+            sizes="(min-width: 900px) 28vw, 50vw"
+            priority
+          />
+        </div>
+      </section>
 
-      <div>
-        {/* Introduction ------------------------------------------------- */}
-        <section className="kv-section">
-          <div className="kv-wrap kv-split kv-split--wide-media">
-            <div>
-              <p className="kv-eyebrow">Introduction</p>
-              <h2 style={{ maxWidth: "16ch" }}>Every story begins with a moment.</h2>
-              <p className="kv-lede" style={{ marginTop: "var(--space-6)" }}>
-                {site.name} is a Canberra-based photography and videography team founded by
-                Prakash Khanal and Yaman Gurung.
-              </p>
-              <p className="kv-muted">
-                Drawing on years of independent creative experience, we now work together under
-                one brand to document people, celebrations, places and businesses with honesty
-                and intention.
-              </p>
-              <Link href="/about" className="kv-link">
-                Read our story →
-              </Link>
-            </div>
-            <Media
-              src="/design/about-landscape.jpg"
-              alt="Open grassland and gum trees outside Canberra"
-              ratio="5 / 4"
-              sizes="(min-width: 900px) 50vw, 100vw"
+      {/* One line ------------------------------------------------------- */}
+      <section className="kv-statement">
+        <p className="kv-eyebrow" style={{ margin: 0 }}>
+          Photography and film | {site.location}
+        </p>
+        <h1>Where moments become stories</h1>
+        <p>
+          We photograph and film weddings, Pasni, family celebrations and the quiet moments in
+          between, for families in Canberra and across Australia.
+        </p>
+        <Link href="/contact" className="kv-link">
+          Check your date
+        </Link>
+      </section>
+
+      {/* A pair of photographs ----------------------------------------- */}
+      <section aria-label="More of our work" className="kv-pair kv-pair--offset">
+        <figure className="kv-figure">
+          <div className="kv-media" style={{ aspectRatio: "4 / 3" }}>
+            <Photo
+              src="/work/proposal.jpg"
+              alt="A couple looking at each other moments after a proposal"
+              sizes="(min-width: 560px) 50vw, 100vw"
             />
           </div>
-        </section>
-
-        {/* Services ----------------------------------------------------- */}
-        <section className="kv-section" style={{ background: "var(--color-surface)" }}>
-          <div className="kv-wrap">
-            <p className="kv-eyebrow">Services</p>
-            <h2 style={{ maxWidth: "16ch" }}>Four ways we work.</h2>
-
-            <div className="kv-grid kv-grid--4" style={{ marginTop: "var(--space-12)" }}>
-              {services.map((service) => (
-                <Link
-                  key={service.slug}
-                  href={`/services#${service.slug}`}
-                  className="kv-card"
-                  style={{ textDecoration: "none", display: "block" }}
-                >
-                  <Media
-                    src={service.image}
-                    alt={`${service.name} photography by ${site.name}`}
-                    ratio="4 / 5"
-                    sizes="(min-width: 900px) 25vw, 50vw"
-                  />
-                  <h3 style={{ fontSize: "var(--text-lg)", marginTop: "var(--space-4)" }}>
-                    {service.name}
-                  </h3>
-                  <p className="kv-muted" style={{ fontSize: "var(--text-sm)" }}>
-                    {service.summary}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why work with us --------------------------------------------- */}
-        <section className="kv-section">
-          <div className="kv-wrap">
-            <p className="kv-eyebrow">Why work with us</p>
-            <h2 style={{ maxWidth: "20ch" }}>What you can expect, on every project.</h2>
-
-            <div className="kv-grid kv-grid--4" style={{ marginTop: "var(--space-12)" }}>
-              {principles.map((principle) => (
-                <div key={principle.title} style={{ borderTop: "2px solid var(--color-accent)", paddingTop: "var(--space-4)" }}>
-                  <h3 style={{ fontSize: "var(--text-lg)" }}>{principle.title}</h3>
-                  <p className="kv-muted" style={{ fontSize: "var(--text-sm)", margin: "var(--space-2) 0 0" }}>
-                    {principle.body}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* About preview ------------------------------------------------ */}
-        <section className="kv-section" style={{ background: "var(--color-surface)" }}>
-          <div className="kv-wrap kv-split">
-            <Media
-              src={pending.teamPhotograph}
-              alt={`${people[0].name} and ${people[1].name} of ${site.name}`}
-              ratio="4 / 5"
-              sizes="(min-width: 900px) 45vw, 100vw"
-              placeholder="Photograph of Prakash and Yaman required"
+          <figcaption>The proposal</figcaption>
+        </figure>
+        <figure className="kv-figure">
+          <div className="kv-media" style={{ aspectRatio: "4 / 3" }}>
+            <Photo
+              src="/work/family.jpg"
+              alt="Parents holding their baby in a red topi at his Pasni"
+              sizes="(min-width: 560px) 50vw, 100vw"
+              position="50% 25%"
             />
-            <div>
-              <p className="kv-eyebrow">About</p>
-              <h2 style={{ maxWidth: "16ch" }}>The people behind {site.name}</h2>
-              <p className="kv-muted" style={{ marginTop: "var(--space-6)" }}>
-                {site.name} brings together the creative experience of its two founders, Prakash
-                Khanal and Yaman Gurung. Both shoot photography and video. Based in Canberra and
-                connected by our Nepalese background, we approach every project with cultural
-                awareness, preparation and respect for the people whose stories we document.
-              </p>
-              <Link href="/about" className="kv-link">
-                Meet the team →
-              </Link>
-            </div>
           </div>
-        </section>
+          <figcaption>First rice feeding</figcaption>
+        </figure>
+      </section>
 
-        {/* Testimonials stay unpublished until genuine ones exist. */}
+      {/* What we photograph -------------------------------------------- */}
+      <section className="kv-section" style={{ paddingInline: "var(--gutter)" }}>
+        <div className="kv-statement" style={{ paddingTop: 0, paddingBottom: "var(--space-12)" }}>
+          <p className="kv-eyebrow" style={{ margin: 0 }}>
+            What we photograph
+          </p>
+          <h2>Every kind of family story</h2>
+        </div>
+        <ul className="kv-occasions">
+          {occasions.map((item) => (
+            <li key={item.name}>
+              <h3>{item.name}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+        <p style={{ textAlign: "center", margin: "var(--space-12) auto 0" }}>
+          <Link href="/services" className="kv-link">
+            Services and what is included
+          </Link>
+        </p>
+      </section>
 
-        <CallToAction />
-      </div>
+      {/* About, in a few lines ------------------------------------------ */}
+      <section className="kv-statement" style={{ background: "var(--color-surface-alt)" }}>
+        <p className="kv-eyebrow" style={{ margin: 0 }}>
+          About us
+        </p>
+        <h2>Prakash and Yaman</h2>
+        <p>
+          Two Canberra photographers and filmmakers with a shared Nepalese background. We know
+          the rituals, the family moments and the timing, so we can stay quiet and catch them as
+          they happen. Both of us shoot photo and video.
+        </p>
+        <Link href="/about" className="kv-link">
+          Our story
+        </Link>
+      </section>
+
+      <CallToAction />
     </>
   );
 }

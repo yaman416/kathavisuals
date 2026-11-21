@@ -37,15 +37,19 @@
           "answer": "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add."
         }
       ],
-      "image": "/design/service-weddings.jpg",
+      "image": "/work/nepali-wedding.jpg",
       "gallery": [
         {
-          "src": "/design/portfolio-weddings.jpg",
-          "alt": "An outdoor wedding ceremony on a lawn in bright daylight"
+          "src": "/work/nepali-wedding.jpg",
+          "alt": "A Nepali bride and groom smiling at each other in front of a thangka"
         },
         {
-          "src": "/design/service-weddings.jpg",
-          "alt": "A couple laughing together in a sunlit garden"
+          "src": "/work/proposal.jpg",
+          "alt": "A couple looking at each other moments after a proposal"
+        },
+        {
+          "src": "/work/maternity.jpg",
+          "alt": "A couple at a maternity session among roses"
         }
       ]
     },
@@ -86,15 +90,15 @@
           "answer": "Yes. We regularly photograph community occasions and take the time to understand the programme and the customs involved beforehand."
         }
       ],
-      "image": "/design/service-events.jpg",
+      "image": "/work/family.jpg",
       "gallery": [
         {
-          "src": "/design/portfolio-events.jpg",
-          "alt": "Guests seated at a long outdoor table under a white canopy"
+          "src": "/work/pasni.jpg",
+          "alt": "A family seated on stage at their son's Pasni"
         },
         {
-          "src": "/design/service-events.jpg",
-          "alt": "Guests laughing together at an outdoor garden party"
+          "src": "/work/family.jpg",
+          "alt": "Parents holding their baby in a red topi at his Pasni"
         }
       ]
     },
