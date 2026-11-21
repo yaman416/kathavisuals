@@ -11,11 +11,11 @@ import { site } from "@/lib/site";
 
 const occasions = [
   { name: "Weddings", body: "Nepali, Hindu and modern weddings, from Haldi and Mehndi to the reception." },
-  { name: "Pasni", body: "First rice feeding ceremonies, with family on every side of the frame." },
-  { name: "Celebrations", body: "Birthdays, puja, community and cultural events across Canberra." },
-  { name: "Engagements", body: "Proposals and pre-wedding shoots, planned around the light." },
+  { name: "Pasni", body: "Weaning ceremonies and first rice feeding, with family on every side of the frame." },
+  { name: "Birthdays", body: "First birthdays, milestone birthdays and the whole family around the cake." },
+  { name: "Puja and community", body: "Puja, cultural programmes and community gatherings across Canberra." },
+  { name: "Pre-wedding", body: "Proposals, engagements and pre-wedding shoots, planned around the light." },
   { name: "Maternity", body: "Soft, natural sessions outdoors or at home, for the two of you." },
-  { name: "Brands", body: "Photo and short-form video for local businesses and properties." },
 ];
 
 function Photo({

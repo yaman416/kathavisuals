@@ -77,9 +77,9 @@ const structuredData = {
   sameAs: [site.instagram, site.facebook].filter(Boolean),
   makesOffer: [
     "Wedding photography and videography",
-    "Event photography and videography",
-    "Real estate photography and video",
-    "Brand and social media content",
+    "Pre-wedding and engagement photography",
+    "Pasni and birthday photography",
+    "Family and community event photography",
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 

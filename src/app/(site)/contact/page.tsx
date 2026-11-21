@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Enquire about wedding, event, real estate or brand photography and video with Katha Visuals in Canberra.",
+    "Enquire about wedding, pre-wedding, Pasni, birthday or community event photography and film with Katha Visuals in Canberra.",
   alternates: { canonical: "/contact" },
 };
 
@@ -26,7 +26,7 @@ export default function ContactPage() {
       <PageHeader
         eyebrow="Contact"
         title="Start a project."
-        lede="Tell us about your wedding, event, property or creative project. We reply within two business days."
+        lede="Tell us about your wedding, shoot or family event. We reply within two business days."
       />
 
       <section className="kv-section" style={{ paddingTop: 0 }}>

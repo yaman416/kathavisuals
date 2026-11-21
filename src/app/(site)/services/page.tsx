@@ -9,7 +9,7 @@ import { services, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Wedding, event, real estate and brand photography and videography in Canberra. What is included, who it is for, and how we work.",
+    "Wedding, pre-wedding, Pasni, birthday and community event photography and film in Canberra. What is included and how we work.",
   alternates: { canonical: "/services" },
 };
 
