@@ -122,17 +122,11 @@ export const services: Service[] = servicesData.items.map((service) => ({
 /* -------------------------------------------------------------------------- */
 
 /**
- * Empty slots are added up to this count so a gallery has something to scroll
- * and an obvious place for the next photograph.
+ * Real photographs only. The site is live to clients now, so a short gallery
+ * is better than "Image to come" boxes.
  */
-export const MIN_SLIDES = 4;
-
-/** Keyed by service slug, padded with nulls that render as placeholders. */
 export const galleries: Record<string, GallerySlot[]> = Object.fromEntries(
-  services.map((service) => {
-    const length = Math.max(MIN_SLIDES, service.gallery.length);
-    return [service.slug, Array.from({ length }, (_, i) => service.gallery[i] ?? null)];
-  }),
+  services.map((service) => [service.slug, [...service.gallery]]),
 );
 
 /* -------------------------------------------------------------------------- */
