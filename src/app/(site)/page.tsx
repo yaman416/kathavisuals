@@ -51,25 +51,25 @@ export default function HomePage() {
       <section aria-label="Recent work" className="kv-triptych">
         <div>
           <Photo
-            src="/work/pasni.jpg"
-            alt="A family seated on stage at their son's Pasni"
+            src="/work/nirvan-family.jpg"
+            alt="Parents in sage green seated on stage with their son at his Pasni"
             sizes="(min-width: 900px) 44vw, 100vw"
-            position="50% 45%"
+            position="50% 55%"
             priority
           />
         </div>
         <div>
           <Photo
-            src="/work/nepali-wedding.jpg"
-            alt="A Nepali bride and groom smiling at each other in front of a thangka"
+            src="/work/birthday-boy.jpg"
+            alt="A baby boy in a red topi and vest at his first birthday"
             sizes="(min-width: 900px) 28vw, 50vw"
             priority
           />
         </div>
         <div>
           <Photo
-            src="/work/maternity.jpg"
-            alt="A couple at a maternity session among roses"
+            src="/work/maternity-couple.jpg"
+            alt="An expecting couple forehead to forehead on a Canberra lawn"
             sizes="(min-width: 900px) 28vw, 50vw"
             priority
           />
@@ -82,6 +82,10 @@ export default function HomePage() {
           Photography and film | {site.location}
         </p>
         <h1>Where moments become stories</h1>
+        <p style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-h3)", color: "var(--color-ink)" }}>
+          Anyone can take photos. We make memories with you, like family, on the days that matter
+          most.
+        </p>
         <p>
           We photograph and film weddings, Pasni, family celebrations and the quiet moments in
           between, for families in Canberra and across Australia.
@@ -96,23 +100,23 @@ export default function HomePage() {
         <figure className="kv-figure">
           <div className="kv-media" style={{ aspectRatio: "4 / 3" }}>
             <Photo
-              src="/work/proposal.jpg"
-              alt="A couple looking at each other moments after a proposal"
+              src="/work/nirvan-kiss.jpg"
+              alt="Parents kissing their son in his topi at his Pasni"
               sizes="(min-width: 560px) 50vw, 100vw"
             />
           </div>
-          <figcaption>The proposal</figcaption>
+          <figcaption>Pasni</figcaption>
         </figure>
         <figure className="kv-figure">
           <div className="kv-media" style={{ aspectRatio: "4 / 3" }}>
             <Photo
-              src="/work/family.jpg"
-              alt="Parents holding their baby in a red topi at his Pasni"
+              src="/work/maternity-family.jpg"
+              alt="Parents kissing their toddler on both cheeks at a maternity session"
               sizes="(min-width: 560px) 50vw, 100vw"
-              position="50% 25%"
+              position="50% 35%"
             />
           </div>
-          <figcaption>First rice feeding</figcaption>
+          <figcaption>Maternity</figcaption>
         </figure>
       </section>
 

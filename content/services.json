@@ -73,15 +73,23 @@
           "answer": "Yes. Ask us about the pre-wedding price when you book your wedding."
         }
       ],
-      "image": "/work/proposal.jpg",
+      "image": "/work/maternity-couple.jpg",
       "gallery": [
+        {
+          "src": "/work/maternity-couple.jpg",
+          "alt": "An expecting couple forehead to forehead on a Canberra lawn, Telstra Tower behind them"
+        },
         {
           "src": "/work/proposal.jpg",
           "alt": "A couple looking at each other moments after a proposal"
         },
         {
-          "src": "/work/maternity.jpg",
-          "alt": "A couple at a maternity session among roses"
+          "src": "/work/maternity-autumn.jpg",
+          "alt": "A mother-to-be in a cream dress under golden autumn trees"
+        },
+        {
+          "src": "/work/maternity-family.jpg",
+          "alt": "Parents kissing their toddler on both cheeks at a maternity session"
         }
       ]
     },
@@ -121,15 +129,51 @@
           "answer": "Yes. We share a Nepalese background and photograph Pasni, puja and cultural events often. If your family does things differently, tell us and we will plan around it."
         }
       ],
-      "image": "/work/family.jpg",
+      "image": "/work/nirvan-family.jpg",
       "gallery": [
         {
-          "src": "/work/pasni.jpg",
-          "alt": "A family seated on stage at their son's Pasni"
+          "src": "/work/nirvan-family.jpg",
+          "alt": "Parents in sage green seated on stage with their son at his Pasni"
         },
         {
-          "src": "/work/family.jpg",
-          "alt": "Parents holding their baby in a red topi at his Pasni"
+          "src": "/work/nirvan-kiss.jpg",
+          "alt": "Parents kissing their son in his topi at his Pasni"
+        },
+        {
+          "src": "/work/birthday-entrance.jpg",
+          "alt": "A family walking in to sparklers at their son's first birthday"
+        },
+        {
+          "src": "/work/pasni-lift.jpg",
+          "alt": "A father lifting his baby high while mum looks on at their Pasni reception"
+        },
+        {
+          "src": "/work/birthday-boy.jpg",
+          "alt": "A baby boy in a red topi and vest sitting on a gold stand"
+        },
+        {
+          "src": "/work/nirvan-entrance.jpg",
+          "alt": "A family walking down the red carpet with their son at his Pasni"
+        },
+        {
+          "src": "/work/birthday-cake.jpg",
+          "alt": "A family cutting the cake at their son's first birthday"
+        },
+        {
+          "src": "/work/pasni-twirl.jpg",
+          "alt": "A couple twirling on the red carpet at their baby's Pasni reception"
+        },
+        {
+          "src": "/work/nirvan-topi.jpg",
+          "alt": "A baby in a green topi and outfit smiling on a gold stand"
+        },
+        {
+          "src": "/work/birthday-family.jpg",
+          "alt": "Parents seated with their son in a red topi at his first birthday"
+        },
+        {
+          "src": "/work/pasni-baby.jpg",
+          "alt": "A baby in a navy outfit laughing on a silver sofa"
         }
       ]
     }
