@@ -565,9 +565,13 @@ img, video { max-width: 100%; }
   scrollbar-width: thin;
 }
 .kv-slide {
-  /* Near full width on a phone, capped on a monitor. Either way the next
-     slide peeks past the edge, which is what says the track scrolls. */
-  flex: 0 0 min(80vw, 780px);
+  /* Every slide is the same height and as wide as its photo, so tall photos
+     show tall and wide ones show wide with nothing cropped. --r is the photo's
+     width divided by its height. A wide photo is capped so the next slide
+     still peeks past the edge, which is what says the track scrolls. */
+  --slide-h: min(66vh, 640px, 120vw);
+  flex: 0 0 auto;
+  width: min(84vw, calc(var(--slide-h) * var(--r, 1.5)));
   scroll-snap-align: start;
 }
 .kv-slide__button {

@@ -9,7 +9,7 @@
         "Photography, film, or both",
         "Coverage planned around your run sheet",
         "Extra days for Haldi, Mehndi, Sangeet or reception",
-        "A sneak peek within 3 days",
+        "A sneak peek within a week",
         "Full edited gallery and film, delivered online"
       ],
       "audience": "Couples and families who want the whole celebration told as one story, rituals and all.",
@@ -17,7 +17,7 @@
         "A conversation about the day, the people and what matters most to you",
         "A written plan covering locations, timings and the moments you cannot miss",
         "Coverage on the day, working quietly around the celebration",
-        "A sneak peek within 3 days, then the full gallery and film"
+        "A sneak peek within a week, followed by the full gallery and film"
       ],
       "faqs": [
         {
@@ -73,19 +73,19 @@
           "answer": "Yes. Ask us about the pre-wedding price when you book your wedding."
         }
       ],
-      "image": "/work/maternity-couple.jpg",
+      "image": "/work/maternity-autumn.jpg",
       "gallery": [
         {
-          "src": "/work/maternity-couple.jpg",
-          "alt": "An expecting couple forehead to forehead on a Canberra lawn, Telstra Tower behind them"
+          "src": "/work/maternity-autumn.jpg",
+          "alt": "A mother-to-be in a cream dress under golden autumn trees"
         },
         {
           "src": "/work/proposal.jpg",
           "alt": "A couple looking at each other moments after a proposal"
         },
         {
-          "src": "/work/maternity-autumn.jpg",
-          "alt": "A mother-to-be in a cream dress under golden autumn trees"
+          "src": "/work/maternity-couple.jpg",
+          "alt": "An expecting couple forehead to forehead on a Canberra lawn, Telstra Tower behind them"
         },
         {
           "src": "/work/maternity-family.jpg",
@@ -118,7 +118,7 @@
         },
         {
           "question": "Can you deliver same day highlights?",
-          "answer": "Not on the night itself, but you will get a set of preview images soon after, then the full edited gallery."
+          "answer": "Not on the night itself. You will get a sneak peek within a week, followed by the full edited gallery and film."
         },
         {
           "question": "How long can we access the files?",
@@ -129,8 +129,20 @@
           "answer": "Yes. We share a Nepalese background and photograph Pasni, puja and cultural events often. If your family does things differently, tell us and we will plan around it."
         }
       ],
-      "image": "/work/nirvan-family.jpg",
+      "image": "/work/pasni-lift.jpg",
       "gallery": [
+        {
+          "src": "/work/pasni-lift.jpg",
+          "alt": "A father lifting his baby high while mum looks on at their Pasni reception"
+        },
+        {
+          "src": "/work/birthday-entrance.jpg",
+          "alt": "A family walking in to sparklers at their son's first birthday"
+        },
+        {
+          "src": "/work/nirvan-entrance.jpg",
+          "alt": "A family walking down the red carpet with their son at his Pasni"
+        },
         {
           "src": "/work/nirvan-family.jpg",
           "alt": "Parents in sage green seated on stage with their son at his Pasni"
@@ -140,20 +152,8 @@
           "alt": "Parents kissing their son in his topi at his Pasni"
         },
         {
-          "src": "/work/birthday-entrance.jpg",
-          "alt": "A family walking in to sparklers at their son's first birthday"
-        },
-        {
-          "src": "/work/pasni-lift.jpg",
-          "alt": "A father lifting his baby high while mum looks on at their Pasni reception"
-        },
-        {
           "src": "/work/birthday-boy.jpg",
           "alt": "A baby boy in a red topi and vest sitting on a gold stand"
-        },
-        {
-          "src": "/work/nirvan-entrance.jpg",
-          "alt": "A family walking down the red carpet with their son at his Pasni"
         },
         {
           "src": "/work/birthday-cake.jpg",

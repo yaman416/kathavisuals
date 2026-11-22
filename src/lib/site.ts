@@ -89,7 +89,8 @@ export const people: Person[] = peopleData.items.map((person) => ({
 
 export type Faq = { question: string; answer: string };
 
-export type GallerySlot = { src: string; alt: string } | null;
+/** `ratio` is width divided by height, added on the server where it is known. */
+export type GallerySlot = { src: string; alt: string; ratio?: number } | null;
 
 export type Service = {
   slug: string;

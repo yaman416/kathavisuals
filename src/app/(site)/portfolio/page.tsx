@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CallToAction } from "@/components/ui/CallToAction";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WorkCarousel } from "@/components/WorkCarousel";
+import { imageRatio } from "@/lib/image-ratio";
 import { galleries, pending, services, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -55,7 +56,9 @@ export default function PortfolioPage() {
       </section>
 
       {services.map((service, index) => {
-        const slots = galleries[service.slug] ?? [];
+        const slots = (galleries[service.slug] ?? []).map((slot) =>
+          slot ? { ...slot, ratio: imageRatio(slot.src) } : slot,
+        );
 
         return (
           <section

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { Media } from "@/components/ui/Media";
 import type { GallerySlot } from "@/lib/site";
 
@@ -126,7 +126,11 @@ export function WorkCarousel({
         aria-label={`${label} gallery`}
       >
         {slots.map((slot, i) => (
-          <li key={`${label}-${i}`} className="kv-slide">
+          <li
+            key={`${label}-${i}`}
+            className="kv-slide"
+            style={{ "--r": slot?.ratio ?? 3 / 2 } as CSSProperties}
+          >
             {slot ? (
               <button
                 type="button"
@@ -137,7 +141,7 @@ export function WorkCarousel({
                 <Media
                   src={slot.src}
                   alt={slot.alt}
-                  ratio="3 / 2"
+                  ratio={String(slot.ratio ?? 3 / 2)}
                   sizes="(min-width: 900px) 62vw, 88vw"
                   priority={priority && i === 0}
                 />
