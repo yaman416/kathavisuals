@@ -15,7 +15,10 @@ const CACHE = "public, s-maxage=900, stale-while-revalidate=3600";
 export async function GET() {
   const raw = process.env.AVAILABILITY_ICS_URL?.trim();
   if (!raw) {
-    return Response.json({ ok: false, booked: [] }, { headers: { "Cache-Control": "no-store" } });
+    return Response.json(
+      { ok: false, today: todayInCanberra(), booked: [] },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   }
 
   // Calendar apps share the address as webcal://, which is plain https.
@@ -29,6 +32,6 @@ export async function GET() {
     return Response.json({ ok: true, today, booked }, { headers: { "Cache-Control": CACHE } });
   } catch (error) {
     console.error("Availability calendar could not be read", error);
-    return Response.json({ ok: false, booked: [] }, { headers: { "Cache-Control": "no-store" } });
+    return Response.json({ ok: false, today: todayInCanberra(), booked: [] }, { headers: { "Cache-Control": "no-store" } });
   }
 }

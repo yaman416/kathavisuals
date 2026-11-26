@@ -809,7 +809,9 @@ textarea.kv-field { min-height: 140px; resize: vertical; }
    Month calendar on the contact page. Open dates are plain and selectable;
    booked dates are greyed and struck through; past dates fade back. */
 .kv-avail { max-width: 440px; margin: 0 auto; }
-.kv-avail--loading { min-height: 560px; }
+.kv-avail--loading { min-height: 640px; }
+.kv-avail__action { display: flex; justify-content: center; margin-top: var(--space-6); }
+.kv-avail__action .kv-btn:disabled { opacity: 0.35; cursor: default; }
 .kv-avail__head {
   display: flex;
   align-items: center;
