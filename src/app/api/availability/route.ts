@@ -1,3 +1,4 @@
+import bookedFile from "../../../../content/booked-dates.json";
 import { bookedDates, todayInCanberra } from "@/lib/availability";
 
 /**
@@ -15,9 +16,13 @@ const CACHE = "public, s-maxage=900, stale-while-revalidate=3600";
 export async function GET() {
   const raw = process.env.AVAILABILITY_ICS_URL?.trim();
   if (!raw) {
+    // No live feed on this deployment: use the dates the scheduled GitHub
+    // workflow copied into content/booked-dates.json, if it has run.
+    const today = todayInCanberra();
+    const synced = Boolean(bookedFile.updated);
     return Response.json(
-      { ok: false, today: todayInCanberra(), booked: [] },
-      { headers: { "Cache-Control": "no-store" } },
+      { ok: synced, today, booked: (bookedFile.booked as string[]).filter((d) => d >= today) },
+      { headers: { "Cache-Control": synced ? CACHE : "no-store" } },
     );
   }
 
