@@ -127,7 +127,7 @@ export function SiteHeader() {
           </nav>
 
           <div style={{ display: "grid", gap: "var(--space-2)", justifyItems: "center" }}>
-            <Link href="/contact" className="kv-btn kv-btn--primary" style={{ width: "100%" }} onClick={close}>
+            <Link href="/contact#availability" className="kv-btn kv-btn--primary" style={{ width: "100%" }} onClick={close}>
               Check your date
             </Link>
             <a href={`tel:${site.phoneHref}`} className="kv-muted" style={{ fontSize: "var(--text-sm)", textDecoration: "none", padding: "12px" }}>

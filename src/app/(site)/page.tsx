@@ -90,7 +90,7 @@ export default function HomePage() {
           We photograph and film weddings, Pasni, family celebrations and the quiet moments in
           between, for families in Canberra and across Australia.
         </p>
-        <Link href="/contact" className="kv-link">
+        <Link href="/contact#availability" className="kv-link">
           Check your date
         </Link>
       </section>

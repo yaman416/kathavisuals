@@ -14,7 +14,7 @@ export function CallToAction() {
         availability and a quote.
       </p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center" }}>
-        <Link href="/contact" className="kv-btn kv-btn--primary">
+        <Link href="/contact#availability" className="kv-btn kv-btn--primary">
           Check your date
         </Link>
         <a href={`tel:${site.phoneHref}`} className="kv-btn kv-btn--ghost">

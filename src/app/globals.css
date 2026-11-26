@@ -804,3 +804,74 @@ textarea.kv-field { min-height: 140px; resize: vertical; }
 
 /* Inner page openings sit a little tighter than the homepage statement. */
 .kv-page-header { padding-block: clamp(56px, 8vw, 110px) clamp(40px, 6vw, 80px); }
+
+/* ---------------------------------------------------- check your date ---
+   Month calendar on the contact page. Open dates are plain and selectable;
+   booked dates are greyed and struck through; past dates fade back. */
+.kv-avail { max-width: 440px; margin: 0 auto; }
+.kv-avail--loading { min-height: 560px; }
+.kv-avail__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.kv-avail__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  color: var(--color-ink);
+}
+.kv-avail__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.kv-avail__weekday {
+  padding-bottom: var(--space-2);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-ink-muted);
+}
+.kv-avail__day {
+  aspect-ratio: 1;
+  min-height: 40px;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-ink);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+.kv-avail__day--open:hover { border-color: var(--color-ink); }
+.kv-avail__day--open:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.kv-avail__day--booked {
+  color: var(--color-ink-muted);
+  background: var(--line);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.kv-avail__day--past { color: var(--color-border); cursor: default; }
+.kv-avail__day.is-picked { color: var(--paper); background: var(--color-ink); }
+.kv-avail__legend {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-ink-muted);
+}
+.kv-avail__legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.kv-avail__key { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--color-border); }
+.kv-avail__key--booked { background: var(--line); border-color: var(--line); }
+.kv-avail__note {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--color-ink-muted);
+}

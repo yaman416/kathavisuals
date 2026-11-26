@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { site } from "@/lib/site";
@@ -28,6 +29,16 @@ export default function ContactPage() {
         title="Start a project."
         lede="Tell us about your wedding, shoot or family event. We reply within two business days."
       />
+
+      <section
+        id="availability"
+        className="kv-section kv-section--tight"
+        style={{ paddingTop: 0, scrollMarginTop: "96px" }}
+      >
+        <div className="kv-wrap">
+          <AvailabilityCalendar />
+        </div>
+      </section>
 
       <section className="kv-section" style={{ paddingTop: 0 }}>
         <div className="kv-wrap kv-split" style={{ alignItems: "start" }}>
