@@ -1,0 +1,41 @@
+name: Sync booked dates
+
+# Copies booked dates (dates only) from the Photoshoot/Events calendar into
+# content/booked-dates.json, which the "Check your date" calendar reads.
+# A change is committed to main, and Vercel redeploys the site.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-booked-dates
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Read calendar
+        env:
+          AVAILABILITY_ICS_URL: ${{ secrets.AVAILABILITY_ICS_URL }}
+        run: node --experimental-strip-types scripts/sync-booked-dates.mts
+      - name: Commit if changed
+        run: |
+          if git diff --quiet content/booked-dates.json; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git config user.name "katha-calendar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/booked-dates.json
+          git commit -m "Update booked dates"
+          git push
