@@ -6,9 +6,10 @@ import { useEffect, useMemo, useState } from "react";
  * "Check your date": a month calendar showing which dates are open and which
  * are booked, read from the shared Photoshoot/Events calendar.
  *
- * Choosing an open date fills the date field in the enquiry form below. If the
- * calendar cannot be read, the section stays hidden and the form works as
- * before, so a client never sees a broken widget.
+ * Choosing an open date fills the date field in the enquiry form, and
+ * "Request to book" takes the client to the form. If the bookings calendar
+ * cannot be read, every future date is selectable and availability is
+ * confirmed by reply.
  */
 
 const MONTHS_AHEAD = 18;
@@ -28,6 +29,12 @@ function longDate(iso: string) {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${iso}T00:00:00Z`));
+}
+
+function shortDate(iso: string) {
+  return new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", timeZone: "UTC" }).format(
+    new Date(`${iso}T00:00:00Z`),
+  );
 }
 
 function Chevron({ direction }: { direction: "left" | "right" }) {
@@ -61,13 +68,16 @@ export function AvailabilityCalendar() {
 
   const booked = useMemo(() => new Set(data?.booked ?? []), [data]);
 
-  if (!data?.ok || !data.today) {
-    // Hidden while loading and if the calendar is unavailable. Space is kept
-    // while loading so the form below does not jump.
-    return data === null ? <div className="kv-avail kv-avail--loading" aria-hidden="true" /> : null;
+  if (data === null) {
+    // Space is kept while loading so the form below does not jump.
+    return <div className="kv-avail kv-avail--loading" aria-hidden="true" />;
   }
 
-  const today = data.today;
+  // If the bookings calendar cannot be read, still let people pick a date:
+  // nothing is shown as booked, and the note says we confirm by reply.
+  const live = data.ok;
+  const today =
+    data.today ?? new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Sydney" }).format(new Date());
   const [ty, tm] = today.split("-").map(Number);
   const first = new Date(Date.UTC(ty, tm - 1 + offset, 1));
   const year = first.getUTCFullYear();
@@ -85,12 +95,19 @@ export function AvailabilityCalendar() {
     }
   };
 
+  const requestToBook = () => {
+    const form = document.getElementById("enquiry");
+    form?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Start the client on their name; the date is already filled in.
+    window.setTimeout(() => document.getElementById("name")?.focus({ preventScroll: true }), 400);
+  };
+
   const cells = [];
   for (let i = 0; i < lead; i++) cells.push(<span key={`b${i}`} aria-hidden="true" />);
   for (let day = 1; day <= daysInMonth; day++) {
     const iso = `${year}-${pad(month + 1)}-${pad(day)}`;
     const past = iso < today;
-    const isBooked = booked.has(iso);
+    const isBooked = live && booked.has(iso);
     const state = past ? "past" : isBooked ? "booked" : "open";
     cells.push(
       <button
@@ -152,16 +169,31 @@ export function AvailabilityCalendar() {
         <span>
           <i className="kv-avail__key kv-avail__key--open" aria-hidden="true" /> Open
         </span>
-        <span>
-          <i className="kv-avail__key kv-avail__key--booked" aria-hidden="true" /> Booked
-        </span>
+        {live ? (
+          <span>
+            <i className="kv-avail__key kv-avail__key--booked" aria-hidden="true" /> Booked
+          </span>
+        ) : null}
       </div>
 
       <p className="kv-avail__note" aria-live="polite">
         {picked
-          ? `${longDate(picked)} is open. We have added it to the form below.`
-          : "Choose an open date to add it to your enquiry. We confirm every date by reply."}
+          ? `${longDate(picked)}${live ? " is open" : ""}.`
+          : live
+            ? "Choose an open date, then request to book it."
+            : "Choose your date, then request to book it. We confirm availability by reply."}
       </p>
+
+      <div className="kv-avail__action">
+        <button
+          type="button"
+          className="kv-btn kv-btn--primary"
+          disabled={!picked}
+          onClick={requestToBook}
+        >
+          Request to book{picked ? ` ${shortDate(picked)}` : ""}
+        </button>
+      </div>
     </div>
   );
 }

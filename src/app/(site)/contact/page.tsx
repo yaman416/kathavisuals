@@ -40,7 +40,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="kv-section" style={{ paddingTop: 0 }}>
+      <section id="enquiry" className="kv-section" style={{ paddingTop: 0, scrollMarginTop: "96px" }}>
         <div className="kv-wrap kv-split" style={{ alignItems: "start" }}>
           <div>
             <EnquiryForm />
