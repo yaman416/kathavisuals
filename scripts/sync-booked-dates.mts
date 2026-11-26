@@ -26,8 +26,13 @@ if (!res.ok) {
 const today = todayInCanberra();
 const booked = bookedDates(await res.text()).filter((d) => d >= today);
 
-const previous = JSON.parse(readFileSync(FILE, "utf8")) as { booked: string[] };
-if (JSON.stringify(previous.booked) === JSON.stringify(booked)) {
+const previous = JSON.parse(readFileSync(FILE, "utf8")) as {
+  updated: string | null;
+  booked: string[];
+};
+// The first successful read always writes, even with no bookings, so the site
+// knows the calendar is connected.
+if (previous.updated && JSON.stringify(previous.booked) === JSON.stringify(booked)) {
   console.log(`No change (${booked.length} booked dates).`);
 } else {
   writeFileSync(FILE, JSON.stringify({ updated: new Date().toISOString(), booked }, null, 2) + "\n");
