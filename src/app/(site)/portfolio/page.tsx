@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { CallToAction } from "@/components/ui/CallToAction";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WorkCarousel } from "@/components/WorkCarousel";
+import { imageRatio } from "@/lib/image-ratio";
 import { galleries, pending, services, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Our Work",
   description:
-    "Wedding, event, real estate and brand photography and video by Katha Visuals in Canberra.",
+    "Wedding, pre-wedding, Pasni and family event photography and film by Katha Visuals in Canberra.",
   alternates: { canonical: "/portfolio" },
 };
 
@@ -16,7 +17,7 @@ export default function PortfolioPage() {
     <>
       <PageHeader
         eyebrow="Our Work"
-        title="Work from weddings, events, properties and brands."
+        title="Weddings, pre-wedding shoots and family celebrations."
         lede={`The work we make in ${site.location} and beyond, grouped by the kind of project you are planning.`}
       />
 
@@ -55,7 +56,9 @@ export default function PortfolioPage() {
       </section>
 
       {services.map((service, index) => {
-        const slots = galleries[service.slug] ?? [];
+        const slots = (galleries[service.slug] ?? []).map((slot) =>
+          slot ? { ...slot, ratio: imageRatio(slot.src) } : slot,
+        );
 
         return (
           <section

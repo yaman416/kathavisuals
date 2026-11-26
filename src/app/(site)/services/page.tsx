@@ -9,7 +9,7 @@ import { services, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Wedding, event, real estate and brand photography and videography in Canberra. What is included, who it is for, and how we work.",
+    "Wedding, pre-wedding, Pasni, birthday and community event photography and film in Canberra. What is included and how we work.",
   alternates: { canonical: "/services" },
 };
 
@@ -49,8 +49,9 @@ export default function ServicesPage() {
       </PageHeader>
 
       {services.map((service, index) => {
-        // Each service carries its own gallery, so related work comes from there.
-        const related = service.gallery.slice(0, 2);
+        // Each service carries its own gallery, so related work comes from there,
+        // skipping the photo already shown at the top of this section.
+        const related = service.gallery.filter((item) => item.src !== service.image).slice(0, 2);
         return (
           <section
             key={service.slug}
@@ -66,7 +67,7 @@ export default function ServicesPage() {
                 <Media
                   src={service.image}
                   alt={`${service.name} photography by ${site.name}`}
-                  ratio="4 / 3"
+                  ratio="4 / 5"
                   sizes="(min-width: 900px) 50vw, 100vw"
                 />
                 <div>

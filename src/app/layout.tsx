@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Italiana, Jost } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+/* Light gallery: a thin, high-contrast display face for headings and the
+   wordmark, and a clean geometric sans for everything else. */
+const italiana = Italiana({
+  variable: "--font-italiana",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 
@@ -28,8 +31,10 @@ export const metadata: Metadata = {
     "Canberra videographer",
     "wedding photography Canberra",
     "event photography ACT",
-    "real estate photography Canberra",
-    "brand content Canberra",
+    "Nepali wedding photographer Canberra",
+    "Hindu wedding photographer Canberra",
+    "Pasni photography Canberra",
+    "maternity photographer Canberra",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -72,9 +77,9 @@ const structuredData = {
   sameAs: [site.instagram, site.facebook].filter(Boolean),
   makesOffer: [
     "Wedding photography and videography",
-    "Event photography and videography",
-    "Real estate photography and video",
-    "Brand and social media content",
+    "Pre-wedding and engagement photography",
+    "Pasni and birthday photography",
+    "Family and community event photography",
   ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
 };
 
@@ -87,7 +92,7 @@ const structuredData = {
  */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-AU" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang="en-AU" className={`${italiana.variable} ${jost.variable}`}>
       <body>
         <script
           type="application/ld+json"

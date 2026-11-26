@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { submitEnquiry } from "@/app/actions";
 import { initialEnquiryState } from "@/lib/enquiry";
-import { budgetOptions, coverageOptions, services, site } from "@/lib/site";
+import { coverageOptions, services, site } from "@/lib/site";
 
 const labelStyle = {
   display: "block",
@@ -144,19 +144,6 @@ export function EnquiryForm() {
               Choose coverage
             </option>
             {coverageOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </Field>
-
-        <Field id="budget" label="Approximate budget" hint="Optional">
-          <select id="budget" name="budget" className="kv-field" defaultValue="">
-            <option value="" disabled>
-              Choose a range
-            </option>
-            {budgetOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

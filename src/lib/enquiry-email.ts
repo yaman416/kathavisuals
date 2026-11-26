@@ -87,7 +87,7 @@ function row(label: string, value: string, isLink: "email" | "tel" | null = null
 }
 
 export function renderEnquiryEmail(fields: EnquiryFields): { html: string; text: string } {
-  const { name, email, phone, service, coverage, date, location, budget, details } = fields;
+  const { name, email, phone, service, coverage, date, location, details } = fields;
 
   const headline = "New enquiry";
   const preheader = `${name || "Someone"} enquired about ${service || "your work"}. Reply to reach them directly.`;
@@ -166,7 +166,6 @@ export function renderEnquiryEmail(fields: EnquiryFields): { html: string; text:
     ${row("Coverage", coverage)}
     ${row("Preferred date", formatDate(date))}
     ${row("Location", location)}
-    ${row("Budget", budget)}
   </table>
 </td>
 </tr>
@@ -207,7 +206,6 @@ export function renderEnquiryEmail(fields: EnquiryFields): { html: string; text:
     `Coverage: ${coverage || "Not specified"}`,
     `Preferred date: ${date ? formatDate(date) : NOT_PROVIDED}`,
     `Location: ${location || NOT_PROVIDED}`,
-    `Budget: ${budget || "Not stated"}`,
     "",
     "THEIR MESSAGE",
     details,

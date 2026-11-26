@@ -3,21 +3,21 @@
     {
       "slug": "weddings",
       "name": "Weddings",
-      "summary": "Honest and thoughtfully composed photography and films that preserve the atmosphere, relationships and meaningful details of your celebration.",
-      "intro": "We cover a wedding the way it actually unfolds. That means arriving early enough to understand the room, staying close to the people who matter, and directing only where it genuinely helps.",
+      "summary": "Nepali, Hindu and modern weddings, photographed and filmed from the first ritual to the last dance.",
+      "intro": "We cover a wedding the way it actually unfolds: Haldi, Mehndi, Sangeet, the ceremony and the reception. We know the rituals and the timing, so we stay close to the people who matter and only step in where it helps.",
       "includes": [
-        "Photography, videography, or both",
+        "Photography, film, or both",
         "Coverage planned around your run sheet",
-        "Preview images within 48 hours",
-        "Full edited gallery in one to two weeks",
-        "Private download link, active for 90 days"
+        "Extra days for Haldi, Mehndi, Sangeet or reception",
+        "A sneak peek within a week",
+        "Full edited gallery and film, delivered online"
       ],
-      "audience": "Couples who want their day told as one honest story rather than a checklist of poses.",
+      "audience": "Couples and families who want the whole celebration told as one story, rituals and all.",
       "process": [
         "A conversation about the day, the people and what matters most to you",
         "A written plan covering locations, timings and the moments you cannot miss",
         "Coverage on the day, working quietly around the celebration",
-        "Previews within 48 hours, then the full gallery"
+        "A sneak peek within a week, followed by the full gallery and film"
       ],
       "faqs": [
         {
@@ -37,36 +37,79 @@
           "answer": "Yes, anywhere in Australia. Travel and accommodation are quoted on top of your package so you can see exactly what they add."
         }
       ],
-      "image": "/design/service-weddings.jpg",
+      "image": "/work/nepali-wedding.jpg",
       "gallery": [
         {
-          "src": "/design/portfolio-weddings.jpg",
-          "alt": "An outdoor wedding ceremony on a lawn in bright daylight"
-        },
-        {
-          "src": "/design/service-weddings.jpg",
-          "alt": "A couple laughing together in a sunlit garden"
+          "src": "/work/nepali-wedding.jpg",
+          "alt": "A Nepali bride and groom smiling at each other in front of a thangka"
         }
       ]
     },
     {
-      "slug": "events",
-      "name": "Events",
-      "summary": "Professional coverage for private celebrations, community gatherings, cultural occasions and corporate events.",
-      "intro": "Events move quickly and rarely repeat themselves. We plan the coverage in advance so the moments that matter are photographed as they happen rather than reconstructed afterwards.",
+      "slug": "pre-wedding",
+      "name": "Pre-wedding",
+      "summary": "Engagements, proposals, pre-wedding shoots and maternity sessions, relaxed and unhurried.",
+      "intro": "These shoots are about the two of you. We pick a location and a time of day with good light, keep the posing gentle, and leave room for the real moments in between.",
       "includes": [
-        "Half or full day coverage",
-        "Photography, videography, or both",
-        "Preview images within 48 hours",
-        "Full edited gallery in one to two weeks",
-        "Private download link, active for 90 days"
+        "Up to 90 minutes, up to two locations",
+        "Help choosing a location and outfits",
+        "Photography, a short film, or both",
+        "Edited gallery delivered online"
       ],
-      "audience": "Organisers and hosts who need a clean, usable record of their event for marketing or for memory.",
+      "audience": "Couples planning a proposal, celebrating an engagement, or expecting a baby.",
       "process": [
-        "A short brief covering the run sheet, the venue and who needs to be photographed",
-        "Coverage planned around the parts of the programme that matter most",
-        "Discreet shooting through the event",
-        "Previews within 48 hours, then the full gallery"
+        "A chat about the two of you and the feel you want",
+        "Location, time and outfit plan",
+        "A relaxed shoot in good light",
+        "Your edited gallery, delivered online"
+      ],
+      "faqs": [
+        {
+          "question": "Can you help plan a surprise proposal?",
+          "answer": "Yes. We will plan where to stand, how to stay out of sight and when to start shooting, so the moment stays a surprise."
+        },
+        {
+          "question": "Is a pre-wedding shoot cheaper with a wedding booking?",
+          "answer": "Yes. Ask us about the pre-wedding price when you book your wedding."
+        }
+      ],
+      "image": "/work/maternity-autumn.jpg",
+      "gallery": [
+        {
+          "src": "/work/maternity-autumn.jpg",
+          "alt": "A mother-to-be in a cream dress under golden autumn trees"
+        },
+        {
+          "src": "/work/proposal.jpg",
+          "alt": "A couple looking at each other moments after a proposal"
+        },
+        {
+          "src": "/work/maternity-couple.jpg",
+          "alt": "An expecting couple forehead to forehead on a Canberra lawn, Telstra Tower behind them"
+        },
+        {
+          "src": "/work/maternity-family.jpg",
+          "alt": "Parents kissing their toddler on both cheeks at a maternity session"
+        }
+      ]
+    },
+    {
+      "slug": "family-events",
+      "name": "Family and community events",
+      "summary": "Pasni, birthdays, puja and community gatherings, covered with care for the people and the customs.",
+      "intro": "Family events move quickly and never happen the same way twice. We learn the programme and the customs beforehand, so the first bite of rice, the blessing or the cake are caught as they happen.",
+      "includes": [
+        "Pasni (weaning ceremony), birthdays, puja and community events",
+        "Photography, film, or both",
+        "Coverage from two hours",
+        "Edited gallery delivered online"
+      ],
+      "audience": "Families and community groups who want the day, the rituals and everyone who came, remembered properly.",
+      "process": [
+        "A short chat about the programme, the venue and who must be photographed",
+        "Coverage planned around the key moments",
+        "Quiet, respectful shooting through the event",
+        "Your edited gallery, delivered online"
       ],
       "faqs": [
         {
@@ -75,108 +118,62 @@
         },
         {
           "question": "Can you deliver same day highlights?",
-          "answer": "Not on the night itself. You will have a set of preview images within 48 hours, and the full edited gallery in one to two weeks."
+          "answer": "Not on the night itself. You will get a sneak peek within a week, followed by the full edited gallery and film."
         },
         {
           "question": "How long can we access the files?",
           "answer": "Your files arrive as a private download link that stays active for 90 days, so there is time to download and share everything you need. After that it is archived, and we will happily restore it on request."
         },
         {
-          "question": "Do you cover cultural and community events?",
-          "answer": "Yes. We regularly photograph community occasions and take the time to understand the programme and the customs involved beforehand."
+          "question": "Do you understand the rituals?",
+          "answer": "Yes. We share a Nepalese background and photograph Pasni, puja and cultural events often. If your family does things differently, tell us and we will plan around it."
         }
       ],
-      "image": "/design/service-events.jpg",
+      "image": "/work/pasni-lift.jpg",
       "gallery": [
         {
-          "src": "/design/portfolio-events.jpg",
-          "alt": "Guests seated at a long outdoor table under a white canopy"
+          "src": "/work/pasni-lift.jpg",
+          "alt": "A father lifting his baby high while mum looks on at their Pasni reception"
         },
         {
-          "src": "/design/service-events.jpg",
-          "alt": "Guests laughing together at an outdoor garden party"
-        }
-      ]
-    },
-    {
-      "slug": "real-estate",
-      "name": "Real Estate",
-      "summary": "Clean, considered property photography and video created to present spaces accurately and attractively.",
-      "intro": "Property work is a deadline business. We shoot for the listing, deliver quickly, and keep the rooms looking like themselves rather than like a rendering.",
-      "includes": [
-        "Interior and exterior photography",
-        "Walkthrough video on request",
-        "Aerial stills and video, flown in-house",
-        "Delivery within 24 to 48 hours",
-        "Private download link, active for 90 days"
-      ],
-      "audience": "Agents and owners who want listings that stand out and photograph well online.",
-      "process": [
-        "Confirm the property, access and the listing deadline",
-        "Shoot the rooms and exterior in the best available light",
-        "Edit for accurate colour and straight verticals",
-        "Deliver within 24 to 48 hours"
-      ],
-      "faqs": [
-        {
-          "question": "Do you shoot drone footage?",
-          "answer": "Yes. We fly our own drone, so aerial stills and video can be added to any property shoot."
+          "src": "/work/birthday-entrance.jpg",
+          "alt": "A family walking in to sparklers at their son's first birthday"
         },
         {
-          "question": "How quickly can we get images?",
-          "answer": "Property images are delivered within 24 to 48 hours, so you can list without waiting."
-        }
-      ],
-      "image": "/design/service-real-estate.jpg",
-      "gallery": [
-        {
-          "src": "/design/service-real-estate.jpg",
-          "alt": "A white living room filled with morning daylight"
+          "src": "/work/nirvan-entrance.jpg",
+          "alt": "A family walking down the red carpet with their son at his Pasni"
         },
         {
-          "src": "/design/portfolio-real-estate.jpg",
-          "alt": "A contemporary home exterior in clear morning light"
-        }
-      ]
-    },
-    {
-      "slug": "brand-content",
-      "name": "Brand Content",
-      "summary": "Photography and short-form video for businesses, products, campaigns and social media.",
-      "intro": "Content that has to work on a feed has different rules to a gallery. We plan the shoot around where it will actually be published and deliver it in the formats you need.",
-      "includes": [
-        "Creative direction and a shot list",
-        "Stills and short-form video",
-        "Formats cut for the platforms you use",
-        "Commercial usage licence",
-        "Private download link, active for 90 days"
-      ],
-      "audience": "Businesses and creators who need a steady supply of images and video that look like their brand.",
-      "process": [
-        "A brief covering the product, the audience and where the work will run",
-        "A shot list agreed before the day",
-        "The shoot, on location or at your premises",
-        "Delivery in the crops and formats you asked for"
-      ],
-      "faqs": [
-        {
-          "question": "Do you offer ongoing content packages?",
-          "answer": "Not yet. We book shoots individually at the moment, so tell us what you need and we will quote that piece of work."
+          "src": "/work/nirvan-family.jpg",
+          "alt": "Parents in sage green seated on stage with their son at his Pasni"
         },
         {
-          "question": "Can you edit for specific platforms?",
-          "answer": "Yes, we can format content for the platforms you use most."
-        }
-      ],
-      "image": "/design/service-social.jpg",
-      "gallery": [
-        {
-          "src": "/design/service-social.jpg",
-          "alt": "Coffee and pastries on a marble counter beside a sunlit window"
+          "src": "/work/nirvan-kiss.jpg",
+          "alt": "Parents kissing their son in his topi at his Pasni"
         },
         {
-          "src": "/design/portfolio-social.jpg",
-          "alt": "An overhead arrangement of plates, fruit and flowers on pale marble"
+          "src": "/work/birthday-boy.jpg",
+          "alt": "A baby boy in a red topi and vest sitting on a gold stand"
+        },
+        {
+          "src": "/work/birthday-cake.jpg",
+          "alt": "A family cutting the cake at their son's first birthday"
+        },
+        {
+          "src": "/work/pasni-twirl.jpg",
+          "alt": "A couple twirling on the red carpet at their baby's Pasni reception"
+        },
+        {
+          "src": "/work/nirvan-topi.jpg",
+          "alt": "A baby in a green topi and outfit smiling on a gold stand"
+        },
+        {
+          "src": "/work/birthday-family.jpg",
+          "alt": "Parents seated with their son in a red topi at his first birthday"
+        },
+        {
+          "src": "/work/pasni-baby.jpg",
+          "alt": "A baby in a navy outfit laughing on a silver sofa"
         }
       ]
     }

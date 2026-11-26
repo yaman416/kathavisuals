@@ -35,7 +35,7 @@ export function Hero() {
           <h1 style={{ maxWidth: "14ch" }}>{site.tagline}</h1>
           <hr className="kv-rule" />
           <p className="kv-lede" style={{ maxWidth: "44ch" }}>
-            Photography and films for weddings, events, properties and brands across Canberra.
+            Photography and films for weddings, pre-wedding shoots and family events across Canberra.
           </p>
           <div
             style={{
